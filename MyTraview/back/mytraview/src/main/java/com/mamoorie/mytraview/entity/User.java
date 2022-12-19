@@ -70,15 +70,14 @@ public class User {
         private Role role;
         private String profileImg;
 
+	    public static User toEntity(final Request request) {
+	        return User.builder().email(request.getEmail()).pwd(request.getPwd())
+	                .articles(request.getArticles()).comments(request.getComments()).phone(request.getPhone())
+	                .name(request.getName()).role(request.getRole()).profileImg(request.getProfileImg()).build();
+	    }
 
-    public static User toEntity(final Request request) {
-        return User.builder().email(request.getEmail()).pwd(request.getPwd())
-                .articles(request.getArticles()).comments(request.getComments()).phone(request.getPhone())
-                .name(request.getName()).role(request.getRole()).profileImg(request.getProfileImg()).build();
     }
-
-
-}
+    
     @Setter
     @Getter
     @Builder
@@ -86,6 +85,7 @@ public class User {
     @AllArgsConstructor
     @ToString
     public static class Response {
+    	
         private String email;
         private String name;
         private List<Article.Response> articles;
