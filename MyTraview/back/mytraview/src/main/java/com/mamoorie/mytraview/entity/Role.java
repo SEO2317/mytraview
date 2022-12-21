@@ -1,13 +1,13 @@
-package com.mamoorie.mytraview.entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
-public enum Role {
-    GENE("ÀÏ¹ÝÀ¯Àú"),
-    PREM("ÇÁ¸®¹Ì¾öÀ¯Àú");
-
-    private String description;
-}
+//package com.mamoorie.mytraview.entity;
+//
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//
+//@Getter
+//@AllArgsConstructor
+//public enum Role {
+//    GENE("ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½"),
+//    PREM("ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½");
+//
+//    private String description;
+//}

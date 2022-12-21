@@ -3,7 +3,6 @@ package com.mamoorie.mytraview.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +21,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,26 +41,36 @@ import lombok.Setter;
 @Table(name = "place")
 public class Place {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private Integer areaCode;
+	@Column
+	private String areaCode;
 	
+	@Column
 	private Integer cityCode;
 	
+	@Column
 	private Double mapX;
 	
+	@Column
 	private Double mapY;
 	
-	private String name;
+	@Column(name = "place_name")
+	private String placeName;
 	
+	@Column(name = "place_category")
 	private String category;
 	
+	@Column
 	private Double rating;
 	
-	private Article article;
+//	@Column
+//	private Article article;
 	
+	@Column
 	private String uploadDate;
-	
 	
 	@Getter @Setter
 	@NoArgsConstructor
@@ -68,37 +78,49 @@ public class Place {
 	@Builder
 	public static class Request{
 		
-		private Integer id;
+//		private Integer id;
 		
-		private Integer areaCode;
+		@NotBlank
+		@NotNull
+		private String areaCode;
 		
+//		@NotBlank
+//		@NotNull
 		private Integer cityCode;
 		
+		@NotBlank
+		@NotNull
 		private Double mapX;
 		
+		@NotBlank
+		@NotNull
 		private Double mapY;
 		
-		private String name;
+		@NotBlank
+		@NotNull
+		private String placeName;
 		
+		@NotBlank
+		@NotNull
 		private String category;
 		
 		private Double rating;
 		
-		private Article article;
+//		private Article article;
 		
 		private String uploadDate;
 		
 		public static Place toEntity(Place.Request req) {
 			return Place.builder()
-					.id(req.getId())
+//					.id(req.getId())
 					.areaCode(req.getAreaCode())
 					.cityCode(req.getCityCode())
 					.mapX(req.getMapX())
 					.mapY(req.getMapY())
-					.name(req.getName())
+					.placeName(req.getPlaceName())
 					.category(req.getCategory())
 					.rating(req.getRating())
-					.article(req.getArticle())
+//					.article(req.getArticle())
 					.uploadDate(req.getUploadDate())
 					.build();
 		}
@@ -113,7 +135,7 @@ public class Place {
 		
 		private Integer id;
 		
-		private Integer areaCode;
+		private String areaCode;
 		
 		private Integer cityCode;
 		
@@ -121,13 +143,13 @@ public class Place {
 		
 		private Double mapY;
 		
-		private String name;
+		private String placeName;
 		
 		private String category;
 		
 		private Double rating;
 		
-		private Article article;
+//		private Article article;
 		
 		private String uploadDate;
 		
@@ -139,10 +161,10 @@ public class Place {
 					.cityCode(place.getCityCode())
 					.mapX(place.getMapX())
 					.mapY(place.getMapY())
-					.name(place.getName())
+					.placeName(place.getPlaceName())
 					.category(place.getCategory())
 					.rating(place.getRating())
-					.article(place.getArticle())
+//					.article(place.getArticle())
 					.uploadDate(place.getUploadDate())
 					.build();
 					
