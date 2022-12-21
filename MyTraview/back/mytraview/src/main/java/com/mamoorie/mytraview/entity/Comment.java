@@ -29,10 +29,14 @@ public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "COMMENT_ID")
 	private Integer id;
 	
-	@Column
+	@Column(name = "COMMENT_CONTENT")
 	private String content;
+
+	@Column(name = "COMMENT_PARENT_ID")
+	private Integer parentId;
 	
 	@ManyToOne
 	@JoinColumn
@@ -42,8 +46,15 @@ public class Comment {
 	@JoinColumn
 	private Article article;
 	
-	@Column
-	private Integer parentId;
+	public void setUser(User user) {
+		this.user = user;
+		user.getComments().add(this);
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+		article.getComments().add(this);
+	}
 	
 	@Builder 
 	@Getter @Setter
@@ -58,8 +69,13 @@ public class Comment {
 		private Integer parentId;
 		
 		public static Comment toEntity(Comment.Request req) {
-			return Comment.builder().id(req.getId()).content(req.getContent())
-					.parentId(req.getParentId()).build();
+			return Comment.builder()
+					.id(req.getId())
+					.user(req.getUser())
+					.article(req.getArticle())
+					.content(req.getContent())
+					.parentId(req.getParentId())
+					.build();
 		}
 		
 		
@@ -73,13 +89,12 @@ public class Comment {
 		
 		private Integer id;
 		private String content;
-		private Article article;
 		private Integer parentId;
 		
 		public static Comment.Response toResponse(Comment commentEntity){
-			return Comment.Response.builder().id(commentEntity.getId())
+			return Comment.Response.builder()
+					.id(commentEntity.getId())
 					.content(commentEntity.getContent())
-					.article(commentEntity.getArticle())
 					.parentId(commentEntity.getParentId())
 					.build();
 		}
@@ -92,6 +107,7 @@ public class Comment {
 			return commentList;
 			
 		}
+		
 	}
 	
 	

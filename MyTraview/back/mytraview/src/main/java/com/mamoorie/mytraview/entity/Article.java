@@ -1,7 +1,6 @@
 package com.mamoorie.mytraview.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -24,7 +24,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-
+@Table
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,7 +47,6 @@ public class Article {
 	private String content;
 
 	@Column(name = "ARTICLE_UPLOAD_DATE")
-//	@Temporal(TemporalType.DATE)
 	private String uploadDate;
 
 	@Column(name = "ARTICLE_VIEW_COUNT")
@@ -55,6 +54,7 @@ public class Article {
 	private Integer viewCount;
 
 	@Column(name = "ARTICLE_LIKED_COUNT")
+	@ColumnDefault("0")
 	private Integer likedCount;
 
 	@OneToMany(mappedBy = "article")
@@ -63,24 +63,30 @@ public class Article {
 	@OneToMany(mappedBy = "article")
 	private List<Place> places;
 	
-	@ManyToOne//(fetch = FetchType.EAGER)
-	@JoinColumn(name = "USER_EMAIL")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn
 	private User user;
 	
-	@ManyToOne//(fetch = FetchType.EAGER)
-	@JoinColumn(name = "BOOKMARK_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn
 	private Bookmark bookmark;
 
-//	public void setUser(User user) {
-//		this.user = user;
-//		user.getArticles().add(this);
-//	}
+	public void setUser(User user) {
+		this.user = user;
+		user.getArticles().add(this);
+	}
 	
-	// ¿äÃ» ¹ŞÀ» ¶§ »ç¿ëÇÒ User EntityÀÇ DTO
+	public void setBookmark(Bookmark bookmark) {
+		this.bookmark = bookmark;
+		bookmark.getArticles().add(this);
+	}
+	
+	// ìš”ì²­ ë°›ì„ ë•Œ ì‚¬ìš©í•  User Entityì˜ DTO
 	@Setter
 	@Getter
 	@Builder
-	@ToString
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class Request {
 
 		private Integer id;
@@ -111,7 +117,7 @@ public class Article {
 		
 	}
 
-	// ¼­¹ö°¡ ÀÀ´äÇÒ ¶§ »ç¿ëÇÒ User EntityÀÇ DTO
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ User Entityï¿½ï¿½ DTO
 	@Setter
 	@Getter
 	@Builder
@@ -126,11 +132,8 @@ public class Article {
 		private Integer viewCount;
 		private Integer likedCount;
 		
-		private List<Comment.Response> comments;
-		private List<Place.Response> places;
-		
-		private User.Response user;
-		private Bookmark.Response bookmark;
+		private List<Comment> comments;
+		private List<Place> places;
 
 		public static Article.Response toResponse(final Article article) {
 			return Article.Response.builder()
@@ -140,10 +143,8 @@ public class Article {
 					.uploadDate(article.getUploadDate())
 					.viewCount(article.getViewCount())
 					.likedCount(article.getLikedCount())
-					.comments(Comment.Response.toResponseList(article.getComments()))
-					.places(Place.Response.toResponseList(article.getPlaces()))
-					.user(User.Response.toResponse(article.getUser()))
-					.bookmark(Bookmark.Response.toResponse(article.getBookmark()))
+					.comments(article.getComments())
+					.places(article.getPlaces())
 					.build();
 		}
 

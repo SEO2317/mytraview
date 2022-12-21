@@ -1,6 +1,5 @@
 package com.mamoorie.mytraview.entity;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +18,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data // Getter, Setter, ToString 포함됨
+@Data // Getter, Setter, ToString 占쏙옙占쌉듸옙 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table
 public class Place {
 	
 	@Id
@@ -29,35 +30,33 @@ public class Place {
 	@Column(name = "PLACE_ID")
 	private Integer id;
 	
-	@Column(name = "AREA_CODE")
-	private Integer areaCode;
+	@Column(name = "PLACE_AREA_CODE")
+	private String areaCode;
 	
-	@Column(name = "CITY_CODE")
-	private Integer cityCode;
-	
-	@Column(name = "MAP_X")
+	@Column(name = "PLACE_MAP_X")
 	private Double mapX;
 	
-	@Column(name = "MAP_Y")
+	@Column(name = "PLACE_MAP_Y")
 	private Double mapY;
 	
 	@Column(name = "PLACE_NAME")
-	private String name;
+	private String placeName;
 	
-	@Column(name = "TAG_CATEGORY")
+	@Column(name = "PLACE_CATEGORY")
 	private String category;
 	
-	@Column(name = "PLACE_RATE")
+	@Column(name = "PLACE_RATING")
 	private Double rating;
 	
 	@ManyToOne
-	@JoinColumn(name = "ARTICLE_ID") // 2번 같은 이름 가능?? 가능할 것 같긴 한데
+	@JoinColumn
 	private Article article;
+
+	public void setArticle(Article article) {
+		this.article = article;
+		article.getPlaces().add(this);
+	}
 	
-	private Timestamp uploadDate;
-	
-	
-	// 요청 받을 때 사용할 Place Entity의 DTO
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
@@ -65,26 +64,21 @@ public class Place {
 	public static class Request {
 		
 		private Integer id;
-		private Integer areaCode;
-		private Integer cityCode;
+		private String areaCode;
 		private Double mapX;
 		private Double mapY;
-		private String name;
-		
+		private String placeName;
 		private String category;
-		
 		private Double rating;
-		
 		private Article article;
 		
 		public static Place toEntity(Place.Request req) {
 			return Place.builder()
 					.id(req.getId())
 					.areaCode(req.getAreaCode())
-					.cityCode(req.getCityCode())
 					.mapX(req.getMapX())
 					.mapY(req.getMapY())
-					.name(req.getName())
+					.placeName(req.getPlaceName())
 					.category(req.getCategory())
 					.rating(req.getRating())
 					.article(req.getArticle())
@@ -92,7 +86,6 @@ public class Place {
 		}
 	}
 	
-	// 서버가 응답할 때 사용할 Place Entity의 DTO
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
@@ -100,29 +93,22 @@ public class Place {
 	public static class Response {
 		
 		private Integer id;
-		private Integer areaCode;
-		private Integer cityCode;
+		private String areaCode;
 		private Double mapX;
 		private Double mapY;
-		private String name;
-		
+		private String placeName;
 		private String category;
-		
 		private Double rating;
-		
-		private Article article;
 		
 		public static Place.Response toResponse(Place place) {
 			return Place.Response.builder()
 					.id(place.getId())
 					.areaCode(place.getAreaCode())
-					.cityCode(place.getCityCode())
 					.mapX(place.getMapX())
 					.mapY(place.getMapY())
-					.name(place.getName())
+					.placeName(place.getPlaceName())
 					.category(place.getCategory())
 					.rating(place.getRating())
-					.article(place.getArticle())
 					.build();
 		}
 		

@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Role {
-    GENE("ÀÏ¹İÀ¯Àú"),
-    PREM("ÇÁ¸®¹Ì¾öÀ¯Àú");
+    COMN("ì¼ë°˜ìœ ì €"),
+    SPEC("ìŠ¤í˜ì…œ");
 
     private String description;
 }
