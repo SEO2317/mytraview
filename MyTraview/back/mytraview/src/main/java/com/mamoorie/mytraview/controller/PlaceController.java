@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mamoorie.mytraview.entity.Place;
-import com.mamoorie.mytraview.repository.PlaceRepository;
 import com.mamoorie.mytraview.service.PlaceService;
 
 import lombok.RequiredArgsConstructor;

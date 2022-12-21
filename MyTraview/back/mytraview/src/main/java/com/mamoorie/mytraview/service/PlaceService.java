@@ -1,7 +1,5 @@
 package com.mamoorie.mytraview.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +68,6 @@ public class PlaceService {
 			place.setMapY(placeEntity.getMapY());
 			place.setPlaceName(placeEntity.getPlaceName());
 			place.setRating(placeEntity.getRating());
-			place.setUploadDate(new SimpleDateFormat().format(new Date()));
 			placeRepository.save(place);
 		  }
 		);
