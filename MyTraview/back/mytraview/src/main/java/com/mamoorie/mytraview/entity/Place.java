@@ -15,19 +15,22 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Data // Getter, Setter, ToString ���Ե� 
+
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Entity
 @Table
 public class Place {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLACE_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name = "PLACE_AREA_CODE")
@@ -56,12 +59,12 @@ public class Place {
 		this.article = article;
 		article.getPlaces().add(this);
 	}
-	
-	@Data
+
+	@Getter @Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
-	public static class Request {
+	public static class Request{
 		
 		private Integer id;
 		private String areaCode;
@@ -84,13 +87,15 @@ public class Place {
 					.article(req.getArticle())
 					.build();
 		}
+		
+		
 	}
-	
-	@Data
+
+	@Getter @Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
-	public static class Response {
+	public static class Response{
 		
 		private Integer id;
 		private String areaCode;
@@ -112,14 +117,15 @@ public class Place {
 					.build();
 		}
 		
-		public static List<Place.Response> toResponseList(List<Place> places) {
+		public static List<Place.Response> toResponseList(List<Place> places){
 			List<Place.Response> placeList = new ArrayList<Place.Response>();
-			for (Place place : places) {
+			
+			for (Place place: places) {
 				placeList.add(Place.Response.toResponse(place));
 			}
+			
 			return placeList;
 		}
 		
 	}
-
 }
