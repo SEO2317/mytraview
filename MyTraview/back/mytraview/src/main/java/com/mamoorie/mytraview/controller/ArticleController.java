@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mamoorie.mytraview.entity.Article;
+import com.mamoorie.mytraview.entity.User;
 import com.mamoorie.mytraview.repository.ArticleRepository;
+import com.mamoorie.mytraview.repository.UserRepository;
 import com.mamoorie.mytraview.service.ArticleService;
 
 @RestController
@@ -27,6 +29,9 @@ public class ArticleController {
 	
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private ArticleService articleService;
@@ -69,7 +74,7 @@ public class ArticleController {
 		System.out.println("POST: createArticle() of ArticleController called");		
 		Article newArticle = Article.Request.toEntity(request);
 //		Address address = request.get();
-		User foundUser = userRepository.findByEmail();
+		User foundUser = userRepository.findByEmail("");
 		newArticle.setUser(foundUser);
 		//TODO: Bookmark set ^ 위에 방법
 		Article savedArticle = articleService.createArticle(newArticle);

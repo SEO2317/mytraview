@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import ListTable from './ListTable';
 
-const TagTabs = (props) => {
+const CategoryTabs = (props) => {
     // console.log('TagTabs', props.areaCode);
     const [response, setResponse] = useState([]);
 
@@ -86,4 +86,4 @@ const TagTabs = (props) => {
     );
 }
 
-export default TagTabs
+export default CategoryTabs

@@ -29,11 +29,12 @@ const Home = () => {
       <div>Home</div>
       <br></br>
       <br></br>
-      <div>
+      <div className='w-11 h-10 ml-8'>
       <Link to="/ArticleListPage">
         <Button>글목록</Button>
       </Link>
       </div>
+      
       <br></br>
       <br></br>
       {data.map(({ areaCode }) => (

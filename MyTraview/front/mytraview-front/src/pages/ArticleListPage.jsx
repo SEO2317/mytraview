@@ -1,5 +1,5 @@
 import React from 'react'
-import TagTabs from '../components/article/TagTabs'
+import CategoryTabs from '../components/article/CategoryTabs'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@material-tailwind/react'
 
@@ -13,7 +13,7 @@ const ArticleListPage = (props) => {
     <Link to="/">
         <Button>홈페이지</Button>
       </Link>
-    <TagTabs areaCode={areaCode} />
+    <CategoryTabs areaCode={areaCode} />
     </>
   )
 }

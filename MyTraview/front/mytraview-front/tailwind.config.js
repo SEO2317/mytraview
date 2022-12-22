@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/* @type {import('tailwindcss').Config} */
 
 // module.exports = {
 //   content: ["./src/**/*.{html,js}"],
@@ -10,6 +10,8 @@
 //     autoprefixer: {},
 //   ],
 // }
+
+
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
