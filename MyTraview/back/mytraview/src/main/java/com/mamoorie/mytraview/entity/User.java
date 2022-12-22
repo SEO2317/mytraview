@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.*;
 
 @Builder
@@ -13,7 +15,6 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString
 @Table(name = "USER_INFO")
 public class User {
 
@@ -41,15 +42,19 @@ public class User {
     private Role role;
     
     @OneToMany(mappedBy = "user")
+	@JsonManagedReference
     private List<Article> articles;
 
     @OneToMany(mappedBy = "user")
+	@JsonManagedReference
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "user")
+	@JsonManagedReference
     private List<Bookmark> bookmarks;
     
     @OneToMany(mappedBy = "user")
+	@JsonManagedReference 
     private List<Liked> likeds;
 
 //    private List<Article> likedArticles;

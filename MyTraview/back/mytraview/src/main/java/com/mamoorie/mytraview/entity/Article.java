@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +32,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 //@DynamicUpdate
 public class Article {
 
@@ -58,14 +60,16 @@ public class Article {
 	private Integer likedCount;
 
 	@OneToMany(mappedBy = "article")
+	@JsonManagedReference
 	private List<Comment> comments;
 
 	@OneToMany(mappedBy = "article")
+	@JsonManagedReference
 	private List<Place> places;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
-	private User user;
+	private User user;  
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
@@ -117,7 +121,6 @@ public class Article {
 		
 	}
 
-	// ������ ������ �� ����� User Entity�� DTO
 	@Setter
 	@Getter
 	@Builder

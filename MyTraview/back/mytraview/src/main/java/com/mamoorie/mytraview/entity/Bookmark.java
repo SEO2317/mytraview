@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +39,7 @@ public class Bookmark {
 	private String name;
 
 	@OneToMany(mappedBy = "bookmark")
+	@JsonManagedReference
 	private List<Article> articles;
 
 	@ManyToOne

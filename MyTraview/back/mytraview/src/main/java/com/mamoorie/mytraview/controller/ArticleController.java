@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mamoorie.mytraview.entity.Article;
+import com.mamoorie.mytraview.repository.ArticleRepository;
 import com.mamoorie.mytraview.service.ArticleService;
 
 @RestController
@@ -23,7 +24,10 @@ import com.mamoorie.mytraview.service.ArticleService;
 //@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:5500"})
 @CrossOrigin(origins = {"http://localhost:3100"})
 public class ArticleController {
-
+	
+	@Autowired
+	private ArticleRepository articleRepository;
+	
 	@Autowired
 	private ArticleService articleService;
 	
