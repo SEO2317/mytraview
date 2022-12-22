@@ -1,6 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import KakaoTest from './components/map/KakaoTest';
 
+import Map from './components/map/Map';
+import OnePage from './components/map/OnePage';
+
+// function App() {
+//   return (
+//     <>
+//       {/* <Map/> */}
+//       <OnePage/>
+//       {/* <KakaoTest/> */}
+//     </>
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ArticleListPage from './pages/ArticleList';
 import Home from './pages/Home';
