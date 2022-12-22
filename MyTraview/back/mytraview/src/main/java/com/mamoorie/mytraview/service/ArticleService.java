@@ -20,6 +20,14 @@ public class ArticleService {
 
 	public List<Article> findByCategory(String category) {
 		return articleRepository.findByPlacesCategory(category);
+	}	
+	
+	public List<Article> findByPlacesAreaCodeAndPlacesCategory(String areaCode, String category) {
+		return articleRepository.findByPlacesAreaCodeAndPlacesCategory(areaCode, category);
+	}
+	
+	public List<Article> findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(Double mapX, Double mapY, String placeName) {
+		return articleRepository.findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(mapX, mapY, placeName);
 	}
 
 	public Article createArticle(Article newArticle) {

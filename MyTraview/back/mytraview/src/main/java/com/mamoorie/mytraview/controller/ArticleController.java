@@ -47,15 +47,32 @@ public class ArticleController {
 		return Article.Response.toResponseList(articleList);
 	}
 	
+	// 'GET' http://localhost:8100/article/list/:areaCode/:category
+	@GetMapping("/list/{areaCode}/{category}")
+	public List<Article.Response> findByPlacesAreaCodeAndPlacesCategory(@PathVariable String areaCode, @PathVariable String category) {
+		System.out.println("GET: findByPlacesAreaCodeAndPlacesCategory() of ArticleController called");		
+		List<Article> articleList = articleService.findByPlacesAreaCodeAndPlacesCategory(areaCode, category);
+		return Article.Response.toResponseList(articleList);
+	}
+	
+	// 'GET' http://localhost:8100/article/list/:mapX/:mapY/:placeName
+	@GetMapping("/list/{mapX}/{mapY}/{placeName}")
+	public List<Article.Response> findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(@PathVariable Double mapX, @PathVariable Double mapY, @PathVariable String placeName) {
+		System.out.println("GET: findByPlacesMapXAndPlacesMapYAndPlacesPlaceName() of ArticleController called");		
+		List<Article> articleList = articleService.findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(mapX, mapY, placeName);
+		return Article.Response.toResponseList(articleList);
+	} 
+	
 	// 'POST' http://localhost:8100/article
 	@PostMapping
 	public ResponseEntity<Article.Response> createArticle(@RequestBody @Valid Article.Request request) {
 		System.out.println("POST: createArticle() of ArticleController called");		
 		Article newArticle = Article.Request.toEntity(request);
-		//Address address = request.getAddress();
+//		Address address = request.get();
+		User foundUser = userRepository.findByEmail();
+		newArticle.setUser(foundUser);
+		//TODO: Bookmark set ^ 위에 방법
 		Article savedArticle = articleService.createArticle(newArticle);
-		//address.setUser(savedUser);
-		//addressRepository.save(address);
 		Article.Response response = Article.Response.toResponse(savedArticle);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}

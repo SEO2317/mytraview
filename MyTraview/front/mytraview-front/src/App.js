@@ -1,3 +1,4 @@
+import './index.css';
 import './App.css';
 import KakaoTest from './components/map/KakaoTest';
 
@@ -12,8 +13,9 @@ import OnePage from './components/map/OnePage';
 //       {/* <KakaoTest/> */}
 //     </>
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ArticleListPage from './pages/ArticleList';
+import ArticleListPage from './pages/ArticleListPage';
 import Home from './pages/Home';
+import ArticleCreatePage from './pages/ArticleCreatePage';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/ArticleListPage" element={<ArticleListPage />} /> 
+          <Route path="/ArticleCreatePage" element={<ArticleCreatePage />} /> 
         </Routes>
       </BrowserRouter>
     </div>

@@ -10,16 +10,20 @@ import com.mamoorie.mytraview.entity.Article;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
-	// Äõ¸® ¸Þ¼­µå
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
 	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
 	
-//	// locationId À¸·Î Á¶È¸
+//	// locationId ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 //	List<Fruit> findByLocationsLocationId(int locationId);
 //	List<Fruit> findDistinctByLocationsLocalEngName(String localEngName);
 //	Fruit findDistinctByItemNameAndLocationsLocalEngName(String itemName, String localEngName);
-//	// harvestDate À¸·Î Á¶È¸
+//	// harvestDate ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 //	List<Fruit> findByHarvestStartBeforeAndHarvestEndAfter(Date curDate1, Date curDate2);
 	
 	List<Article> findByPlacesCategory(String category);
+	List<Article> findByPlacesAreaCodeAndPlacesCategory(String areaCode, String category);
+	
+
+	List<Article> findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(Double mapX, Double mapY, String placeName);
 	
 }
