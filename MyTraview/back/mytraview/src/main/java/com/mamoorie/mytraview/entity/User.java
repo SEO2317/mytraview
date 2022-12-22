@@ -66,7 +66,7 @@ public class User {
     @AllArgsConstructor
     @ToString
     public static class Request {
-    	
+
     	private String email;
         private String pw;
         private String token;
@@ -116,6 +116,8 @@ public class User {
         private List<Comment> comments;
         private List<Bookmark> bookmarks;
         private List<Liked> likeds;
+
+        private String resMessage;
         
 	    public static User.Response toResponse(final User user) {
 	        return Response.builder()
