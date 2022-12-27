@@ -50,6 +50,5 @@
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4"
   },
- 
-  "proxy": "http://localhost:8100"
+  "proxy": "https://dapi.kakao.com/v2/local/search/address"
 }

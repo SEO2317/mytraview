@@ -30,6 +30,7 @@ const ArticleCreatePage = () => {
   }
 
   const req = {
+
     title: title,
     content: content
   }

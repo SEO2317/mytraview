@@ -136,7 +136,6 @@ const ArticleDetailPage = () => {
               </div>
           </form>
       </>
-  )
-}
+  )}
 
 export default ArticleDetailPage

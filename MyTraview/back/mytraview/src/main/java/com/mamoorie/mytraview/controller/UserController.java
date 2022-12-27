@@ -1,5 +1,6 @@
 package com.mamoorie.mytraview.controller;
 
+<<<<<<< HEAD
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -7,6 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+//import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
+//import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
+//import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
+
+import com.mamoorie.mytraview.entity.User;
+import com.mamoorie.mytraview.preferences.jwt.JwtTokenProvider;
+import com.mamoorie.mytraview.repository.UserRepository;
+import com.mamoorie.mytraview.service.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 //import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
 //import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
 //import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
@@ -29,6 +43,12 @@ import com.mamoorie.mytraview.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+=======
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.regex.Pattern;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 
 
 @RestController
@@ -37,8 +57,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserController {
 
+<<<<<<< HEAD
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
+=======
+
+    private final JwtTokenProvider jwtTokenProvider;
+
+    private final UserService userService;
+
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
     private final UserRepository userRepository;
 
 //    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -92,6 +120,7 @@ public class UserController {
 //            return ResponseEntity.badRequest().body("이메일이 이미 존재합니다.");
 //
 //        }
+<<<<<<< HEAD
         String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
 
 
@@ -100,6 +129,15 @@ public class UserController {
         if(i==true){
             return ResponseEntity.ok().body("알맞는 형식입니다.");
         }
+=======
+//        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+//
+//        boolean i = Pattern.matches(pattern,req.getEmail());
+//        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
+//        if(!i){
+//            return ResponseEntity.ok().body("형식을 맞춰 입력하세요.");
+//        }
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 
         try {
 //            if (req == null || req.getPwd() == null) {

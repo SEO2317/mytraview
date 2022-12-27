@@ -65,12 +65,14 @@ const TagList = () => {
       </Table>
     </TableContainer>
     <Fragment>
-      <div className="flex gap-3 justify-center">
+
+      <div className="flex justify-center gap-3">
         <Button onClick={() => handleOpen("xl")} variant="gradient">
           태그 추가하기
         </Button>
       </div>
       <Dialog style={{height:"97vh", width:"100vw"}}
+
         open={
           size === "xs" ||
           size === "sm" ||

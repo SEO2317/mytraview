@@ -1,4 +1,3 @@
-// import axios from 'axios'
 import React, { useEffect } from 'react'
 
 const KakaoTest = () => {
@@ -10,7 +9,6 @@ const KakaoTest = () => {
         "Authorization": "KakaoAK c7cef9ee92577782a14980afa1b746c6",
 
     })  
-    // axios.defaults.withCredentials = true;
      
 const query = encodeURI("전북 삼성동 100")
 

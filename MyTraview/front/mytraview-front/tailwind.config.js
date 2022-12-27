@@ -1,28 +1,27 @@
-/** @type {import('tailwindcss').Config} */
+/* @type {import('tailwindcss').Config} */
+
 // module.exports = {
-//   content: [
-//     "./src/**/*.{js,jsx,ts,tsx}",
-//   ],
+//   content: ["./src/**/*.{html,js}"],
 //   theme: {
 //     extend: {},
 //   },
-//   plugins: [],
+//   plugins: [
+//     tailwindcss: {},
+//     autoprefixer: {},
+//   ],
 // }
-
 
 
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
+  // purge: [],
+  // darkMode: false, // or 'media' or 'class'
   content: [
     "./src/*/.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        'Ebony': '#282c34'
-      }
-    },
+    extend: {},
   },
   variants: {
     extend: {},

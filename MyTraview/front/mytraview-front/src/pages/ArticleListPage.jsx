@@ -12,11 +12,11 @@ const ArticleListPage = (props) => {
 
   return (
     <>
-      <div>ArticleListPage</div>
-      <Link to="/">
+    <div onClick={() =>console.log(areaCode)}>ArticleListPage</div>
+    <Link to="/">
         <Button>홈페이지</Button>
       </Link>
-      <CategoryTabs areaCode={areaCode} />
+    <CategoryTabs areaCode={areaCode} />
     </>
   )
 }

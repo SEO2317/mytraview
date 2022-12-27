@@ -20,7 +20,11 @@ export function call(api, method, req){
         if(res.ok){
             return res.json();
         } else {
-            
+            new Error(res);
         }
     })
+    .catch((error)=>{
+        console.log(error);
+    })
 }
+

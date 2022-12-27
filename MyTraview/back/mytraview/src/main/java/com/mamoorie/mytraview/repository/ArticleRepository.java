@@ -10,6 +10,7 @@ import com.mamoorie.mytraview.entity.Article;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
+<<<<<<< HEAD
 	//
 	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
 	
@@ -18,6 +19,16 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 //	List<Fruit> findDistinctByLocationsLocalEngName(String localEngName);
 //	Fruit findDistinctByItemNameAndLocationsLocalEngName(String itemName, String localEngName);
 //	// harvestDate
+=======
+	// ���� �޼���
+	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
+	
+//	// locationId ���� ��ȸ
+//	List<Fruit> findByLocationsLocationId(int locationId);
+//	List<Fruit> findDistinctByLocationsLocalEngName(String localEngName);
+//	Fruit findDistinctByItemNameAndLocationsLocalEngName(String itemName, String localEngName);
+//	// harvestDate ���� ��ȸ
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 //	List<Fruit> findByHarvestStartBeforeAndHarvestEndAfter(Date curDate1, Date curDate2);
 	
 	List<Article> findByPlacesCategory(String category);
@@ -25,5 +36,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	
 
 	List<Article> findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(Double mapX, Double mapY, String placeName);
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 	List<Article> findAllByWriter(String writer);
 }

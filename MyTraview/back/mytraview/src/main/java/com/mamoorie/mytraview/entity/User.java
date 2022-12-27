@@ -1,5 +1,6 @@
 package com.mamoorie.mytraview.entity;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+=======
+import lombok.*;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.util.*;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 
 @Builder
 @Getter
@@ -31,6 +43,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "USER_INFO")
 public class User {
+<<<<<<< HEAD
 	
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Integer id;
@@ -38,6 +51,11 @@ public class User {
 	@Id
     @Column(name = "USER_EMAIL", length = 100)
     @Email
+=======
+
+    @Id
+    @Column(name = "USER_EMAIL", length = 100)
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
     private String email;
 
     @Column(name = "USER_PASSWORD", length = 100, nullable = false)
@@ -159,4 +177,8 @@ public class User {
 	        return list;
 	    }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc

@@ -25,6 +25,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+<<<<<<< HEAD
+=======
+import lombok.ToString;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 
 @Entity
 @Table
@@ -84,9 +88,12 @@ public class Article {
 	private Bookmark bookmark;
 	
 	private String resMessage;
+<<<<<<< HEAD
 	
 //	@Column(name = comment_writer)
 //	private String writer;
+=======
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 
 	public void setUser(User user) {
 		this.user = user;
@@ -179,4 +186,8 @@ public class Article {
 		
 	}
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc

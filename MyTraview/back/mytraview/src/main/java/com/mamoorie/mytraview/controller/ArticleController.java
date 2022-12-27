@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mamoorie.mytraview.entity.Article;
 import com.mamoorie.mytraview.entity.User;
+<<<<<<< HEAD
+=======
+import com.mamoorie.mytraview.repository.ArticleRepository;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import com.mamoorie.mytraview.repository.UserRepository;
 import com.mamoorie.mytraview.service.ArticleService;
 
@@ -34,10 +42,17 @@ public class ArticleController {
 //	private ArticleRepository articleRepository;
 	
 	
+<<<<<<< HEAD
 	private final UserRepository userRepository;
 	
 	
 	private final ArticleService articleService;
+=======
+	private UserRepository userRepository;
+	
+	
+	private ArticleService articleService;
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 	
 	// 'GET' http://localhost:8100/article
 	@GetMapping
@@ -77,7 +92,11 @@ public class ArticleController {
 		System.out.println("POST: createArticle() of ArticleController called");		
 		Article newArticle = Article.Request.toEntity(request);
 //		Address address = request.get();
+<<<<<<< HEAD
 		User foundUser = userRepository.findByEmail("1234@1234.com");
+=======
+		User foundUser = userRepository.findByEmail("");
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 		newArticle.setUser(foundUser);
 		//TODO: Bookmark set ^ 위에 방법
 		Article savedArticle = articleService.createArticle(newArticle);
@@ -108,4 +127,8 @@ public class ArticleController {
 		return ResponseEntity.ok().body(res);
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
