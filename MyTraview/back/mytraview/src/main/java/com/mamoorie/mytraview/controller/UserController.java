@@ -91,14 +91,13 @@ public class UserController {
 //            return ResponseEntity.badRequest().body("이메일이 이미 존재합니다.");
 //
 //        }
-        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-
-
-        boolean i = Pattern.matches(pattern,req.getEmail());
-        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
-        if(i==true){
-            return ResponseEntity.ok().body("알맞는 형식입니다.");
-        }
+//        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+//
+//        boolean i = Pattern.matches(pattern,req.getEmail());
+//        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
+//        if(!i){
+//            return ResponseEntity.ok().body("형식을 맞춰 입력하세요.");
+//        }
 
         try {
 //            if (req == null || req.getPwd() == null) {

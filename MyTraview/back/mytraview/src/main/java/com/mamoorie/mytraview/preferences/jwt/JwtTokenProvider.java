@@ -20,11 +20,11 @@ public class JwtTokenProvider {
     public String makeJwtToken(User user) {
         Date revalidated = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
 
-        return Jwts.builder().signWith(SignatureAlgorithm.HS512, String.valueOf(SECRET_KEY)).setSubject(user.getName())
+        return Jwts.builder().signWith(SignatureAlgorithm.HS512, String.valueOf(SECRET_KEY)).setSubject(user.getEmail())
                 .setIssuer("mytraview app").setIssuedAt(new Date()).setExpiration(revalidated).compact();
     }
 
-    public String validateAndGetName(String token) {
+    public String validateAndGetEmail(String token) {
         Claims claims = Jwts.parser().setSigningKey(String.valueOf(SECRET_KEY)).parseClaimsJws(token).getBody();
 
         return claims.getSubject();

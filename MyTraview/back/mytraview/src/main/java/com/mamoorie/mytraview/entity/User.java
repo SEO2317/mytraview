@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -20,7 +21,6 @@ public class User {
 
     @Id
     @Column(name = "USER_EMAIL", length = 100)
-    @Email
     private String email;
 
     @Column(name = "USER_PASSWORD", length = 100, nullable = false)
