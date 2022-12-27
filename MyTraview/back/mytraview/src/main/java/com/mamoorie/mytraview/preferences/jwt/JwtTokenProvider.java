@@ -24,7 +24,7 @@ public class JwtTokenProvider {
                 .setIssuer("mytraview app").setIssuedAt(new Date()).setExpiration(revalidated).compact();
     }
 
-    public String validateAndGetName(String token) {
+    public String validateAndGetEmail(String token) {
         Claims claims = Jwts.parser().setSigningKey(String.valueOf(SECRET_KEY)).parseClaimsJws(token).getBody();
 
         return claims.getSubject();

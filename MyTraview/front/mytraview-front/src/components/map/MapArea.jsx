@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import kLatLng from './K_latlng.json'
+
+
 const { kakao } = window;
+
 
 const MapArea = () => {
 

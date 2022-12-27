@@ -9,7 +9,7 @@ const ArticleListPage = (props) => {
   const areaCode = from.areaCode;
   return (
     <>
-    <div>ArticleListPage</div>
+    <div onClick={() =>console.log(areaCode)}>ArticleListPage</div>
     <Link to="/">
         <Button>홈페이지</Button>
       </Link>
