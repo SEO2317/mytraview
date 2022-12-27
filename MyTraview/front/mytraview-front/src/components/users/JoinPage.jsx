@@ -1,30 +1,53 @@
+import alertGradient from '@material-tailwind/react/theme/components/alert/alertGradient'
 import React, { useState } from 'react'
 
 const JoinPage = () => {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState()
   const [name, setName] = useState("")
   const [pw, setPw] = useState("")
   const [confirmpw, setConfirmPw] = useState("")
+  const [agrees,setAgrees] = useState(false)
   const [Phone, setPhone] = useState("")
   const [role, setRole] = useState()
 
+  const [emailError, setEmailError] = useState(false)
+  const [pwError,setPwError] = useState(false)
+  const [confirmpwError,setConfirmPwError] = useState(false)
+  const [nameError,setNameError] = useState(false)
+  const [phoneError,setPhoneError] = useState(false)
+
   const onEmailHandler = (event) => {
-    setEmail(event.target.value)
+    const emailRegex = new RegExp("([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$");
+    if(!event.target.value || !(emailRegex.test(event.target.value))) 
+    setEmail(false);
+    else {setEmailError(true);
+    setEmail(event.target.value)}
   }
 
   const onNameHandler = (event) => {
+    setNameError(false);
     setName(event.target.value)
   }
 
   const onPwHandler = (event) => {
+    const pwRegex = new RegExp("^[A-Za-z0-9]{4,12}$");
+    if((!event.target.value && (pwRegex.test(event.target.value))))
+    setPwError(false);
+    else setConfirmPwError(true);
     setPw(event.target.value)
   }
 
   const onConfirmPwHandler = (event) => {
+    if(pw === event.target.value) setConfirmPwError(false);
+    else setConfirmPwError(true);
     setConfirmPw(event.target.value)
   }
 
   const onPhoneHandler = (event) => {
+    // const phoneRegex = new RegExp("(010)-\d{3,4}-\d{4}");
+    // if((!event.target.value || (phoneRegex.test(event.target.value))))
+    // setPhone(false);
+    // else setPhoneError(true);
     setPhone(event.target.value)
   }
 
@@ -35,15 +58,33 @@ const JoinPage = () => {
   const onRoleHandler2 = () => {
     setRole("SPEC")
   }
+  
+  const checkAgreeHandler = () => {
+    agrees === false ? setAgrees(true) : setAgrees(false)
+  }
 
+
+  const validation = () => {
+    if(!email) setEmailError(true);
+    if(!pw) setPwError(true);
+    if(!confirmpw) setConfirmPwError(true);
+    if(!Phone) setPhoneError(true);
+    if(!agrees) setAgrees(true);
+    if(!name) setName(true);
+
+    if(email && pw && confirmpw && name && Phone) return true;
+    else return false;
+  }
 
   const toChangePage = () => {
-
+    validation()
+     
     fetch('http://localhost:8100/users/join', {
 
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
+        'Accept' : 'application/json'
       },
       body: JSON.stringify({
         email: email,
@@ -51,11 +92,13 @@ const JoinPage = () => {
         name: name,
         phone: Phone,
         role: role,
-      }),
+        agrees: agrees,
+      })
+      
     })
-      // .then(res => res.json())
+      .then(res => res.json())
       .then(res => {
-        // console.log(res)
+        console.log(res)
       })
 
   }
@@ -73,7 +116,12 @@ const JoinPage = () => {
           <div><input type="radio" id="special" name="role" value="special" onClick={onRoleHandler2}/>
             <label htmlFor="special">special</label>
           </div>
-          <button onClick={() => console.log(role)}>롤 확인</button>
+          <div className="flex">
+						<input type="checkbox" name='agrees' onClick={checkAgreeHandler} className="mt-10 mb-16 border-sky-400" defaultValue="" />
+					</div>
+          {/* <div><input type="checkbox" onClick={toChangePage} className="mt-10 mb-16 border-sky-400" defaultValue="" /></div> */}
+          <button onClick={() => {console.log(role);}}>롤 확인</button>
+          <button onClick={() => {console.log(email);}}>이메일 확인</button>
         </div>
         {/* <div className='flex'>
           <input type="radio" id="html" name="fav_language" value="HTML">
