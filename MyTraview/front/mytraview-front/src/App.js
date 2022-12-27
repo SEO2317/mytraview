@@ -9,6 +9,8 @@ import ArticleListPage from './pages/ArticleListPage';
 import Home from './pages/Home';
 import MapArea from './components/map/MapArea';
 import ArticleCreatePage from './pages/ArticleCreatePage';
+import JoinPage from './components/users/JoinPage';
+import LoginPage from './components/users/LoginPage';
 
 function App() {
   return (
@@ -17,13 +19,18 @@ function App() {
         <Routes>
           {/* <Map/> */}
           {/* <MapArea/> */}
-          <Route path = "myMap" element={<Map/>}/>
-          <Route path = "myMapArea" element={<MapArea/>}/>
+          {/* <Route path = "myMap" element={<Map/>}/>
+          <Route path = "myMapArea" element={<MapArea/>}/> */}
           {/* <OnePage/> */}
           {/* <KakaoTest/> */}
-          <Route path="/" element={<Home />} /> 
+          {/* <Route path="/" element={<Home />} /> 
           <Route path="/ArticleListPage" element={<ArticleListPage />} /> 
-          <Route path="/ArticleCreatePage" element={<ArticleCreatePage />} /> 
+          <Route path="/ArticleCreatePage" element={<ArticleCreatePage />} /> */}
+          {/*<LoginPage>*/}
+          {/*<JoinPage>*/}
+          <Route path = "/LoginPage" element={<LoginPage/>}/>
+          <Route path = "/JoinPage" element={<JoinPage/>}/>
+
         </Routes>
     </BrowserRouter>
     </>

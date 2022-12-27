@@ -100,7 +100,7 @@ public class UserService {
 
     public boolean checkName(HttpServletRequest request, String name) {
         String token = parseBearerToken(request);
-        String psName = jwtTokenProvider.validateAndGetName(token);
+        String psName = jwtTokenProvider.validateAndGetEmail(token);
         System.out.println(psName);
         if (psName.equals(name)) {
             return true;
