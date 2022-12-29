@@ -1,6 +1,6 @@
 package com.mamoorie.mytraview.service;
 
-<<<<<<< HEAD
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import com.mamoorie.mytraview.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-=======
+
 import com.mamoorie.mytraview.entity.User;
 import com.mamoorie.mytraview.preferences.jwt.JwtTokenProvider;
 import com.mamoorie.mytraview.repository.UserRepository;
@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
+
 
 @Service
 @Slf4j
@@ -116,11 +116,8 @@ public class UserService {
 
     public boolean checkName(HttpServletRequest request, String name) {
         String token = parseBearerToken(request);
-<<<<<<< HEAD
-        String psName = jwtTokenProvider.validateAndGetName(token);
-=======
+//        String psName = jwtTokenProvider.validateAndGetName(token);
         String psName = jwtTokenProvider.validateAndGetEmail(token);
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
         System.out.println(psName);
         if (psName.equals(name)) {
             return true;
@@ -136,8 +133,4 @@ public class UserService {
         }
         return null;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc

@@ -1,24 +1,15 @@
 package com.mamoorie.mytraview.service;
 
-<<<<<<< HEAD
-=======
-import com.mamoorie.mytraview.entity.Article;
-import com.mamoorie.mytraview.repository.ArticleRepository;
-import org.springframework.stereotype.Service;
 
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD
 import org.springframework.stereotype.Service;
 
 import com.mamoorie.mytraview.entity.Article;
 import com.mamoorie.mytraview.repository.ArticleRepository;
 
-=======
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +20,10 @@ public class ArticleService {
 
 	final private ArticleRepository articleRepository;
 
+	public Article findArticle(Integer articleId) {
+		return articleRepository.findById(articleId).get();
+	}
+	
 	public List<Article> findAllArticles() {
 		return articleRepository.findAll();
 	}
@@ -83,10 +78,6 @@ public class ArticleService {
 			throw new RuntimeException("PostEntity는 null 허용 불가");
 		}
 
-	};
+	}
+}
 
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc

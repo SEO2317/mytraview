@@ -1,15 +1,8 @@
 package com.mamoorie.mytraview.controller;
 
 import java.util.List;
-<<<<<<< HEAD
 
 import org.springframework.http.ResponseEntity;
-=======
-import java.util.regex.Pattern;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,10 +111,5 @@ public class PlaceController {
 		placeService.deletePlaceInfo(placeEntity);
 	}
 	
-	
-	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
+

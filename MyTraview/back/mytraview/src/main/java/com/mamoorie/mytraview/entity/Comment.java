@@ -16,10 +16,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-<<<<<<< HEAD
-=======
-import lombok.Data;
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,12 +50,9 @@ public class Comment {
 	@JsonBackReference(value = "article-comment")
 	private Article article;
 	
-<<<<<<< HEAD
 	@Column(name = "COMMENT_WRITER")
 	private String writer;
-	
-=======
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
+
 	public void setUser(User user) {
 		this.user = user;
 		user.getComments().add(this);
@@ -123,11 +116,6 @@ public class Comment {
 		}
 		
 	}
-	
-	
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
+

@@ -102,9 +102,4 @@ public class Bookmark {
 		}
 		
 	}
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2f2ff1ef94e845f45563caae9f35f5a2eb2476cc
