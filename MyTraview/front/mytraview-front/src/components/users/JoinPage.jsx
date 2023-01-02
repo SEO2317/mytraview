@@ -1,4 +1,4 @@
-import alertGradient from '@material-tailwind/react/theme/components/alert/alertGradient'
+// import alertGradient from '@material-tailwind/react/theme/components/alert/alertGradient' // 메터리얼-테일윈드
 import React, { useState } from 'react'
 
 const JoinPage = () => {

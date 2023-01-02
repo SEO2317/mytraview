@@ -72,10 +72,10 @@ public class User {
     private List<Bookmark> bookmarks;
     
     @OneToMany(mappedBy = "user")
-	@JsonManagedReference(value =  "user-liked")
-    private List<Liked> likeds;
+	@JsonManagedReference(value =  "user-heart")
+    private List<Heart> hearts;
 
-//    private List<Article> likedArticles;
+//    private List<Article> heartArticles;
 
     @Setter
     @Getter
@@ -95,7 +95,7 @@ public class User {
         private List<Article> articles;
         private List<Comment> comments;
         private List<Bookmark> bookmarks;
-        private List<Liked> likeds;
+        private List<Heart> hearts;
 
 	    public static User toEntity(final Request request) {
 	        return User.builder()
@@ -107,7 +107,7 @@ public class User {
 	                .name(request.getName())
 	                .role(request.getRole())
 	                .profileImg(request.getProfileImg())
-	                .likeds(request.getLikeds())
+	                .hearts(request.getHearts())
 	                .bookmarks(request.getBookmarks())
 	                //TODO: 토큰 처리
 	                .token(request.getToken())
@@ -133,7 +133,7 @@ public class User {
         private List<Article> articles;
         private List<Comment> comments;
         private List<Bookmark> bookmarks;
-        private List<Liked> likeds;
+        private List<Heart> hearts;
 
         private String resMessage;
         
@@ -148,7 +148,7 @@ public class User {
 	        		.articles(user.getArticles())
 	        		.comments(user.getComments())
 	        		.bookmarks(user.getBookmarks())
-	        		.likeds(user.getLikeds())
+	        		.hearts(user.getHearts())
 	                .build();
 	    }
 	

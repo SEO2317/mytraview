@@ -52,6 +52,9 @@ public class Comment {
 	
 	@Column(name = "COMMENT_WRITER")
 	private String writer;
+	
+	@Column(name = "COMMENT_ARTICLE_ID")
+	private Integer articleId; // 임시추가
 
 	public void setUser(User user) {
 		this.user = user;
@@ -74,6 +77,8 @@ public class Comment {
 		private User user;
 		private Article article;
 		private Integer parentId;
+		private Integer articleId; // 임시추가
+		private String writer;
 		
 		public static Comment toEntity(Comment.Request req) {
 			return Comment.builder()
@@ -82,6 +87,8 @@ public class Comment {
 					.article(req.getArticle())
 					.content(req.getContent())
 					.parentId(req.getParentId())
+					.articleId(req.getArticleId()) // 임시추가
+					.writer(req.getWriter())
 					.build();
 		}
 		
@@ -97,12 +104,16 @@ public class Comment {
 		private Integer id;
 		private String content;
 		private Integer parentId;
+		private Integer articleId; // 임시추가
+		private String writer; // 임시추가
 		
 		public static Comment.Response toResponse(Comment commentEntity){
 			return Comment.Response.builder()
 					.id(commentEntity.getId())
 					.content(commentEntity.getContent())
 					.parentId(commentEntity.getParentId())
+					.articleId(commentEntity.getArticleId()) // 임시추가
+					.writer(commentEntity.getWriter())
 					.build();
 		}
 		

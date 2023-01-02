@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { API_BASE_URL } from '../../api_config/ApiBaseUrl';
 import { call } from '../../api_config/ApiService';
-import { Select, Option } from "@material-tailwind/react";
+import { MenuItem, Select } from '@mui/material'; // 메터리얼-테일윈드
 const { kakao } = window;
 
 const Map = () => {
@@ -451,27 +451,27 @@ const Map = () => {
       <div id="retrieve" onClick={retrieveResponse}>조회하기</div>
       <div id="api" className='w-72'>
         <Select label="Request Api">
-          <Option onClick={selectedLatLng}>마지막으로 선택한 위도 경도 및 지번 주소</Option>
-          <Option onClick={savePlace}>해당 위치 위도 경도 저장하기</Option>
-          <Option onClick={() => { retrieveByCategory(category); console.log(category); }}>카테고리로 모든 위도 경도 조회하기</Option>
+          <MenuItem onClick={selectedLatLng}>마지막으로 선택한 위도 경도 및 지번 주소</MenuItem>
+          <MenuItem onClick={savePlace}>해당 위치 위도 경도 저장하기</MenuItem>
+          <MenuItem onClick={() => { retrieveByCategory(category); console.log(category); }}>카테고리로 모든 위도 경도 조회하기</MenuItem>
         </Select>
       </div>
       <div id="category" className='w-72'>
         <Select label="카테고리">
-          <Option onClick={() => { setCategory("관광"); console.log("관광"); }}>관광</Option>
-          <Option onClick={() => { setCategory("레져"); console.log("레저"); }}>레져</Option>
-          <Option onClick={() => { setCategory("여행"); console.log("여행"); }}>여행</Option>
-          <Option onClick={() => { setCategory("식당"); console.log("식당"); }}>식당</Option>
-          <Option onClick={() => { setCategory("테스트"); console.log("테스트"); }}>테스트</Option>
+          <MenuItem onClick={() => { setCategory("관광"); console.log("관광"); }}>관광</MenuItem>
+          <MenuItem onClick={() => { setCategory("레져"); console.log("레저"); }}>레져</MenuItem>
+          <MenuItem onClick={() => { setCategory("여행"); console.log("여행"); }}>여행</MenuItem>
+          <MenuItem onClick={() => { setCategory("식당"); console.log("식당"); }}>식당</MenuItem>
+          <MenuItem onClick={() => { setCategory("테스트"); console.log("테스트"); }}>테스트</MenuItem>
         </Select>
       </div>
       <div id="rating" className='w-72'>
         <Select label="별점">
-          <Option onClick={() => { setRating(1) }}>1</Option>
-          <Option onClick={() => { setRating(2) }}>2</Option>
-          <Option onClick={() => { setRating(3) }}>3</Option>
-          <Option onClick={() => { setRating(4) }}>4</Option>
-          <Option onClick={() => { setRating(5) }}>5</Option>
+          <MenuItem onClick={() => { setRating(1) }}>1</MenuItem>
+          <MenuItem onClick={() => { setRating(2) }}>2</MenuItem>
+          <MenuItem onClick={() => { setRating(3) }}>3</MenuItem>
+          <MenuItem onClick={() => { setRating(4) }}>4</MenuItem>
+          <MenuItem onClick={() => { setRating(5) }}>5</MenuItem>
         </Select>
       </div>
       <div id="retrieveByCategory" style={{ width: "300px", display: "flex", justifyContent: "space-between" }}>

@@ -27,25 +27,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table
-public class Liked {
+@Table(name = "HEART")
+public class Heart {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "LIKED_ID")
+	@Column(name = "HEART_ID")
 	private Integer id;
 	
-	@Column(name = "LIKED_ARTICLE_ID")
+	@Column(name = "HEART_ARTICLE_ID")
 	private Integer articleId;
 	
 	@ManyToOne
 	@JoinColumn
-	@JsonBackReference(value = "user-liked")
+	@JsonBackReference(value = "user-heart")
 	private User user;
 
 	public void setUser(User user) {
 		this.user = user;
-		user.getLikeds().add(this);
+		user.getHearts().add(this);
 	}
 	
 	@Data
@@ -58,8 +58,8 @@ public class Liked {
 		private Integer articleId;
 		private User user;
 		
-		public static Liked toEntity(Liked.Request req) {
-			return Liked.builder()
+		public static Heart toEntity(Heart.Request req) {
+			return Heart.builder()
 					.id(req.getId())
 					.articleId(req.getArticleId())
 					.user(req.getUser())
@@ -76,19 +76,19 @@ public class Liked {
 		private Integer id;
 		private Integer articleId;
 		
-		public static Liked.Response toResponse(Liked liked) {
-			return Liked.Response.builder()
-					.id(liked.getId())
-					.articleId(liked.getArticleId())
+		public static Heart.Response toResponse(Heart heart) {
+			return Heart.Response.builder()
+					.id(heart.getId())
+					.articleId(heart.getArticleId())
 					.build();
 		}
 		
-		public static List<Liked.Response> toResponseList(List<Liked> likeds) {
-			List<Liked.Response> likedList = new ArrayList<Liked.Response>();
-			for (Liked liked : likeds) {
-				likedList.add(Liked.Response.toResponse(liked));
+		public static List<Heart.Response> toResponseList(List<Heart> hearts) {
+			List<Heart.Response> heartList = new ArrayList<Heart.Response>();
+			for (Heart heart : hearts) {
+				heartList.add(Heart.Response.toResponse(heart));
 			}
-			return likedList;
+			return heartList;
 		}
 		
 	}

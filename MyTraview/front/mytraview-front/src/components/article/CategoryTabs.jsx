@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import {
-    Tabs,
-    TabsHeader,
-    TabsBody,
-    Tab,
-    TabPanel,
-} from "@material-tailwind/react";
+// import {
+//     Tabs,
+//     TabsHeader,
+//     TabsBody,
+//     Tab,
+//     TabPanel,
+// } from "@material-tailwind/react"; // 메터리얼-테일윈드
 import ListTable from './ListTable';
 import Map from '../map/Map';
+import { Tab, Tabs } from '@mui/material';
 
 const CategoryTabs = (props) => {
     // console.log('TagTabs', props.areaCode);
@@ -63,27 +64,26 @@ const CategoryTabs = (props) => {
     return (
         <>
         <div>{props.areaCode}</div>
-        <Tabs value="html">
-            <TabsHeader>
+        {/* <Tabs value="html">
+            <div>
                 {data.map(({ category }) => (
                     <Tab key={category} value={category} onClick={() => { headerOnClick(category) }}>
                         {category}
                     </Tab>
                 ))}
-            </TabsHeader>
-            <TabsBody>
+            </div>
+            <div>
                 {data.map(({ category }) => (
-                    <TabPanel key={category} value={category}>
-                        {/* 카카오 지도 추가 */}
-                        <div>카카오 지도</div>
+                    <Tab key={category} value={category}>
+                        //카카오 지도 추가
+                        //<div>카카오 지도</div>
                             <Map />
                         <div>{text}</div>
-                        {/* <ListTable tag={category} /> */}
-                    </TabPanel>
+                        <ListTable tag={category} />
+                    </Tab>
                 ))}
-            </TabsBody>
-        </Tabs>
-        <button onClick={test}>테스트</button>
+            </div>
+        </Tabs> */}
         </>
     );
 }

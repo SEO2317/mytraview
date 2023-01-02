@@ -5,9 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@material-tailwind/react": "^1.2.4",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.0",
+    "@mui/material": "^5.11.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -50,5 +49,5 @@
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4"
   },
-  "proxy": "https://dapi.kakao.com/v2/local/search/address"
+  "proxy": "http://localhost:8100"
 }

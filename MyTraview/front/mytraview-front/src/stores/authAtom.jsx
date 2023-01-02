@@ -1,5 +1,5 @@
 
-import { atom, Atom } from 'jotai'
+import { atom } from 'jotai'
 
 // const authAtom = atom(기본값);
 const authAtom = atom({ // atom 생성

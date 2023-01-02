@@ -1,7 +1,7 @@
 import React from 'react'
 import CategoryTabs from '../components/article/CategoryTabs'
 import { Link, useLocation } from 'react-router-dom'
-import { Button } from '@material-tailwind/react'
+import { Button } from '@mui/material' // 메터리얼-테일윈드
 
 const ArticleListPage = (props) => {
   const location = useLocation()
@@ -12,11 +12,11 @@ const ArticleListPage = (props) => {
 
   return (
     <>
-    <div onClick={() =>console.log(areaCode)}>ArticleListPage</div>
-    <Link to="/">
-        <Button>홈페이지</Button>
+      <div onClick={() => console.log(areaCode)}>ArticleListPage</div>
+      <Link to="/">
+        <button>홈페이지</button>
       </Link>
-    <CategoryTabs areaCode={areaCode} />
+      <CategoryTabs areaCode={areaCode} />
     </>
   )
 }

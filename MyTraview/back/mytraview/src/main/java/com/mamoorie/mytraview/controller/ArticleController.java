@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("article")
-//@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:5500"})
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3100")
 public class ArticleController {
@@ -49,10 +48,11 @@ public class ArticleController {
 	
 	// 'GET' http://localhost:8100/article
 	@GetMapping
-	public List<Article.Response> findAllArticles() {
+	public ResponseEntity<?> findAllArticles() {
 		System.out.println("GET: findAllArticles() of ArticleController called");		
 		List<Article> articleList = articleService.findAllArticles();
-		return Article.Response.toResponseList(articleList);
+		List<Article.Response> res = Article.Response.toResponseList(articleList);
+				return ResponseEntity.ok().body(res);
 	}
 	
 	// 'GET' http://localhost:8100/article/list/:category

@@ -26,4 +26,10 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	List<Article> findByPlacesMapXAndPlacesMapYAndPlacesPlaceName(Double mapX, Double mapY, String placeName);
 
 	List<Article> findAllByWriter(String writer);
+	
+//	Article findByArticleId(Integer id); // 임시추가
+//	List<Article> findByWriter(String writer); // 임시추가
+	
+//	Article findAllById(Integer id); // 임시추가
+//	void deleteById(Integer id); // 임시추가
 }

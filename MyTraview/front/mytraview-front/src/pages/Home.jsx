@@ -1,4 +1,3 @@
-import { Button } from '@material-tailwind/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -26,31 +25,31 @@ const Home = () => {
 
   return (
     <>
-      <div>Home</div>
-      <br></br>
-      <br></br>
-      <div className='w-11 h-10 ml-8'>
-      <Link to="/ArticleListPage">
-        <Button>글목록</Button>
-      </Link>
-      </div>
-      
-      <br></br>
-      <br></br>
-      {data.map(({ areaCode }) => (
-        <Link to="/ArticleListPage" state={{ from: { areaCode } }} key={areaCode}>
-          <Button>{areaCode}</Button>
+
+      <div className="text-center">Home
+        <br />
+        <br />
+
+        <Link to="/ViewAllArticles">
+          <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">글목록</button>
         </Link>
-      ))}
-      <br></br>
-      <br></br>
-      <div>
-      <Link to="/ArticleCreatePage">
-        <Button>리뷰추가</Button>
-      </Link>
-      <Link to="/ArticleInput">
-        <Button>React-Quill</Button>
-      </Link>
+        <br />
+        <br />
+        {data.map(({ areaCode }) => (
+          <Link to="/ArticleListPage" state={{ from: { areaCode } }} key={areaCode}>
+            <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">{areaCode}</button>
+          </Link>
+        ))}
+        <br></br>
+        <br></br>
+        <div>
+          <Link to="/ArticleCreatePage">
+            <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">리뷰추가</button>
+          </Link>
+          <Link to="/ArticleInput">
+            <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">React-Quill</button>
+          </Link>
+        </div>
       </div>
     </>
   )
