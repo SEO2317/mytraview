@@ -41,7 +41,7 @@ Run Application<br><br>
 &nbsp;
 서영석 - 유저 서비스 백/프론트, UI 틀 구성, css 일부<br><br>
 &nbsp;
-이동찬 - 게시글 서비스 백 전반 및 프론트 연동 일부<br><br>
+이동찬 - 게시글 서비스 백 전반 및 프론트 연동 대부분<br><br>
 </div>
 
 <div>
