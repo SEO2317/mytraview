@@ -101,7 +101,7 @@ Run Application<br><br>
 <h3>Front</h3>
 <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=black">
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
-<img src="https://img.shields.io/badge/Material-UI-007FFF?style=for-the-badge&logo=MUI&logoColor=white">
+<img src="https://img.shields.io/badge/Material UI-007FFF?style=for-the-badge&logo=MUI&logoColor=white">
 </p>
 </div>
 <div>
