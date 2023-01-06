@@ -22,7 +22,7 @@ const Modify = (props) => {
 
   const [content, setContent] = useState(props.content);
   const [commentId, setCommentId] = useState(props.commentId);
-  const [flag, setFlag] = useState(props.flag);
+  // const [flag, setFlag] = useState(false);
   
 
   // const [size, setSize] = useState(null);
@@ -35,6 +35,7 @@ const Modify = (props) => {
 
   function closeModal() {
     setIsOpen(false)
+    props.flagController(!props.flag)
   }
 
   function openModal() {
@@ -122,10 +123,6 @@ const Modify = (props) => {
                     Payment successful
                   </Dialog.Title>
                   <div className="mt-2">
-                    {/* <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p> */}
                     <input type="text" value={content} onChange={(e)=>{setContent(e.target.value)}}/>
                   </div>
 
@@ -133,14 +130,14 @@ const Modify = (props) => {
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => {updateContent(commentId); setFlag(true); closeModal()}}
+                      onClick={() => {updateContent(commentId); closeModal()}}
                     >
                       수정
                     </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => {deleteContent(commentId); setFlag(true); closeModal()}}
+                      onClick={() => {deleteContent(commentId);  closeModal()}}
                     >
                       삭제
                     </button>

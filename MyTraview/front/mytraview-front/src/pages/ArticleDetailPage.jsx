@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { call } from '../api_config/ApiService'
 import curBoardAtom from '../components/atoms/curBoardAtom'
 import Modify from '../components/comment/Modify'
+import SubComment from '../components/comment/SubComment'
 
 
 const ArticleDetailPage = () => {
@@ -23,10 +24,15 @@ const ArticleDetailPage = () => {
     const [commentContent, setCommentContent] = useState("")
     const [postSeq, setPostSeq] = useState("") // 게시글 번호(프론트 단)
     const [flag, setFlag] = useState(false);
+    const [flag2, setFlag2] = useState(false);
 
     const writeComment = (e) => {
         setCommentContent(e.target.value);
 
+    }
+
+    const flagController = (testFlag) => {
+        setFlag2(testFlag);
     }
 
     const updateArticle = () => {
@@ -131,9 +137,12 @@ const ArticleDetailPage = () => {
                 if (flag === false) {
                     setFlag(!flag)
                 }
+                if(flag2 === false){
+                    setFlag2(!flag2)
+                }
             })
             .catch(error => console.error(error))
-    }, [flag])
+    }, [flag, flag2])
 
     let [isOpen, setIsOpen] = useState(false)
 
@@ -188,16 +197,45 @@ const ArticleDetailPage = () => {
                                 <td className='pl-2 text-left text-gray-600'>작성자</td>
                                 <td className='pl-2 text-left text-gray-600'>내용</td>
                             </tr>
-                            {comments && comments.map(comment => (
+                            {/* {comments && comments.map(comment => (
                                 <tr key={comment.id} className="text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
                                     <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
                                     <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
-                                    <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flag={flag} /></td>
-
-
+                                    <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
                                 </tr>
                             )
                             )
+                            } */}
+                            {comments.replyComments===null?
+                            comments && comments.map(comment => (
+                                <tr key={comment.id} className="text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
+                                    <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
+                                    <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
+                                    <td><SubComment isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
+                                    <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
+                                </tr>
+                            )
+                            ) : 
+                            comments && comments.map(comment => (
+                                <>
+                                <tr key={comment.id} className=" text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
+                                        <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
+                                        <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
+                                        <td><SubComment isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
+                                        <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
+                                        </tr>
+                                    {comment.replyComments&&comment.replyComments.map(reply => (
+                                        <tr key={reply.id} >
+                                        <td >
+                                        <td className="pl-2 text-gray-600 text-start">{reply.writer}</td>
+                                        <td id={reply.id} className="py-4 pl-2 text-left text-gray-600">{reply.content}</td>
+                                        <td><Modify isOpen={isOpen} content={reply.content} commentId={reply.id} flagController={flagController} flag={flag2} /></td>
+                                        </td>
+                                    </tr>
+                                    ))}
+                                </>
+                                
+                                ))
                             }
                         </tbody>
                     </table>
@@ -205,7 +243,7 @@ const ArticleDetailPage = () => {
                     {/* 댓글창 끝 */}
 
                     <Link to='/ArticleUpdatePage'>
-                        <button type='modify' onClick={updateArticle} className='px-5 py-2 mx-3 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200 '>수정</button>
+                        <button type='modify' onClick={()=>{setCurBoard(article.id); updateArticle()}} className='px-5 py-2 mx-3 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200 '>수정</button>
                     </Link>
                 </div>
             </div>

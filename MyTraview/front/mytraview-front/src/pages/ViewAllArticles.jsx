@@ -51,6 +51,10 @@ const ViewAllArticles = () => {
           onChange={({ target: { value } }) => setLimit(Number(value))}
         >
           <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
         </select>
       </label>
       <div className="overflow-x-auto mt-6">
@@ -66,7 +70,7 @@ const ViewAllArticles = () => {
             </tr>
           </thead>
           <tbody className="text-sm font-normal text-gray-700">
-            {articles && articles.map(article => (
+            {articles && articles.slice(offset, offset + limit).map(article => (
               <tr key={article.id} className="hover:bg-gray-100 border-b border-gray-200 py-10" >
 
                 <td className="px-4 py-2 text-center border">{postNum++}</td>
