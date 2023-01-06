@@ -123,7 +123,7 @@ public class CommentController {
 			
 			replyComment.setCommentLevel(1);
 			
-			findComment.setReplyComment(replyComment);
+			replyComment.setReplyComment(findComment);
 			
 			Comment createReplyComment = commentRepository.save(findComment);
 			
@@ -150,13 +150,14 @@ public class CommentController {
 		
 		// 대댓글 삭제
 		@DeleteMapping("/deleteReply")
+		@Transactional
 		public ResponseEntity<?> deleteReplyComment(@RequestBody Comment.Request req){
 			
 			Comment findReplyComment = commentRepository.findById(req.getId()).get();
 			
 			commentRepository.delete(findReplyComment);
 			
-			return ResponseEntity.ok(Comment.Response.builder().content("삭제가 정상적으로 완료 되었습니다."));
+			return ResponseEntity.ok(Comment.Response.builder().content("삭제가 정상적으로 완료 되었습니다.").build());
 		}
 	
 }

@@ -47,11 +47,11 @@ public class Comment {
 	@Column(name = "COMMENT_COMMENT_LEVEL")
 	private Integer commentLevel;
 	
-	@OneToMany(mappedBy = "replyComments", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "replyComment", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "replyComment-replyComments")
 	private List<Comment> replyComments;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	@JsonBackReference(value = "replyComment-replyComments")
 	private Comment replyComment;
