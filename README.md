@@ -3,11 +3,11 @@
 <div>
  <h2>1. Getting Started</h2>
 
-<h3> FRONTEND Getting Started </h3>
+<h4> FRONTEND Getting Started </h4>
 Run the development server:
 npm start<br>
 
-<h3> BACKEND Getting Started </h3>
+<h4> BACKEND Getting Started </h4>
 Run the development server:
 Run Application<br><br>
 
@@ -15,13 +15,14 @@ Run Application<br><br>
 
 <div>
 <h2>2. Development Topic</h2>
- <P>여행 리뷰 커뮤니티</P>
+ <h4>여행 리뷰 커뮤니티</h4>
  회원가입 및 로그인하여 이용자들의 여행 후기를 남기는 게시판으로,<br>
  여행에 관련한 모든 것에 대한 리뷰를 남길 수 있습니다.<br>
  먹거리, 교통, 숙박, 관광지, 테마별 코스 등 카테고리별로 후기가 남기도록 태그를 걸어야 작성할 수 있게 만들어<br>
  모든 이용자들이 원하는 지역과 카테고리별 후기를 쉽게 찾아볼 수 있게 만들었습니다.<br><br>
 
-<p> My Traview : My Travel + Review 의 합성어로, 각 개개인의 리얼한 여행 리뷰만을 담았다는 의미입니다.</p><br>
+ <h4> My Traview :</h4>
+ My Travel + Review 의 합성어로, 각 개개인의 리얼한 여행 리뷰만을 담았다는 의미입니다.<br><br>
 </div>
 
 <div>
@@ -90,11 +91,10 @@ Run Application<br><br>
 
 - 댓글 보드 : 내용, 작성자(대댓글 기능 없음/ 배민 같이 후기에 대한 감상 정도만 남김)
 
-- 서브 포스트 : 카테고리(누르면 해당 목록 이동), 제목, 작성자, 작성일, 조회수, 내용, 댓글, 대댓글, 작성자 등급
+- 서브 포스트 : 제목, 작성자, 작성일, 조회수, 내용, 댓글
 
-- 메인 포스트 : 글번호, 제목, 작성자, 작성일(작성 시간 업로드), 조회수, 왼쪽이나 오른쪽에 카테고리 나열, 작성자 등급
-                         단, 작성일에 수정됨 이라는 부분이 뜨지 않도록
-                         공지사항 게시글 상단 고정
+- 메인 포스트 : 글번호, 제목, 작성자, 작성일, 조회수, 왼쪽이나 오른쪽에 카테고리 나열,<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;공지사항 게시글 상단 고정
 
 - 카테고리 별로 api 다르게 해서 항목별로 뜨도록<br><br>
 
