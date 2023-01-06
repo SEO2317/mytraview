@@ -130,8 +130,8 @@ Run Application<br><br>
 <li>SPRING - 4.0.0</li>
 <li>ECLIPSE - 4.2</li>
 <li>SPRINGBOOT - 2.7.3</li>
-<li>TAILWINDCSS - 3.2.4</li>
-<li>MATERIALCSS - 5.11.2</li>
+<li>TAILWIND CSS - 3.2.4</li>
+<li>MATERIAL UI - 5.11.2</li>
 
 <div>
 <p>
