@@ -87,7 +87,7 @@ Run Application<br><br>
 <br><br>
 </div>
 <h2>7. ERD</h2>
-<img width="80%" src="https://user-images.githubusercontent.com/108639301/210914181-8467f3dd-1fc9-474b-8b20-e5259104ec64.jpg" />
+<img width="80%" src="https://user-images.githubusercontent.com/107653158/210916375-6ee28a4d-dbd9-4947-9185-1a6a00486cc5.png"/>
 <br><br>
 <h2>8. Stack</h2><br>
 <li>JAVA - 11</li>
