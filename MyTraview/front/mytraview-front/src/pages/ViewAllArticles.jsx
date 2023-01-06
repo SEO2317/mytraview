@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { call } from '../api_config/ApiService';
 import curBoardAtom from '../components/atoms/curBoardAtom';
-import ArticlePaging from './ArticlePaging';
+import Pagination from '../components/article/Pagination';
 
 const ViewAllArticles = () => {
 
@@ -54,7 +54,7 @@ const ViewAllArticles = () => {
         </select>
       </label>
       <div className="overflow-x-auto mt-6">
-        <div onClick={() => {console.log( articles)}}>dddddddddddddddddddd</div>
+        {/* <div onClick={() => {console.log( articles)}}>dddddddddddddddddddd</div> */}
         <table className="table-auto border-collapse w-full">
           <thead>
             <tr className="rounded-lg text-sm font-medium text-gray-700 text-left text-[0.9674rem]">
@@ -90,7 +90,7 @@ const ViewAllArticles = () => {
             ))}
           </tbody>
         </table>
-        <ArticlePaging
+        <Pagination
           total={articles.length}
           limit={limit}
           page={page}

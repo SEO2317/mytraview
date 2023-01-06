@@ -9,6 +9,7 @@ const ArticleInput = () => {
     }
     
     return (
+        // 임시 editor 페이지
         <div>
           <EditorComponent value={desc} onChange={onEditorChange} />
         </div>

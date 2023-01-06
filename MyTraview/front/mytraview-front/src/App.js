@@ -1,8 +1,7 @@
 import './index.css';
 import './App.css';
-import KakaoTest from './components/map/KakaoTest';
+// import KakaoTest from './components/map/KakaoTest';
 import Map from './components/map/Map';
-import OnePage from './components/map/OnePage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ArticleListPage from './pages/ArticleListPage';
 import Home from './pages/Home';
@@ -14,15 +13,23 @@ import ArticleInput from './pages/ArticleInput';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticleUpdatePage from './pages/ArticleUpdatePage';
 import ViewAllArticles from './pages/ViewAllArticles';
-import ArticlePaging from './pages/ArticlePaging';
+import ArticlePaging from './components/article/Pagination';
+import LandingPage from './components/map/LandingPage';
+import OnePage from './components/main/OnePage';
+import SeventeenDistrict from './components/main/SeventeenDistrict';
+import Nav from './components/main/Nav';
 
 function App() {
   return (
     <>
       <BrowserRouter>
+          <Nav />
         <Routes>
           {/* 메인 페이지 */}
           <Route path="/" element={<Home />} />
+          <Route path="/Nav" element={<Nav />} />
+          <Route path = "/OnePage" element={<OnePage />}/>
+          <Route path = "/SeventeenDistrict" element={<SeventeenDistrict />}/>
           {/* 지도 관련 */}
           <Route path="/myMap" element={<Map />} />
           <Route path="/myMapArea" element={<MapArea />} />
@@ -39,6 +46,10 @@ function App() {
           <Route path="/ArticleDetailPage" element={<ArticleDetailPage />} />
           {/* 게시판 조회 */}
           <Route path="/ViewAllArticles" element={<ViewAllArticles />} />
+          <Route path = "/LoginPage" element={<LoginPage/>}/>
+          <Route path = "/JoinPage" element={<JoinPage/>}/>
+          <Route path = "/SearchMap" element={<LandingPage/>}/>
+
         </Routes>
       </BrowserRouter>
     </>

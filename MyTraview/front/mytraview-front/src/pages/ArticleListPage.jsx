@@ -3,7 +3,7 @@ import CategoryTabs from '../components/article/CategoryTabs'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@mui/material' // 메터리얼-테일윈드
 
-const ArticleListPage = (props) => {
+const ArticleListPage = () => {
   const location = useLocation()
   const { from } = location.state
   const areaCode = from.areaCode;

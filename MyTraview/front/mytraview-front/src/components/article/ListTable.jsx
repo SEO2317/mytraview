@@ -33,7 +33,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
-
+// No.	제목	작성자	작성일	조회수
 function createData(name, calories, fat, carbs, protein) {
   return {
     name,
@@ -43,6 +43,15 @@ function createData(name, calories, fat, carbs, protein) {
     protein,
   };
 }
+// function createData(name, calories, fat, carbs, protein) {
+//   return {
+//     name,
+//     calories,
+//     fat,
+//     carbs,
+//     protein,
+//   };
+// }
 
 const rows = [
   createData('Cupcake', 305, 3.7, 67, 4.3),

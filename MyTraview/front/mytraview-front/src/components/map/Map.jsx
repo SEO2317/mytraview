@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { API_BASE_URL } from '../../api_config/ApiBaseUrl';
 import { call } from '../../api_config/ApiService';
-import { MenuItem, Select } from '@mui/material'; // 메터리얼-테일윈드
 const { kakao } = window;
 
-const Map = () => {
+const Map = (props) => {
 
-  const [myMap, setMyMap] = useState();
-  const [myMarker, setMyMarKer] = useState();
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
-  const [areaCode, setAreaCode] = useState();
-  const [category, setCategory] = useState();
-  const [rating, setRating] = useState();
-  const [placeName, setPlaceName] = useState();
-  const [items, setItems] = useState();
-  const [myInfowindow, setMyInfowindow] = useState();
+  const [myMap, setMyMap] = useState('');
+  const [myMarker, setMyMarKer] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [areaCode, setAreaCode] = useState('');
+  const [category, setCategory] = useState('');
+  const [rating, setRating] = useState('');
+  const [placeName, setPlaceName] = useState('');
+  const [items, setItems] = useState('');
+  const [myInfowindow, setMyInfowindow] = useState('');
   var [markers, setMarkers] = useState([]);
-  const [myPs, setMyPs] = useState();
+  const [myPs, setMyPs] = useState('');
   // var markers = [];
+  const rate = [1,2,3,4,5];
+  const selecteCategory = ['숙박','먹거리', '교통', '관광지', '레져', '테마별 코스', '전체'];
 
+  const handleRating = (e) => {
+    setRating(e.target.value);
+  }
+
+  const handleCategory = (e) => {
+    setCategory(e.target.value)
+  }
 
   let req = {
     areaCode: areaCode,
@@ -47,7 +55,7 @@ const Map = () => {
   const retrieveByCategory = (categoryValue) => {
 
     call(`/place/retrieve4?category=${categoryValue}`, 'GET')
-    .then((res) => {
+      .then((res) => {
         removeMarker();
         for (var i = 0; i < res.length; i++) {
 
@@ -78,11 +86,13 @@ const Map = () => {
   }
 
   const removeMarker = () => {
+
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(null);
     }
     // markers = [];
   }
+
   // let removeMarker2 = () => {
   //   for (var i = 0; i < markers.length; i++) {
   //     markers.shift();
@@ -226,18 +236,18 @@ const Map = () => {
   function getListItem(index, places) {
 
     var el = document.createElement('li'),
-      itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-        '<div class="info">' +
+      itemStr = '<span className="markerbg marker_' + (index + 1) + '"></span>' +
+        '<div className="info">' +
         '   <h5>' + places.place_name + '</h5>';
 
     if (places.road_address_name) {
       itemStr += '    <span>' + places.road_address_name + '</span>' +
-        '   <span class="jibun gray">' + places.address_name + '</span>';
+        '   <span className="jibun gray">' + places.address_name + '</span>';
     } else {
       itemStr += '    <span>' + places.address_name + '</span>';
     }
 
-    itemStr += '  <span class="tel">' + places.phone + '</span>' +
+    itemStr += '  <span className="tel">' + places.phone + '</span>' +
       '</div>';
 
     el.innerHTML = itemStr;
@@ -352,16 +362,12 @@ const Map = () => {
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
     // 키워드로 장소를 검색합니다
-    searchPlaces();
+    // searchPlaces();
 
     // 지도에 마커를 표시합니다
     marker.setMap(kakaoMap);
     setMyMarKer(marker);
     setMyInfowindow(infowindow);
-
-
-    // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-    kakao.maps.event.addListener(kakaoMap,'click', function (mouseEvent) {
     setMyPs(ps);
 
 
@@ -375,8 +381,8 @@ const Map = () => {
           var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
           detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
-          var content = '<div class="bAddr">' +
-            '<span class="title">법정동 주소정보</span>' +
+          var content = '<div className="bAddr">' +
+            '<span className="title">법정동 주소정보</span>' +
             detailAddr +
             '</div>';
           // 클릭한 위도, 경도 정보를 가져옵니다 
@@ -426,66 +432,69 @@ const Map = () => {
 
   return (
     <>
+    <div id="retrieveByCategory" style={{ width: "300px", display: "flex", justifyContent: "space-between" }}>
+        <button onClick={() => { retrieveByCategory("숙박"); console.log("숙박"); }}>숙박</button>
+        <button onClick={() => { retrieveByCategory("먹거리"); console.log("먹거리"); }}>먹거리</button>
+        <button onClick={() => { retrieveByCategory("교통"); console.log("교통"); }}>교통</button>
+        <button onClick={() => { retrieveByCategory("관광지"); console.log("관광지"); }}>관광지</button>
+        <button onClick={() => { retrieveByCategory("레져"); console.log("레져");}}>레져</button>
+        <button onClick={() => { retrieveByCategory("테마별 코스");console.log("테마별 코스"); }}>테마별 코스</button>
+        <button onClick={() => { retrieveByCategory("전체");console.log("전체"); }}>전체</button>
+        <button onClick={() => { console.log(markers); }}>테스트</button>
+      </div>
+      <div>장소를 입력하세요.
+        <input type="text" onChange={(e) => {setPlaceName(e.target.value)}} />
+      </div>
       <div className="map_wrap">
+        
 
         <div id="map" style={{ width: '1000px', height: '500px' }}></div>
         <div className="hAddr">
           <span className="title">지도중심기준 행정동 주소정보</span>
           <span id="centerAddr"></span>
         </div>
-        <div id="menu_wrap" class="bg_white">
+        {/* <div id="menu_wrap" className="bg_white">
           <div className="option">
             <div>
-              <form onSubmit="searchPlaces(); return false;">
+              <form onSubmit={searchPlaces}>
                 키워드 : <input type="text" placeholder="키워드 입력" id="keyword" size="15" />
                 <button type="submit">검색하기</button>
               </form>
             </div>
           </div>
 
-          <ul id="placesList"></ul>
+          <div id="placesList"></div>
           <div id="pagination"></div>
-        </div>
+        </div> */}
       </div>
+      
 
       <div id="retrieve" onClick={retrieveResponse}>조회하기</div>
       <div id="api" className='w-72'>
-        <Select label="Request Api">
-          <MenuItem onClick={selectedLatLng}>마지막으로 선택한 위도 경도 및 지번 주소</MenuItem>
-          <MenuItem onClick={savePlace}>해당 위치 위도 경도 저장하기</MenuItem>
-          <MenuItem onClick={() => { retrieveByCategory(category); console.log(category); }}>카테고리로 모든 위도 경도 조회하기</MenuItem>
-        </Select>
+          <div className="items-center w-full h-full bg-gray-100 border-4 rounded-md resize-none mb-9" onClick={selectedLatLng}>마지막으로 선택한 위도 경도 및 지번 주소</div>
+          <div className="items-center w-full h-full bg-gray-100 border-4 rounded-md resize-none mb-9" onClick={savePlace}>해당 위치 위도 경도 저장하기</div>
+          <div className="items-center w-full h-full bg-gray-100 border-4 rounded-md resize-none mb-9" onClick={() => { retrieveByCategory(category); console.log(category); }}>카테고리로 모든 위도 경도 조회하기</div>
       </div>
-      <div id="category" className='w-72'>
-        <Select label="카테고리">
-          <MenuItem onClick={() => { setCategory("관광"); console.log("관광"); }}>관광</MenuItem>
-          <MenuItem onClick={() => { setCategory("레져"); console.log("레저"); }}>레져</MenuItem>
-          <MenuItem onClick={() => { setCategory("여행"); console.log("여행"); }}>여행</MenuItem>
-          <MenuItem onClick={() => { setCategory("식당"); console.log("식당"); }}>식당</MenuItem>
-          <MenuItem onClick={() => { setCategory("테스트"); console.log("테스트"); }}>테스트</MenuItem>
-        </Select>
+      <div id="category" className="w-full py-4 text-sm text-left text-gray-900 border-t-4 px-30">카테고리
+        <select onChange={handleCategory} value={category}>
+          {selecteCategory&&selecteCategory.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
       </div>
-      <div id="rating" className='w-72'>
-        <Select label="별점">
-          <MenuItem onClick={() => { setRating(1) }}>1</MenuItem>
-          <MenuItem onClick={() => { setRating(2) }}>2</MenuItem>
-          <MenuItem onClick={() => { setRating(3) }}>3</MenuItem>
-          <MenuItem onClick={() => { setRating(4) }}>4</MenuItem>
-          <MenuItem onClick={() => { setRating(5) }}>5</MenuItem>
-        </Select>
+      <div id="rating" className="w-full py-4 text-sm text-left text-gray-900 border-t-4 px-30">별점
+        <select onChange={handleRating} value={rating}>
+          {rate&&rate.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
       </div>
-      <div id="retrieveByCategory" style={{ width: "300px", display: "flex", justifyContent: "space-between" }}>
-        <button onClick={() => { retrieveByCategory("관광"); console.log("관광"); }}>관광</button>
-        <button onClick={() => { retrieveByCategory("레져"); console.log("레져"); }}>레져</button>
-        <button onClick={() => { retrieveByCategory("여행"); console.log("여행"); }}>여행</button>
-        <button onClick={() => { retrieveByCategory("식당"); console.log("식당"); }}>식당</button>
-        <button onClick={() => { retrieveByCategory("테스트"); }}>테스트</button>
-        <button onClick={() => { console.log(markers); }}>테스트</button>
-      </div>
-
     </>
   )
-})
 }
 
 export default Map

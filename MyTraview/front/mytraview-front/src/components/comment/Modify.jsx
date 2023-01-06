@@ -11,14 +11,19 @@ import { Fragment, useState } from "react";
 import Map from '../map/Map';
 import { Dialog, Transition } from '@headlessui/react';
 import LandingPage from '../map/LandingPage';
+import { call } from '../../api_config/ApiService';
 // import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const TagList = ({category}) => {
+const Modify = (props) => {
 
+  const [content, setContent] = useState(props.content);
+  const [commentId, setCommentId] = useState(props.commentId);
+  const [flag, setFlag] = useState(props.flag);
+  
 
   // const [size, setSize] = useState(null);
   // const [rows, setRows] = useState([]);
@@ -36,20 +41,53 @@ const TagList = ({category}) => {
     setIsOpen(true)
   }
 
-  let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(props.isOpen)
+
+  const updateContent = (idOfComment) => {
+    
+    const req = {
+      id: idOfComment,
+      writer: "Alex",
+      content: content
+    }
+    
+    call("/comment", "PUT", req)
+    .then((res)=>{
+      console.log(res);
+    })
+    .catch((res)=>
+    {
+      console.log(res);
+    })
+  }
+
+  const deleteContent = (idOfComment) => {
+    const req = {
+      id: idOfComment,
+      writer: "Alex"
+    }
+
+    call("/comment","DELETE", req)
+    .then((res)=>{
+      console.log(res);
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+
+  }
 
   return (
     <>
-      <div className="fixed bottom-5 right-0 flex items-center justify-end mr-56">
       
         <button
           type="button"
           onClick={openModal}
           className="rounded-md bg-black bg-opacity-80 px-4 py-2 text-sm font-medium border-2 text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
-          +
+          수정
         </button>
-      </div>
+  
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -88,16 +126,23 @@ const TagList = ({category}) => {
                       Your payment has been successfully submitted. We’ve sent
                       you an email with all of the details of your order.
                     </p> */}
-                    <LandingPage/>
+                    <input type="text" value={content} onChange={(e)=>{setContent(e.target.value)}}/>
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={() => {updateContent(commentId); setFlag(true); closeModal()}}
                     >
-                      Got it, thanks!
+                      수정
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => {deleteContent(commentId); setFlag(true); closeModal()}}
+                    >
+                      삭제
                     </button>
                   </div>
                 </Dialog.Panel>
@@ -185,4 +230,4 @@ const TagList = ({category}) => {
   );
 }
 
-export default TagList
+export default Modify

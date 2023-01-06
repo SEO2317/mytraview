@@ -13,6 +13,7 @@ const ArticleCreatePage = () => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [curBoard, setCurBoard] = useAtom(curBoardAtom);
+  const [category, setCategory] = useState('');
 
 
   // const [desc, setDesc] = useState('') // react-quill 에디터 변수
@@ -33,6 +34,7 @@ const ArticleCreatePage = () => {
 
     title: title,
     content: content
+
   }
   const handleCreate = () => {
     call("/article", "POST", req)
@@ -42,7 +44,9 @@ const ArticleCreatePage = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
+
+      // call("/place", "POST", )
   }
 
   return (
@@ -57,12 +61,12 @@ const ArticleCreatePage = () => {
             
           </div>
           <br></br>
-            <div className="items-center text-gray-700 bg-gray-100 rounded-md resize-none mb-9 text-center opacity-80">
+            <div className="items-center text-center text-gray-700 bg-gray-100 rounded-md resize-none mb-9 opacity-80">
               <EditorComponent value={content} onChange={writeContent}/>
             </div>
             <br></br>
             <br></br>
-          <TagList />
+          <TagList category={category}/>
           <Link to='/ArticleDetailPage'>
             <button type='create' onClick={handleCreate} className='float-right px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300'>저장하기</button>
           </Link>

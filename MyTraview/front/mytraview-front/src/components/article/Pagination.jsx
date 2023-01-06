@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const ArticlePaging = ({ total, limit, page, setPage }) => {
+const Pagination = ({ total, limit, page, setPage }) => {
   const numPages = Math.ceil(total / limit);
   
 // const Button = styled.button`
@@ -97,4 +97,4 @@ const ArticlePaging = ({ total, limit, page, setPage }) => {
 //   }
 // `;
 
-export default ArticlePaging
+export default Pagination
