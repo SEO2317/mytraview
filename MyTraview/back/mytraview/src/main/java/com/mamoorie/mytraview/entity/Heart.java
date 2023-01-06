@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,10 @@ public class Heart {
 	@Column(name = "HEART_ARTICLE_ID")
 	private Integer articleId;
 	
-	@ManyToOne
+	@Column(name = "HEART_EMAIL")
+	private String email;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	@JsonBackReference(value = "user-heart")
 	private User user;
@@ -56,12 +60,14 @@ public class Heart {
 		
 		private Integer id;
 		private Integer articleId;
+		private String email;
 		private User user;
 		
 		public static Heart toEntity(Heart.Request req) {
 			return Heart.builder()
 					.id(req.getId())
 					.articleId(req.getArticleId())
+					.email(req.getEmail())
 					.user(req.getUser())
 					.build();
 		}
@@ -75,11 +81,13 @@ public class Heart {
 		
 		private Integer id;
 		private Integer articleId;
+		private String email;
 		
 		public static Heart.Response toResponse(Heart heart) {
 			return Heart.Response.builder()
 					.id(heart.getId())
 					.articleId(heart.getArticleId())
+					.email(heart.getEmail())
 					.build();
 		}
 		

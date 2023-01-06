@@ -109,7 +109,7 @@ public class User {
 	                .profileImg(request.getProfileImg())
 	                .hearts(request.getHearts())
 	                .bookmarks(request.getBookmarks())
-	                //TODO: 토큰 처리
+	                //TODO: �넗�겙 泥섎━
 	                .token(request.getToken())
 	                .build();
 	    }

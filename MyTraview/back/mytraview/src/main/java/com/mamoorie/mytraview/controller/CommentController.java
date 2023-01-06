@@ -80,7 +80,7 @@ public class CommentController {
 
 			Comment updatedComment = commentRepository.findById(req.getId()).get();
 
-			if (updatedComment.getWriter().equals(req.getWriter())) {
+			if (updatedComment.getWriter().equals(updatedComment.getWriter())) {
 
 				commentService.updateComment(req);
 				Comment.Response res = Comment.Response.toResponse(updatedComment);
@@ -97,7 +97,7 @@ public class CommentController {
 
 			Comment findComment = commentRepository.findById(req.getId()).get();
 
-			if (findComment.getWriter().equals(req.getWriter())) {
+			if (findComment.getWriter().equals(findComment.getWriter())) {
 
 //			Comment comment = Comment.Request.toEntity(req);
 
@@ -111,6 +111,52 @@ public class CommentController {
 			}
 
 			return ResponseEntity.badRequest().body("해당 댓글 작성자만 이 요청을 할 수 있습니다.");
+		}
+		
+		// 대댓글 생성
+		@PostMapping("/createReply")
+		public ResponseEntity<?> createReplyComment(@RequestBody Comment.Request req){
+			
+			Comment replyComment = Comment.Request.toEntity(req);
+			
+			Comment findComment = commentRepository.findById(req.getParentId()).get();
+			
+			replyComment.setCommentLevel(1);
+			
+			findComment.setReplyComment(replyComment);
+			
+			Comment createReplyComment = commentRepository.save(findComment);
+			
+			return ResponseEntity.ok(Comment.Response.toResponse(createReplyComment));
+			
+		}
+		
+		// 대댓글 수정
+		@PutMapping("/updateReply")
+		public ResponseEntity<?> updateReplyComment(@RequestBody Comment.Request req){
+			
+			Comment findReplyComment = commentRepository.findById(req.getId()).get();
+			
+			findReplyComment.setContent(req.getContent());
+			
+			Comment updateReplyComment = commentRepository.save(findReplyComment);
+			
+			Comment.Response res = Comment.Response.toResponse(updateReplyComment);
+			
+			return ResponseEntity.ok(res);
+			
+		}
+		
+		
+		// 대댓글 삭제
+		@DeleteMapping("/deleteReply")
+		public ResponseEntity<?> deleteReplyComment(@RequestBody Comment.Request req){
+			
+			Comment findReplyComment = commentRepository.findById(req.getId()).get();
+			
+			commentRepository.delete(findReplyComment);
+			
+			return ResponseEntity.ok(Comment.Response.builder().content("삭제가 정상적으로 완료 되었습니다."));
 		}
 	
 }

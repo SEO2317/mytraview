@@ -3,16 +3,20 @@ package com.mamoorie.mytraview.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,6 +44,18 @@ public class Comment {
 	@Column(name = "COMMENT_PARENT_ID")
 	private Integer parentId;
 	
+	@Column(name = "COMMENT_COMMENT_LEVEL")
+	private Integer commentLevel;
+	
+	@OneToMany(mappedBy = "replyComments", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "replyComment-replyComments")
+	private List<Comment> replyComments;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn
+	@JsonBackReference(value = "replyComment-replyComments")
+	private Comment replyComment;
+	
 	@ManyToOne
 	@JoinColumn
 	@JsonBackReference(value = "user-comment")
@@ -66,6 +82,11 @@ public class Comment {
 		article.getComments().add(this);
 	}
 	
+	public void setReplyComment(Comment replyComment) {
+		this.replyComment = replyComment;
+		replyComment.getReplyComments().add(this);
+	}
+	
 	@Builder 
 	@Getter @Setter
 	@NoArgsConstructor
@@ -79,6 +100,9 @@ public class Comment {
 		private Integer parentId;
 		private Integer articleId; // 임시추가
 		private String writer;
+		private Integer commentLevel;
+		private Comment replyComment;
+		private List<Comment> replyComments;
 		
 		public static Comment toEntity(Comment.Request req) {
 			return Comment.builder()
@@ -89,6 +113,9 @@ public class Comment {
 					.parentId(req.getParentId())
 					.articleId(req.getArticleId()) // 임시추가
 					.writer(req.getWriter())
+					.commentLevel(req.getCommentLevel())
+					.replyComment(req.getReplyComment())
+					.replyComments(req.getReplyComments())
 					.build();
 		}
 		
@@ -106,6 +133,9 @@ public class Comment {
 		private Integer parentId;
 		private Integer articleId; // 임시추가
 		private String writer; // 임시추가
+		private Integer commentLevel;
+		private Comment replyComment;
+		private List<Comment> replyComments;
 		
 		public static Comment.Response toResponse(Comment commentEntity){
 			return Comment.Response.builder()
@@ -114,6 +144,9 @@ public class Comment {
 					.parentId(commentEntity.getParentId())
 					.articleId(commentEntity.getArticleId()) // 임시추가
 					.writer(commentEntity.getWriter())
+					.commentLevel(commentEntity.getCommentLevel())
+					.replyComment(commentEntity.getReplyComment())
+					.replyComments(commentEntity.getReplyComments())
 					.build();
 		}
 		

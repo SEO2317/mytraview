@@ -66,30 +66,29 @@ public class UserController {
     @GetMapping("/duplicate")
     public ResponseEntity<?> checkDuplicateEmail(@RequestParam String email) {
 
-        log.warn("중복된 이메일 확인:" + email);
+        log.warn("以묐났�맂 �씠硫붿씪 �솗�씤:" + email);
 
         if (userRepository.existsByEmail(email)) {
 
-            log.warn("checkDuplicatedEmail message: 이메일이 이미 존재합니다");
+            log.warn("checkDuplicatedEmail message: �씠硫붿씪�씠 �씠誘� 議댁옱�빀�땲�떎");
 
-            return ResponseEntity.badRequest().body("닉네임이 이미 존재합니다.");
-
+            return ResponseEntity.badRequest().body("�땳�꽕�엫�씠 �씠誘� 議댁옱�빀�땲�떎.");
         }
-
-        return ResponseEntity.ok().body("해당 이메일은 사용 가능합니다.");
+        return ResponseEntity.ok().body("�빐�떦 �씠硫붿씪�� �궗�슜 媛��뒫�빀�땲�떎.");
     }
 
 
     @GetMapping("/findAll")
     public List<User.Response> findAllUser() {
-        List<User> users = userService.findAllUser();
+
+    	List<User> users = userService.findAllUser();
 
         List<User.Response> response = User.Response.toResponseList(users);
 
         return response;
     }
 
-    @GetMapping("/find/{email}")
+    @GetMapping("/find")
     public ResponseEntity<?> findUser(@PathVariable String email) {
         if (userRepository.existsByEmail(email)) {
             User user = userService.findUser(email);
@@ -98,7 +97,7 @@ public class UserController {
 
             return ResponseEntity.ok().body(searchUser);
         } else {
-            return ResponseEntity.ok().body("검색한 이메일은 없습니다.");
+            return ResponseEntity.ok().body("寃��깋�븳 �씠硫붿씪�� �뾾�뒿�땲�떎.");
         }
 
     }
@@ -109,32 +108,32 @@ public class UserController {
 
 //        if (userRepository.existsByEmail(req.getEmail())) {
 //
-//            return ResponseEntity.badRequest().body("이메일이 이미 존재합니다.");
+//            return ResponseEntity.badRequest().body("�씠硫붿씪�씠 �씠誘� 議댁옱�빀�땲�떎.");
 //
 //        }
 
-        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-
-
-        boolean i = Pattern.matches(pattern,req.getEmail());
-        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
-        if(i==true){
-            return ResponseEntity.ok().body("알맞는 형식입니다.");
-        }
+//        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+//
+//
+//        boolean i = Pattern.matches(pattern,req.getEmail());
+//        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
+//        if(i==true){
+//            return ResponseEntity.ok().body("�븣留욌뒗 �삎�떇�엯�땲�떎.");
+//        }
 
 //        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
 //
 //        boolean i = Pattern.matches(pattern,req.getEmail());
 //        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
 //        if(!i){
-//            return ResponseEntity.ok().body("형식을 맞춰 입력하세요.");
+//            return ResponseEntity.ok().body("�삎�떇�쓣 留욎떠 �엯�젰�븯�꽭�슂.");
 //        }
 
 
         try {
 //            if (req == null || req.getPwd() == null) {
 //
-//                throw new RuntimeException("잘못된 요청입니다.");
+//                throw new RuntimeException("�옒紐삳맂 �슂泥��엯�땲�떎.");
 //
 //            }
 
@@ -150,7 +149,7 @@ public class UserController {
 
         } catch (Exception e) {
 
-            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+            return ResponseEntity.badRequest().body("�옒紐삳맂 �슂泥��엯�땲�떎.");
 
         }
 
@@ -170,15 +169,15 @@ public class UserController {
         responseData.setToken(token);
 
         return ResponseEntity.ok().body(responseData);
-//        return userRepository.findByEmail(request.());
     }
+    
     @PutMapping
-    public ResponseEntity<?> updateUser(HttpServletRequest request ,String name, @RequestBody User.Request req) {
+    public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User.Request req) {
         User searchUser = (User) userRepository.findByName(req.getName());
 
         if (userService.checkName(request, searchUser.getName())) {
 
-            req.setName(name);
+            req.setName(req.getName());
 
             List<User> user = userService.update(req, req.getEmail());
 
@@ -188,7 +187,7 @@ public class UserController {
 
         } else {
 
-            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("본인만 가능합니다.").build());
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("蹂몄씤留� 媛��뒫�빀�땲�떎.").build());
 
         }
     }
@@ -214,7 +213,7 @@ public class UserController {
             }
         } else {
 
-            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("본인만 가능합니다.").build());
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("蹂몄씤留� 媛��뒫�빀�땲�떎.").build());
 
 
         }

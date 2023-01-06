@@ -67,6 +67,7 @@ public class Article {
 	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "article-comment")
 	private List<Comment> comments;
+	
 
 	@OneToMany(mappedBy = "article")
 	@JsonManagedReference(value = "article-place")
