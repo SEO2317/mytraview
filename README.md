@@ -1,4 +1,5 @@
 # My Traview
+<br>
 
 <div>
  <h2>1. Getting Started</h2>
@@ -51,8 +52,7 @@ Run Application<br><br>
 1. 로그인/ 로그아웃/회원가입<br>
 - 유저 인증<br>
 - 아이디 중복 체크<br>
-- 이메일/폰번호(비번/아이디 잊었을 때 임시비번 전송, 광고전송)<br>
-- 집주소(현재 위치 기능 느낌) 있어야 할지 모르겠음<br>
+- 이메일/폰번호(비번/아이디 잊었을 때 임시비번 전송, 광고 전송)<br>
 - 비번 확인, 비번 보이기/안보이기, 새로고침 해도 로그인 유지<br>
 - 비회원 - 회원만 읽을 수 있는 글입니다.<br><br>
 
@@ -118,7 +118,49 @@ Run Application<br><br>
 
 <div>
 <h2>6. API Docs(with POSTMAN)</h2>
-<br><br>
+0. 사용한 Api List<br><br>
+
+1. User<br>
+- SignUp<br>
+- UserInfo<br>
+- UpdateUserInfo<br>
+- DeleteUser<br><br>
+
+
+2. Article
+- CreateArticle
+- InquireEachArticle
+- InquireArticlesByCategory
+- InquireArticleByEmail
+- InquireArticleByAreaCode
+- UpdateArticle
+- DeleteArticle<br><br>
+
+
+3. Comment
+- CreateComment
+- UpdateComment
+- DeleteComment
+- CreateReplyComment
+- UpdateReplyComment
+- DeleteReplyComment<br><br>
+
+
+4. Place
+- SavePlacesByCreaingArticle
+- InquirePlaceByPlaceName
+- InquirePlaceByAreaCode
+- InquirePlaceByMapXAndMapY
+- InquirePlaceByCategory
+- UpdatePlaceInfo
+- DeletePlaceInfo<br><br>
+
+
+5. Heart
+- ColourHeart
+- VacateHeart
+- InquireHeartsByArticle
+- InquireHeartsByEmail<br><br>
 </div>
 
 <h2>7. ERD</h2>
