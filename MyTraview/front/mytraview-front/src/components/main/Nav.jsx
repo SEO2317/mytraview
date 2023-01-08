@@ -1,7 +1,7 @@
 import { MenuOutlined } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-// import MenuItems from './MenuItems'
+import MenuItems from './MenuItems'
 
 const Nav = () => {
 
@@ -10,11 +10,13 @@ const Nav = () => {
   const showMenu = () => {
     setActive(!active)
   }
+  
+  // TO Do : 로그인 중일 때 메인페이지 상 원페이징 되는 네비바, 로그아웃 중일 때 메인페이지 상 원페이징 되는 네비바
+  // 로그인 중일 때 메인 외 모든 페이지 상 링크태그 네비바, 로그아웃 중일 때 메인 외 모든 페이지 상 링크태그 네비바
 
   return (
-    
-    <div className='top-0 flex items-center justify-between w-full text-white bg-amber-500'>
 
+    <div className='fixed flex items-center justify-between w-full p-4 text-white bg-transparent'>
 
       <div className='text-2xl font-bold text-center uppercase'>
         <h1>My <span className='block text-3xl'>Traview</span></h1>
@@ -27,20 +29,23 @@ const Nav = () => {
         </div>
 
         <ul className='hidden gap-8 p-6 uppercase md:flex bg-white/10'>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/SeventeenDistrict'>17도</Link></li>
-          <li><Link to='/ArticleCreatepage'>이벤트</Link></li>
-          <li><Link to='/viewAllArticles'>추천글</Link></li>
-          <li><Link to='/ArticleDetailPage'>About</Link></li>
-          <li><Link to='/ArticleCreatePage'>Contact</Link></li>
+          <li><a href="#s1">Home</a></li>
+          <li><a href="#s2">17도</a></li>
+          <li><a href="#s3">Best Reviews</a></li>
+          <li><a href="#s4">Event Sale</a></li>
+          <li><Link to='/SignInPage'>Sign In</Link></li>
+          <li><Link to='/SignUpPage'>Sign Up</Link></li>
+          <li><Link to='/UserMyPage'>MyPage</Link></li>
+          <li><Link to='/UserUpdateMyPage'>MyPage업데이트</Link></li>
+
         </ul>
 
-        {/* <MenuItems showMenu={showMenu} active={active} /> */}
+        <MenuItems showMenu={showMenu} active={active} />
 
       </nav>
 
     </div>
-    
+
   )
 }
 

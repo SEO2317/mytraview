@@ -1,11 +1,10 @@
-import { upload } from '@testing-library/user-event/dist/upload'
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { call } from '../api_config/ApiService'
 import curBoardAtom from '../components/atoms/curBoardAtom'
 import Modify from '../components/comment/Modify'
 import SubComment from '../components/comment/SubComment'
+// import CountHeart from '../components/heart/CountHeart'
 
 
 const ArticleDetailPage = () => {
@@ -102,20 +101,7 @@ const ArticleDetailPage = () => {
 
     } // 댓글 컴포넌트
 
-    // const updateComment = (commentId) => {
 
-    //     const req = {
-    //         id: commentId,
-    //         content: null
-    //     }
-
-    //     call("/comment", "PUT", req)
-    //         .then
-    // }
-
-    // const deleteComment = (commentId) => {
-
-    // }
 
 
 
@@ -149,7 +135,7 @@ const ArticleDetailPage = () => {
     return (
         <>
             <div className="bg-[url('/public/images/10.jpg')] opacity-80 bg-cover">
-                {/* <div onClick={() => { console.log("현재보드 수 :" + curBoard) }}></div> */}
+                <div onClick={() => { console.log("현재보드 수 :" + curBoard) }}></div>
                 <div className='max-w-2xl px-6 py-10 m-auto bg-white rounded-md'>
                     <div className="mb-6 text-2xl font-bold text-left text-gray-500 border-4">
                         <Link to="/" className='text-gray-500'>
@@ -178,6 +164,10 @@ const ArticleDetailPage = () => {
                         {/* html 강제 적용 컴포넌트 */}
                         <div dangerouslySetInnerHTML={{ __html: article.content }} />
                     </div>
+
+                    {/* 좋아요 */}
+                   {/* <CountHeart /> */}
+
                     {/* 댓글창 */}
                     <div className="mb-6">
                         <input name="message" placeholder="댓글입력" onChange={writeComment} className="resize-none focus:outline-none w-full rounded-lg p-2 text-[20px] bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400" />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import EditorComponent from './EditorComponent';
+import EditorComponent from '../components/article/EditorComponent';
 
 const ArticleInput = () => {
     const [desc, setDesc] = useState('');

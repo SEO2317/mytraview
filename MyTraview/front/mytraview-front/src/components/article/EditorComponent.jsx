@@ -62,7 +62,7 @@ class EditorComponent extends Component{
       }
     
       formats = [
-        //'font',
+        'font',
         'header',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
         'list', 'bullet', 'indent',

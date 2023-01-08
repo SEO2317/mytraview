@@ -85,17 +85,17 @@ const StyledSlider = styled(Slider)`
     <>
       <div className="text-center">Home
         <br /><br />
-        {/* ViewAllArticles */}
-        <Link to="/ViewAllArticles">
+        {/* ArticleSubListPage */}
+        <Link to="/ArticleSubListPage">
           <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">글목록</button>
         </Link>
         <br /><br />
-        {/* ArticleListPage */}
+        {/* ArticleMainListPage */}
         <StyledSlider {...settings}>
           {data.map(({ areaCode }) => (
             <div key={areaCode}>
               <div className='ml-10' style={{ width: "80%" }} >
-                <Link to="/ArticleListPage" state={{ from: { areaCode } }} >
+                <Link to="/ArticleMainListPage" state={{ from: { areaCode } }} >
                   <div className='box-content h-64 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300'>
                     <button>{areaCode}</button>
                   </div>

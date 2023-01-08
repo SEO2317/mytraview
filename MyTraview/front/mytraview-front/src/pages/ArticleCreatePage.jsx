@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Map from '../components/map/Map';
 import TagList from '../components/article/TagList';
 // import { Input } from '@material-tailwind/react'; // 메터리얼-테일윈드
-import EditorComponent from './EditorComponent';
+import EditorComponent from '../components/article/EditorComponent';
 import curBoardAtom from '../components/atoms/curBoardAtom';
 import { useAtom } from 'jotai';
 

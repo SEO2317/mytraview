@@ -4,65 +4,73 @@ import { Link } from 'react-router-dom';
 import { call } from '../api_config/ApiService';
 import curBoardAtom from '../components/atoms/curBoardAtom';
 import Pagination from '../components/article/Pagination';
-import ArticleCreateButton from '../components/main/ArticleCreateButton';
+import ArticleCreateButton from '../components/main/ArticleCreateButton'
 
-const ViewAllArticles = () => {
 
-    const [articles, setArticles] = useState([]);
-    const [_, setCurBoard] = useAtom(curBoardAtom);
-    // const [auth, setAuth] = useAtom(authAtom); 
-    const [limit, setLimit] = useState(10);
-    const [page, setPage] = useState(1);
-    const offset = (page - 1) * limit;
-    let [postNum, setPostNum] = useState(1)
+const ArticleSubListPage = () => {
 
-    // const checkUser = (e) => {
-    //     if (auth.token === null) {
-    //         e.preventDefault();
-    //         alert("로그인 후 사용 가능합니다.");
-    //     }
-    // }
+  const [articles, setArticles] = useState([]);
+  const [_, setCurBoard] = useAtom(curBoardAtom);
+  // const [auth, setAuth] = useAtom(authAtom); 
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+  let [postNum, setPostNum] = useState(1)
 
-    const viewCountIncrease = () => {
-        call("/article", "GET")
-            .then((res) => {
-                console.log(res);
-            })
-    } // 조회수 증가함수
+  // const checkUser = (e) => {
+  //     if (auth.token === null) {
+  //         e.preventDefault();
+  //         alert("로그인 후 사용 가능합니다.");
+  //     }
+  // }
 
-    useEffect(() => {
-        fetch('http://localhost:8100/article')
-            .then((response) => response.json())
-            .then((response) => {
-                console.log(response);
-                setArticles(response);
-            })
-            .catch(error => console.error(error))
-    }, [])
+  const viewCountIncrease = () => {
+    call("/article", "GET")
+      .then((res) => {
+        console.log(res);
+      })
+  } // 조회수 증가함수
 
+  useEffect(() => {
+    fetch('http://localhost:8100/article')
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        setArticles(response);
+      })
+      .catch(error => console.error(error))
+  }, [])
 
 
   return (
-    <>
-    <br /><br /><br /><br /><br />
-    <div className='px-96'>
-      <label >
-        페이지 당 표시할 게시물 수:&nbsp;
+    
+  <div className="bg-[url('/public/images/Palace.jpg')] opacity-80 bg-cover h-[100vh]">
+      <br /><br /><br /><br /><br />
+      <div className='px-96'>
+      <div className="box-content h-10 py-5 mb-2 ml-4 text-4xl font-bold text-center text-gray-200 border-4 w-60 border-x-transparent">
+        Place Name
+      </div>
+
+      <div className="box-content h-5 py-5 mb-2 ml-4 text-2xl font-bold text-center text-gray-200 border-4 border-x-transparent w-96">
+        Some desciption of the place
+      </div>
+      
+      <label className='mx-10 font-extrabold text-gray-300'>
+        {/* 페이지 당 표시할 게시물 수 :&nbsp; */}
         <select
           type="number"
           value={limit}
+          style={{font: "bold", color: "white", background: "transparent", position: "end"}}
           onChange={({ target: { value } }) => setLimit(Number(value))}
         >
           <option value="10" className="text-sm font-bold text-right text-neutral-600">10개씩</option>
           <option value="15" className="text-sm font-bold text-right text-neutral-600">15개씩</option>
           <option value="20" className="text-sm font-bold text-right text-neutral-600">20개씩</option>
-          <option value="30" className="text-sm font-bold text-right text-neutral-600">30개씩</option>
-          <option value="50" className="text-sm font-bold text-right text-neutral-600">50개씩</option>
         </select>
       </label>
 
       <div className="mt-6 overflow-x-auto">
-        <div onClick={() => {console.log( articles)}}>전체 리뷰 조회 페이지</div>
+        <div onClick={() => { console.log(articles) }}></div>
         <table className="w-full border-collapse table-auto">
           <thead>
             <tr className="rounded-lg text-sm font-medium text-gray-700 text-left text-[0.9674rem]">
@@ -78,13 +86,13 @@ const ViewAllArticles = () => {
               <tr key={article.id} className="py-10 border-b border-gray-200 hover:bg-gray-100" >
 
                 <td className="px-4 py-2 text-center border">{postNum++}</td>
- 
+
                 <td className="px-4 py-2 text-left text-gray-700 border">
                   <Link to="/ArticleDetailPage">
                     <button onClick={() => {
-                    setCurBoard(article.id);
-                    // viewCountIncrease(article.articleId)
-                  }}>{article.title}</button>
+                      setCurBoard(article.id);
+                      // viewCountIncrease(article.articleId)
+                    }}>{article.title}</button>
                   </Link>
                 </td>
 
@@ -104,16 +112,14 @@ const ViewAllArticles = () => {
           limit={limit}
           page={page}
           setPage={setPage}
+          className={{color: "white"}}
         />
-        {/* <Link to="/ArticleCreatePage" className="float-right px-5 py-2 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200">글쓰기</Link> */}
-        {/* onClick={checkUser} */}
-
         <ArticleCreateButton />
-
       </div>
       </div>
-    </>
+    </div>
+    
   )
 }
 
-export default ViewAllArticles
+export default ArticleSubListPage

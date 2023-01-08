@@ -271,12 +271,15 @@ const ListTable = (props) => {
                         scope="row"
                         padding="none"
                       >
+                        {/* 여기에다가 api 응답 집어넣을것! */}
                         {row.name}
+
                       </TableCell>
                       <TableCell align="right">{row.calories}</TableCell>
                       <TableCell align="right">{row.fat}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell>
+                      {/* 여기에다가 api 응답 집어넣을것! */}
                     </TableRow>
                   );
                 })}

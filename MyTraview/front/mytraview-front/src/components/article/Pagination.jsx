@@ -4,64 +4,8 @@ import styled from 'styled-components';
 
 const Pagination = ({ total, limit, page, setPage }) => {
   const numPages = Math.ceil(total / limit);
-  
-// const Button = styled.button`
-//   border: none;
-//   border-radius: 8px;
-//   padding: 8px;
-//   margin: 0;
-//   background: black;
-//   color: white;
-//   font-size: 1rem;
 
-//   &:hover {
-//     background: tomato;
-//     cursor: pointer;
-//     transform: translateY(-2px);
-//   }
-
-//   &[disabled] {
-//     background: grey;
-//     cursor: revert;
-//     transform: revert;
-//   }
-
-//   &[aria-current] {
-//     background: deeppink;
-//     font-weight: bold;
-//     cursor: revert;
-//     transform: revert;
-//   }
-
-  return (
-    <> 
-      <Nav>
-        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
-          &lt;
-        </Button>
-        {Array(numPages)
-          .fill()
-          .map((_, i) => (
-            <Button
-              key={i + 1}
-              onClick={() => setPage(i + 1)}
-              aria-current={page === i + 1 ? "page" : null}
-              className='font-bold'
-            >
-              {i + 1}
-            </Button>
-          ))}
-        <Button onClick={() => setPage(page + 1)} disabled={page === numPages} className=''>
-          &gt;
-        </Button>
-      </Nav>
-    </>
-  )
-}
-
-// 일단 스타일 컴포넌트는 무시하는걸로
-
-const Nav = styled.nav`
+  const Nav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,5 +41,33 @@ const Button = styled.button`
     transform: revert;
   }
 `;
+
+  return (
+    <> 
+      <Nav>
+        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
+          &lt;
+        </Button>
+        {Array(numPages)
+          .fill()
+          .map((_, i) => (
+            <Button
+              key={i + 1}
+              onClick={() => setPage(i + 1)}
+              aria-current={page === i + 1 ? "page" : null}
+              className='font-bold'
+            >
+              {i + 1}
+            </Button>
+          ))}
+        <Button onClick={() => setPage(page + 1)} disabled={page === numPages} className=''>
+          &gt;
+        </Button>
+      </Nav>
+    </>
+  )
+}
+
+
 
 export default Pagination

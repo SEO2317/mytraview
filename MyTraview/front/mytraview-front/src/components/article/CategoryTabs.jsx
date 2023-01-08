@@ -69,7 +69,7 @@ const CategoryTabs = (props) => {
             <div>카카오 지도</div>
                             <Map areaCode = {props.areaCode}/>
                         <div>{text}</div>
-                        <div><ListTable /></div>
+                        <div><ListTable areaCode = {props.areaCode}/></div>
                         {/* <ListTable tag={category} /> */}
             {/* <div className="container mx-auto">
                 <div className="flex  justify-center max-w-xl">

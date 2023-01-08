@@ -100,6 +100,7 @@ const ArticleUpdatePage = () => {
 
     return (
         <>
+            <br /><br /><br /><br /><br />
             <form>
                 <div className='max-w-2xl px-6 py-10 m-auto bg-white rounded-md'>
                     <Link to="/ArticleListPage" className="mb-6 text-2xl font-bold text-left text-gray-500 border-4">
@@ -108,13 +109,13 @@ const ArticleUpdatePage = () => {
                     <div className="mb-6 text-2xl font-bold text-left text-gray-500 border-4">잡담</div>
                     <div>
                         <div className="mb-10 text-2xl font-bold text-center text-gray-500 border-4">
-                            번호<input type="text" readOnly value={curBoard} className="px-30 py-4 text-sm w-full text-center text-gray-900 border-2" />
+                            번호<input type="text" readOnly value={curBoard} className="w-full py-4 text-sm text-center text-gray-900 border-2 px-30" />
                         </div>
                     </div>
                     <div>
                         <div className="mb-10 text-2xl font-bold text-center text-gray-500 border-4">
                             제목
-                            <input type="text" name="title" value={title} placeholder="고민을 한 마디로 알려주세요" onChange={(event) => setTitle(event.target.value)} className="px-30 py-4 text-sm w-full text-left text-gray-900 border-2" />
+                            <input type="text" name="title" value={title} placeholder="고민을 한 마디로 알려주세요" onChange={(event) => setTitle(event.target.value)} className="w-full py-4 text-sm text-left text-gray-900 border-2 px-30" />
                         </div>
                     </div>
                     <div>

@@ -1,19 +1,31 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
-import authAtom from '../../stores/authAtom'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import authAtom from '../stores/authAtom';
+const eye = <FontAwesomeIcon icon={faEye} />
 
 
-const LoginPage = () => {
+const SignInPage = () => {
   const [email, setEmail] = useState("")
   const [pw, setPw] = useState("")
   const [confirmpw, setConfirmPw] = useState("");
-  const [agrees, setAgrees] = useState(false);
-  const [duplicateCheck, setDuplicateCheck] = useState(false);
+  const [agrees, setAgrees] = useState(false)
   const [auth,setAuth] = useAtom(authAtom)
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [confirmpasswordShown, setConfirmPasswordShown] = useState(false);
+
+  const togglePasswordVisiblity1 = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
+
+  const togglePasswordVisiblity2 = () => {
+    setConfirmPasswordShown(confirmpasswordShown ? false : true);
+  };
 
 
   const changeAgrees = () => {
-    agrees === false ? setAgrees(true) : setAgrees(false);
+    agrees === false ? setAgrees(true) : setAgrees(false)
 };
 
   const ChangeEmail = e => {
@@ -140,12 +152,15 @@ const LoginPage = () => {
 
                     <div className="flex mx-4 my-8 border-b-2 border-sky-400 md:mx-2 hover:border-purple-300">
                         <label className="self-center text-gray-700 w-28">Password :</label>
-                        <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" type="password" name="pw" placeholder="비밀번호를 재입력하세요" onChange={ChangePw} required />
+                        <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" input type={passwordShown ? "text" : "password"}  name="pw" placeholder="비밀번호를 재입력하세요" onChange={ChangePw} required />
+                        <i onClick={togglePasswordVisiblity1}>{eye}</i>
                     </div>
 
                     <div className="flex mx-4 my-8 border-b-2 border-sky-400 md:mx-2 hover:border-purple-300">
                         <label className="self-center text-gray-700 w-28">Password :</label>
-                        <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" type="password" name="pw" placeholder="비밀번호를 재입력하세요" onChange={ChangeConfirmPw} required />
+                        <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" input type={confirmpasswordShown ? "text" : "password"} name="pw" placeholder="비밀번호를 재입력하세요" onChange={ChangeConfirmPw} required />
+                        <i onClick={togglePasswordVisiblity2}>{eye}</i>
+                        {/* <button onClick={toggleHidePassword}></button> */}
                     </div>
 
 
@@ -167,4 +182,4 @@ const LoginPage = () => {
         </div>
         )
 }
-export default LoginPage
+export default SignInPage

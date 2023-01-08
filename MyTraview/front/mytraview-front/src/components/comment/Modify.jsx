@@ -35,7 +35,6 @@ const Modify = (props) => {
 
   function closeModal() {
     setIsOpen(false)
-    props.flagController(!props.flag)
   }
 
   function openModal() {
