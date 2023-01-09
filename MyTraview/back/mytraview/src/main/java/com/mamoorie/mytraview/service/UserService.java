@@ -1,3 +1,4 @@
+
 package com.mamoorie.mytraview.service;
 
 
@@ -5,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -14,17 +17,6 @@ import com.mamoorie.mytraview.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import com.mamoorie.mytraview.entity.User;
-import com.mamoorie.mytraview.preferences.jwt.JwtTokenProvider;
-import com.mamoorie.mytraview.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 
 @Service
@@ -35,6 +27,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
+    
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User saveUser(User newUser){
         return userRepository.save(newUser);
@@ -44,8 +38,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findUser(String name) {
-        return userRepository.findByName(name);
+    public User findUser(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public User LoginUser(User.Request request){
@@ -61,34 +55,26 @@ public class UserService {
 
     };
 
-
-    public List<User> retrieve(final String name) {
-
-        return (List<User>) userRepository.findByName(name);
-    }
-
-    public List<User> update(final User.Request req, String email){
-        User checkUser = User.Request.toEntity(req);
-        validation(checkUser);
-        final User user = userRepository.findByEmail(email);
-        user.setPw(req.getPw());
+    public User update(String email, User.Request req){
+    	final User user = userRepository.findByEmail(email);
+        validation(user);
+        user.setPw(passwordEncoder.encode(req.getPw()));
         user.setName(req.getName());
         user.setPhone(req.getPhone());
-        userRepository.save(user);
-        return retrieve(req.getName());
+        user.setRole(req.getRole());
+        User updatedUser = userRepository.save(user);
+        return updatedUser;
     }
 
 
 
-    public List<User> delete(final String email) {
+    public void delete(final String email) {
 
         User findUser = userRepository.findByEmail(email);
 
         try {
 
-            userRepository.deleteAll();
-
-            userRepository.deleteByEmail(email);
+            userRepository.delete(findUser);
 
         } catch (Exception e) {
 
@@ -97,36 +83,21 @@ public class UserService {
             throw new RuntimeException("삭제 중 에러 발생" + email);
         }
 
-        return retrieve(findUser.getName());
     }
 
-//    public User getByCredentials(final String nickName, final String pwd, final PasswordEncoder encoder) {
-//
-//        final User originalUser = userRepository.findByNickName(nickName);
-//
-//        if(originalUser != null && encoder.matches(pwd, originalUser.getPwd())) {
-//
-//            return originalUser;
-//
-//        }
-//        return null;
-//
-//    }
+    public User getByCredentials(final String email, final String password, final PasswordEncoder encoder) {
+		final User originalUser = userRepository.findByEmail(email);
+		
+		// matches 메서드를 이용해 패스워드가 같은지 확인
+		if(originalUser != null && encoder.matches(password, originalUser.getPw())) {
+			return originalUser;
+		}
+		return null;
+		
+	}
 
 
-    public boolean checkName(HttpServletRequest request, String name) {
-        String token = parseBearerToken(request);
-//        String psName = jwtTokenProvider.validateAndGetName(token);
-        String psName = jwtTokenProvider.validateAndGetEmail(token);
-        System.out.println(psName);
-        if (psName.equals(name)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private String parseBearerToken(HttpServletRequest request) {
+    public String parseBearerToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);

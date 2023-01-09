@@ -1,29 +1,18 @@
+
 package com.mamoorie.mytraview.controller;
 
 
 import java.util.List;
-import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-//import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
-//import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
-//import com.mamoorie.mytraview.config.jwt.JwtTokenProvider;
-
-import com.mamoorie.mytraview.entity.User;
-import com.mamoorie.mytraview.preferences.jwt.JwtTokenProvider;
-import com.mamoorie.mytraview.repository.UserRepository;
-import com.mamoorie.mytraview.service.UserService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
-
 import com.mamoorie.mytraview.entity.User;
 import com.mamoorie.mytraview.preferences.jwt.JwtTokenProvider;
 import com.mamoorie.mytraview.repository.UserRepository;
@@ -41,11 +27,6 @@ import com.mamoorie.mytraview.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.regex.Pattern;
 
 
 
@@ -61,20 +42,20 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-//    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/duplicate")
     public ResponseEntity<?> checkDuplicateEmail(@RequestParam String email) {
 
-        log.warn("以묐났�맂 �씠硫붿씪 �솗�씤:" + email);
+        log.warn("중복 이메일 확인 중:" + email);
 
         if (userRepository.existsByEmail(email)) {
 
-            log.warn("checkDuplicatedEmail message: �씠硫붿씪�씠 �씠誘� 議댁옱�빀�땲�떎");
+            log.warn("checkDuplicatedEmail message: 이미 회원이 존재합니다.");
 
-            return ResponseEntity.badRequest().body("�땳�꽕�엫�씠 �씠誘� 議댁옱�빀�땲�떎.");
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("해당 이메일이 이미 존재합니다.").build());
         }
-        return ResponseEntity.ok().body("�빐�떦 �씠硫붿씪�� �궗�슜 媛��뒫�빀�땲�떎.");
+        return ResponseEntity.ok().body(User.Response.builder().resMessage("해당 이메일은 사용 가능합니다.").build());
     }
 
 
@@ -89,7 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<?> findUser(@PathVariable String email) {
+    public ResponseEntity<?> findUser(@AuthenticationPrincipal String email) {
+    	
         if (userRepository.existsByEmail(email)) {
             User user = userService.findUser(email);
 
@@ -97,7 +79,7 @@ public class UserController {
 
             return ResponseEntity.ok().body(searchUser);
         } else {
-            return ResponseEntity.ok().body("寃��깋�븳 �씠硫붿씪�� �뾾�뒿�땲�떎.");
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("전송에 실패하였습니다.").build());
         }
 
     }
@@ -106,40 +88,11 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<?> saveUser(@Valid @RequestBody User.Request req) {
 
-//        if (userRepository.existsByEmail(req.getEmail())) {
-//
-//            return ResponseEntity.badRequest().body("�씠硫붿씪�씠 �씠誘� 議댁옱�빀�땲�떎.");
-//
-//        }
-
-//        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-//
-//
-//        boolean i = Pattern.matches(pattern,req.getEmail());
-//        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
-//        if(i==true){
-//            return ResponseEntity.ok().body("�븣留욌뒗 �삎�떇�엯�땲�떎.");
-//        }
-
-//        String pattern = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
-//
-//        boolean i = Pattern.matches(pattern,req.getEmail());
-//        // log.warn(user.getEmail) == moon@dndwdnwqidnwq
-//        if(!i){
-//            return ResponseEntity.ok().body("�삎�떇�쓣 留욎떠 �엯�젰�븯�꽭�슂.");
-//        }
-
-
         try {
-//            if (req == null || req.getPwd() == null) {
-//
-//                throw new RuntimeException("�옒紐삳맂 �슂泥��엯�땲�떎.");
-//
-//            }
 
             User user = User.Request.toEntity(req);
 
-//            user.setPwd(passwordEncoder.encode(req.getPwd()));
+            user.setPw(passwordEncoder.encode(req.getPw()));
 
             User savedUser = userService.saveUser(user);
 
@@ -149,7 +102,7 @@ public class UserController {
 
         } catch (Exception e) {
 
-            return ResponseEntity.badRequest().body("�옒紐삳맂 �슂泥��엯�땲�떎.");
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("잘못된 요청입니다. 다시 한 번 확인해주세요.").build());
 
         }
 
@@ -157,8 +110,9 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<User.Response> LoginUser(@RequestBody User.Request request) {
-        User user = userRepository.findByEmailAndPw(request.getEmail(), request.getPw());
+    public ResponseEntity<User.Response> LoginUser(@RequestBody User.Request req) {
+        
+        User user = userService.getByCredentials(req.getEmail(), req.getPw(), passwordEncoder);
 
         String token = jwtTokenProvider.makeJwtToken(user);
 
@@ -172,36 +126,33 @@ public class UserController {
     }
     
     @PutMapping
-    public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User.Request req) {
-        User searchUser = (User) userRepository.findByName(req.getName());
+    public ResponseEntity<?> updateUser(@RequestBody User.Request req, @AuthenticationPrincipal String email) {
 
-        if (userService.checkName(request, searchUser.getName())) {
+        if (userRepository.existsByEmail(email)) {
 
-            req.setName(req.getName());
+            User user = userService.update(email, req);
 
-            List<User> user = userService.update(req, req.getEmail());
-
-            List<User.Response> res = User.Response.toResponseList(user);
+            User.Response res = User.Response.toResponse(user);
 
             return ResponseEntity.ok().body(res);
 
         } else {
 
-            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("蹂몄씤留� 媛��뒫�빀�땲�떎.").build());
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("잘못된 요청입니다. 다시 한 번 확인해주세요.").build());
 
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(HttpServletRequest request ,String name, @RequestBody User.Request req) {
-        User searchUser = userRepository.findByEmail(req.getEmail());
-        if (userService.checkName(request, searchUser.getName())) {
+    @Transactional
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal String email) {
+
+    	if (userRepository.existsByEmail(email)) {
             try {
-                List<User> user= userService.delete(req.getEmail());
+                userService.delete(email);
 
-                List<User.Response> res = User.Response.toResponseList(user);
 
-                return ResponseEntity.ok().body(res);
+                return ResponseEntity.ok().body(User.Response.builder().resMessage("회원탈퇴가 완료 되었습니다."));
 
             } catch (Exception e) {
 
@@ -213,7 +164,7 @@ public class UserController {
             }
         } else {
 
-            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("蹂몄씤留� 媛��뒫�빀�땲�떎.").build());
+            return ResponseEntity.badRequest().body(User.Response.builder().resMessage("해당 요청을 완료하지 못했습니다.").build());
 
 
         }

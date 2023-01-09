@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,13 +24,13 @@ import com.mamoorie.mytraview.repository.ArticleRepository;
 import com.mamoorie.mytraview.repository.CommentRepository;
 import com.mamoorie.mytraview.repository.UserRepository;
 import com.mamoorie.mytraview.service.CommentService;
+import com.mamoorie.mytraview.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("comment")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3100")
 public class CommentController {
 	
 	private final UserRepository userRepository;
@@ -40,26 +41,27 @@ public class CommentController {
 	
 	private final CommentService commentService;
 	
-	// 댓글 작성 = C
+	private final UserService userService;
+	
 		@PostMapping("/create")
-		public ResponseEntity<?> createComment(@Valid @RequestBody Comment.Request req) {
+		public ResponseEntity<?> createComment(@Valid @RequestBody Comment.Request req, @AuthenticationPrincipal String email) {
 			Comment comment = Comment.Request.toEntity(req);
 
 			Article findArticle = articleRepository.findById(comment.getArticleId()).get();
-			User findUser = userRepository.findByName(req.getWriter());
+			User findUser = userRepository.findByEmail(email);
 			comment.setUser(findUser);
 			comment.setArticle(findArticle);
-			comment.setWriter(findUser.getName()); // writer와 Name 확인용
-			comment.setArticleId(findArticle.getId()); // 임시저장
+			comment.setWriter(findUser.getName()); // writer�� Name Ȯ�ο�
+			comment.setArticleId(findArticle.getId()); // �ӽ�����
 			commentService.saveComment(comment);
 
 			Comment.Response res = Comment.Response.toResponse(comment);
 			return ResponseEntity.ok().body(res);
 		}
 
-		// 댓글 전체 조회 = R
+		// ��� ��ü ��ȸ = R
 		@GetMapping("/articleId={id}")
-		public ResponseEntity<?> getCommentList(@PathVariable Integer id) {
+		public ResponseEntity<?> getCommentList(@PathVariable Integer id, @AuthenticationPrincipal String email) {
 
 			List<Comment> comments = commentService.retrieveCommentList(id);
 			List<Comment.Response> commentList = Comment.Response.toResponseList(comments);
@@ -74,56 +76,57 @@ public class CommentController {
 			return ResponseEntity.ok().body(res);
 		}
 
-		// 댓글 수정 = U
 		@PutMapping
-		public ResponseEntity<?> updateComment(@Valid @RequestBody Comment.Request req) {
-
-			Comment updatedComment = commentRepository.findById(req.getId()).get();
-
-			if (updatedComment.getWriter().equals(updatedComment.getWriter())) {
-
-				commentService.updateComment(req);
-				Comment.Response res = Comment.Response.toResponse(updatedComment);
-				return ResponseEntity.ok().body(res);
-			}
-
-			return ResponseEntity.ok().body("해당 댓글 작성자만 이 요청을 할 수 있습니다.");
-		}
-
-		// 댓글 삭제 = D
-		@DeleteMapping
-		@Transactional
-		public ResponseEntity<?> deleteComment(@RequestBody Comment.Request req) {
+		public ResponseEntity<?> updateComment(@Valid @RequestBody Comment.Request req, @AuthenticationPrincipal String email) {
 
 			Comment findComment = commentRepository.findById(req.getId()).get();
 
-			if (findComment.getWriter().equals(findComment.getWriter())) {
+			if (!findComment.getUser().getEmail().equals(email)) {
+				
+				return ResponseEntity.badRequest().body(Comment.Response.builder().resMessage("작성자만 가능합니다.").build());
+				
+			}
+			
+				Comment updatedComment = commentService.updateComment(req);
+				
+				Comment.Response res = Comment.Response.toResponse(updatedComment);
+				
+				return ResponseEntity.ok().body(res);
 
-//			Comment comment = Comment.Request.toEntity(req);
+		}
 
+		@DeleteMapping
+		@Transactional
+		public ResponseEntity<?> deleteComment(@RequestBody Comment.Request req, @AuthenticationPrincipal String email) {
+
+			Comment findComment = commentRepository.findById(req.getId()).get();
+
+			if (!findComment.getUser().getEmail().equals(email)) {
+				return ResponseEntity.badRequest().body(Comment.Response.builder().resMessage("작성자만 가능합니다.").build());
+			}
+			
 				commentService.deleteComment(findComment);
 
-				List<Comment> updatedComments = commentService.retrieveCommentList(findComment.getArticleId());
+				return ResponseEntity.ok().body(Comment.Response.builder().resMessage("삭제 되었습니다."));
 
-				List<Comment.Response> res = Comment.Response.toResponseList(updatedComments);
-
-				return ResponseEntity.ok().body(res);
-			}
-
-			return ResponseEntity.badRequest().body("해당 댓글 작성자만 이 요청을 할 수 있습니다.");
 		}
 		
-		// 대댓글 생성
 		@PostMapping("/createReply")
-		public ResponseEntity<?> createReplyComment(@RequestBody Comment.Request req){
+		public ResponseEntity<?> createReplyComment(@RequestBody Comment.Request req, @AuthenticationPrincipal String email){
 			
 			Comment replyComment = Comment.Request.toEntity(req);
 			
 			Comment findComment = commentRepository.findById(req.getParentId()).get();
 			
+			User findUser = userService.findUser(email);
+			
+			replyComment.setUser(findUser);
+			
 			replyComment.setCommentLevel(1);
 			
 			replyComment.setReplyComment(findComment);
+			
+			replyComment.setWriter(findUser.getName());
 			
 			Comment createReplyComment = commentRepository.save(findComment);
 			
@@ -131,11 +134,16 @@ public class CommentController {
 			
 		}
 		
-		// 대댓글 수정
 		@PutMapping("/updateReply")
-		public ResponseEntity<?> updateReplyComment(@RequestBody Comment.Request req){
+		public ResponseEntity<?> updateReplyComment(@RequestBody Comment.Request req, @AuthenticationPrincipal String email){
 			
 			Comment findReplyComment = commentRepository.findById(req.getId()).get();
+			
+			String findEmail = findReplyComment.getUser().getEmail();
+			
+			if(!findEmail.equals(email)) {
+				return ResponseEntity.badRequest().body(Comment.Response.builder().resMessage("작성자만 가능합니다.").build());
+			}
 			
 			findReplyComment.setContent(req.getContent());
 			
@@ -147,17 +155,23 @@ public class CommentController {
 			
 		}
 		
-		
-		// 대댓글 삭제
 		@DeleteMapping("/deleteReply")
 		@Transactional
-		public ResponseEntity<?> deleteReplyComment(@RequestBody Comment.Request req){
+		public ResponseEntity<?> deleteReplyComment(@RequestBody Comment.Request req, @AuthenticationPrincipal String email){
 			
 			Comment findReplyComment = commentRepository.findById(req.getId()).get();
 			
+			String findEmail = findReplyComment.getUser().getEmail();
+			
+			if(!findEmail.equals(email)) {
+				return ResponseEntity.badRequest().body(Comment.Response.builder().resMessage("작성자만 가능합니다.").build());
+			}
+			
 			commentRepository.delete(findReplyComment);
 			
-			return ResponseEntity.ok(Comment.Response.builder().content("삭제가 정상적으로 완료 되었습니다.").build());
+			return ResponseEntity.ok(Comment.Response.builder().resMessage("삭제 되었습니다.").build());
 		}
+		
+		
 	
 }

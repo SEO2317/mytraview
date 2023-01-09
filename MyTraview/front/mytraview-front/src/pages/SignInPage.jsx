@@ -1,9 +1,10 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import authAtom from '../stores/authAtom';
 const eye = <FontAwesomeIcon icon={faEye} />
+const eyeSlash = <FontAwesomeIcon icon={faEyeSlash} />
 
 
 const SignInPage = () => {
@@ -52,13 +53,9 @@ const SignInPage = () => {
         alert("닉네임과 패스워드를 꼭 입력해주세요.")
     } else if (email === "") {
         alert("닉네임을 입력해주세요.")
-    } else if (confirmpw === "" || pw === "") {
+    } else if (pw === "") {
         alert("비밀번호 확인을 입력해주세요.")
-    } else if (agrees === false) {
-        alert("약관에 동의해주세요.")
-    } else if (confirmpw != pw) {
-        alert("비밀번호가 일치하지 않습니다.")
-    }
+    }  
     else {
 
     fetch('http://localhost:8100/users/login', {
@@ -153,20 +150,7 @@ const SignInPage = () => {
                     <div className="flex mx-4 my-8 border-b-2 border-sky-400 md:mx-2 hover:border-purple-300">
                         <label className="self-center text-gray-700 w-28">Password :</label>
                         <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" input type={passwordShown ? "text" : "password"}  name="pw" placeholder="비밀번호를 재입력하세요" onChange={ChangePw} required />
-                        <i onClick={togglePasswordVisiblity1}>{eye}</i>
-                    </div>
-
-                    <div className="flex mx-4 my-8 border-b-2 border-sky-400 md:mx-2 hover:border-purple-300">
-                        <label className="self-center text-gray-700 w-28">Password :</label>
-                        <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" input type={confirmpasswordShown ? "text" : "password"} name="pw" placeholder="비밀번호를 재입력하세요" onChange={ChangeConfirmPw} required />
-                        <i onClick={togglePasswordVisiblity2}>{eye}</i>
-                        {/* <button onClick={toggleHidePassword}></button> */}
-                    </div>
-
-
-                    <div className="flex mx-4 my-8 border-b-2 border-sky-400 md:mx-2 hover:border-purple-300">
-                        <label className="self-center text-gray-700 w-28">agrees :</label>
-                        <input className="w-full py-3 pl-2 bg-transparent border-0 placeholder-slate-400 focus:placeholder-transparent md:pl-6 focus:outline-none" type="checkbox" name="agrees" placeholder="약관 동의해주세요" onChange={changeAgrees} required />
+                        <i onClick={togglePasswordVisiblity1}>{passwordShown===true ? eye : eyeSlash }</i>
                     </div>
                 </div>
                 

@@ -14,10 +14,9 @@ const Nav = () => {
   // TO Do : 로그인 중일 때 메인페이지 상 원페이징 되는 네비바, 로그아웃 중일 때 메인페이지 상 원페이징 되는 네비바
   // 로그인 중일 때 메인 외 모든 페이지 상 링크태그 네비바, 로그아웃 중일 때 메인 외 모든 페이지 상 링크태그 네비바
 
-  
   return (
 
-    <div className='top-0 fixed flex items-center justify-between w-full p-4 text-white bg-transparent' style={{zIndex: 9999}}>
+    <div className='fixed flex items-center justify-between w-full p-4 text-white bg-transparent'>
 
       <div className='text-2xl font-bold text-center uppercase'>
         <h1>My <span className='block text-3xl'>Traview</span></h1>

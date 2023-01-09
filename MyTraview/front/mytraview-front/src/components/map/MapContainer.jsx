@@ -262,6 +262,7 @@ const MapContainer = ({ searchPlace }) => {
         <ul id="placesList"></ul>
         <div id="pagination"></div>
       </div>
+      <div className='mt-4'>ddd</div>
     </div>
   )
 }

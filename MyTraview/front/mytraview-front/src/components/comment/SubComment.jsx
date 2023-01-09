@@ -44,11 +44,24 @@ const SubComment = (props) => {
 
   let [isOpen, setIsOpen] = useState(props.isOpen)
 
-  const updateContent = (idOfComment) => {
+
+  const createReplyComment = () => {
     
     const req = {
-      id: idOfComment,
-      writer: "Alex",
+      parentId: commentId,
+      content: content
+    }
+
+    call("/comment/createReply", "POST",req)
+    .then((res) => {console.log(res);})
+    .catch((res) => {console.log(res)})
+
+  }
+
+  const updateContent = () => {
+    
+    const req = {
+      parentId: commentId,
       content: content
     }
     
@@ -86,7 +99,7 @@ const SubComment = (props) => {
           onClick={openModal}
           className="rounded-md bg-black bg-opacity-80 px-4 py-2 text-sm font-medium border-2 text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
-          대댓글
+          답글
         </button>
   
 
@@ -120,26 +133,26 @@ const SubComment = (props) => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    답글 달기
                   </Dialog.Title>
                   <div className="mt-2">
-                    <input type="text" value={content} onChange={(e)=>{setContent(e.target.value)}}/>
+                    <input type="text" onChange={(e)=>{setContent(e.target.value)}}/>
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => {updateContent(commentId); closeModal()}}
+                      onClick={() => {createReplyComment(); closeModal()}}
                     >
-                      수정
+                      작성
                     </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {deleteContent(commentId);  closeModal()}}
                     >
-                      삭제
+                      취소
                     </button>
                   </div>
                 </Dialog.Panel>

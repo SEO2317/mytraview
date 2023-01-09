@@ -16,15 +16,8 @@ const ViewAllArticles = () => {
     const offset = (page - 1) * limit;
     let [postNum, setPostNum] = useState(1)
 
-    // const checkUser = (e) => {
-    //     if (auth.token === null) {
-    //         e.preventDefault();
-    //         alert("로그인 후 사용 가능합니다.");
-    //     }
-    // }
-
-    const viewCountIncrease = () => {
-        call("/article", "GET")
+    const viewCountIncrease = (id) => {
+        call(`/article/viewCount?articleId=${id}`, "GET")
             .then((res) => {
                 console.log(res);
             })
@@ -39,8 +32,6 @@ const ViewAllArticles = () => {
             })
             .catch(error => console.error(error))
     }, [])
-
-
 
   return (
     <>
@@ -83,7 +74,7 @@ const ViewAllArticles = () => {
                   <Link to="/ArticleDetailPage">
                     <button onClick={() => {
                     setCurBoard(article.id);
-                    // viewCountIncrease(article.articleId)
+                    viewCountIncrease(article.id)
                   }}>{article.title}</button>
                   </Link>
                 </td>

@@ -1,3 +1,4 @@
+
 package com.mamoorie.mytraview.repository;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface HeartRespository extends JpaRepository<Heart, Integer> {
 	
 	List<Heart> findAllByEmail(String email);
 	List<Heart> findAllByArticleId(Integer articleId);
+	Heart findByArticleIdAndEmail(Integer articleId, String email);
 	void deleteByArticleIdAndEmail(Integer articleId, String email);
 }

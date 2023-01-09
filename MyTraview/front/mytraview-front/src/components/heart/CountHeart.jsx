@@ -1,105 +1,74 @@
-// import React, { useEffect, useState } from 'react'
-// import { useAtom } from 'jotai'
-// import curBoardAtom from '../atoms/curBoardAtom'
-// import ColouredHeartImg from "../assets/coloured_heart.png"
-// import VacantHeartImg from "../assets/empty_heart.png"
+import React, { useEffect, useState } from 'react'
+import { useAtom } from 'jotai'
+import curBoardAtom from '../atoms/curBoardAtom'
+import ColouredHeartImg from "../assets/coloured_heart.png"
+import VacantHeartImg from "../assets/empty_heart.png"
+import { call } from '../../api_config/ApiService'
 
 
-// const CountHeart = () => {
+const CountHeart = (props) => {
 
-//   const [heartCount, setHeartCount] = useState("")
-//   const [curBoard, setCurBoard] = useAtom(curBoardAtom)
-//   const [flag2, setFlag2] = useState(false)
-//   const [heartFlag, setHeartFlag] = useState('')
+    const [heartCount, setHeartCount] = useState("")
+    const [curBoard, setCurBoard] = useState(props.articleId)
+    const [heartFlag, setHeartFlag] = useState(false)
 
-//   const heartHandler = () => {
-//     setFlag2(!flag2);
-//     setHeartFlag(!heartFlag);
+    const flagHandler = () => {
+        setHeartFlag(!heartFlag);
+    }
 
-//     // if (setFlag2 === !flag2) {
-//     //     const accessToken = sessionStorage.getItem("ACCESS_TOKEN")
+    const heartHandler = () => {
 
-//     //     const req = {
-//     //         articleId: curBoard,
-//     //         email: "test@test.com",
-//     //         flag: heartFlag
-//     //     }
+        if (heartFlag === true) {
+            setHeartCount((res) => res - 1 )
+            flagHandler()
+            const req = {
+                articleId: curBoard
+            }
+            call(`/heart`, 'DELETE', req)
+                .then((res) => {
+                    { console.log("좋아요 취소"); }
+                })
+                .then((res) => {
+                    console.log(res);
+                })
+        } else {
+            setHeartCount((res) => res + 1 )
+            flagHandler()
+            const req = {
+                articleId: curBoard,
+                flag: true
+            }
+            call("/heart", "POST", req)
+                .then((res) => { setHeartFlag(res.flag);console.log("현재 heartFlag 값" + heartFlag); })
+                .catch((res) => { console.log(res); })
+        }
+    }
 
-//     //     const options = {
-//     //         method: 'POST',
-//     //         headers: {
-//     //             'Content-Type': 'application/json',
-//     //             "Authorization": "Bearer " + accessToken
-//     //         },
-//     //         body: JSON.stringify(req),
-//     //     };
-//     //     fetch(`http://localhost:8100/heart/coloured`, options)
-//     //         .then((res) => {
-//     //             res.json()
-//     //         })
-//     //         .then((res) => {
-//     //             console.log(res);
-//     //         })
-//     // }
-//     // .catch((error) => {
-//     //     console.log("제대로 입력되지 않았습니다.");
-//     // })
+      useEffect(() => {
+        call(`/heart/articleId=${curBoard}`,'GET')
+        .then((res) => {setHeartFlag(res.flag); console.log(res)})
+        .catch((res) => {console.log(res);})
+      }, [])
 
-//     const accessToken = sessionStorage.getItem("ACCESS_TOKEN")
-
-//     const req = {
-//       articleId: curBoard,
-//       email: "test@test.com",
-//       flag: heartFlag
-//     }
-
-//     const options = {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         "Authorization": "Bearer " + accessToken
-//       },
-//       body: JSON.stringify(req),
-//     };
-//     fetch(`http://localhost:8100/heart/coloured`, options)
-//       .then((res) => {
-//         res.json()
-//       })
-//       .then((res) => {
-//         console.log(res);
-//       })
-//       .catch((error) => {
-//         console.log("제대로 입력되지 않았습니다.");
-//       })
-//   }
-
-//   useEffect(() => {
-//     fetch(`http://localhost:8100/heart=${curBoard}`)
-//       .then(response => response.json())
-//       .then(response => {
-//         console.log(response);
-//         setHeartCount(response)
-//         setHeartFlag(response.flag)
-//         if (flag2 === false) {
-//           setFlag2(!flag2)
-//         }
-//       })
-//       .catch(error => console.error(error))
-//   }, [flag2])
+      useEffect(() => {
+        call(`/heart/countHeart=${curBoard}`,'GET')
+        .then( (res) => {setHeartCount(res.articleId); console.log(res)})
+        .catch((res) => {console.log(res);})
+      }, [])
 
 
-//   return (
+    return (
 
-//     <div className='flex'>
-//       {/* img src="./public/images/coloured_heart.png" or img src="./assets/coloured_heart.png" 이렇게 가져오면 사진을 읽지 못함 */}
-//       {/* <img src={flag2 === true?ColouredHeartImg:VacantHeartImg} img className='object-scale-down w-6 h-4 pt-[5px] mx-2 my-2' onClick={() => {setFlag2(!flag2)}} /> */}
-//       <div onClick={() => { heartHandler() }} className='object-scale-down w-4 h-4 pt-[5px] mx-2 my-2'>
-//         <img src={flag2 === true ? ColouredHeartImg : VacantHeartImg} />
-//       </div>
-//       <div className='my-2 mr-2'>{heartCount.length}</div>
-//     </div>
+        <div className='flex'>
+            {/* img src="./public/images/coloured_heart.png" or img src="./assets/coloured_heart.png" 이렇게 가져오면 사진을 읽지 못함 */}
+            {/* <img src={flag2 === true?ColouredHeartImg:VacantHeartImg} img className='object-scale-down w-6 h-4 pt-[5px] mx-2 my-2' onClick={() => {setFlag2(!flag2)}} /> */}
+            <button onClick={heartHandler} className='object-scale-down w-4 h-4 pt-[5px] mx-2 my-2'>
+                <img src={heartFlag === true ? ColouredHeartImg : VacantHeartImg} />
+            </button>
+            <div className='my-2 mr-2'>({heartCount})</div>
+        </div>
 
-//   )
-// }
+    )
+}
 
-// export default CountHeart
+export default CountHeart

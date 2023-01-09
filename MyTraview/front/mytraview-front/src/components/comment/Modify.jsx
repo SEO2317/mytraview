@@ -44,37 +44,41 @@ const Modify = (props) => {
   let [isOpen, setIsOpen] = useState(props.isOpen)
 
   const updateContent = (idOfComment) => {
-    
+    if(window.confirm("정말로 수정하시겠습니까?")){
     const req = {
       id: idOfComment,
-      writer: "Alex",
       content: content
     }
     
     call("/comment", "PUT", req)
     .then((res)=>{
-      console.log(res);
+      console.log(res); alert("수정이 완료 되었습니다.")
     })
     .catch((res)=>
     {
-      console.log(res);
+      console.log(res); alert(res.resMessage)
     })
+  }else{
+    alert("내용을 다시 한 번 확인해주세요.")
+  }
   }
 
   const deleteContent = (idOfComment) => {
+    if(window.confirm("정말로 삭제하시겠습니까?")){
     const req = {
       id: idOfComment,
-      writer: "Alex"
     }
 
     call("/comment","DELETE", req)
     .then((res)=>{
-      console.log(res);
+      console.log(res); alert("정상적으로 삭제 되었습니다.")
     })
     .catch((res) => {
-      console.log(res);
+      console.log(res); alert(res.resMessage)
     })
-
+  }else{
+    alert("취소되었습니다.")
+  }
   }
 
   return (
@@ -119,7 +123,7 @@ const Modify = (props) => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    댓글 수정
                   </Dialog.Title>
                   <div className="mt-2">
                     <input type="text" value={content} onChange={(e)=>{setContent(e.target.value)}}/>

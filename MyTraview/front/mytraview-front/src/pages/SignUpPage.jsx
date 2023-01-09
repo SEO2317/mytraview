@@ -6,7 +6,6 @@ const SignUpPage = () => {
   const [name, setName] = useState("")
   const [pw, setPw] = useState("")
   const [confirmpw, setConfirmPw] = useState("")
-  const [agrees,setAgrees] = useState(false)
   const [phone, setPhone] = useState("")
   const [role, setRole] = useState()
  
@@ -27,7 +26,6 @@ const SignUpPage = () => {
      setNameMessage("이름은 2글자 이상 5글자 이하로 입력해주세요!");
      setJoinFlag(false)
    } else {
-     setNameMessage("사용가능한 닉네임 입니다.");
      setName(currentName)
      setJoinFlag(true)
    }
@@ -102,7 +100,7 @@ const SignUpPage = () => {
     }).then(res => res.json())
     .then((res) => {alert(res.resMessage);
       console.log(res);
-      if(res.resMessage === "해당 이메일은 사용 가능합니다"){
+      if(res.resMessage === "해당 이메일은 사용 가능합니다."){
         setDuplicateFlag(true)
       }else{
         setDuplicateFlag(false)
@@ -118,11 +116,13 @@ const SignUpPage = () => {
 
 
   const onRoleHandler = () => {
-    setRole("ROLE_COMM")
+    setRole("COMN");
+    setRollCheckFlag(true);
   }
 
   const onRoleHandler2 = () => {
-    setRole("ROLE_SPEC")
+    setRole("SPEC");
+    setRollCheckFlag(true);
   }
 
 
@@ -142,14 +142,15 @@ const SignUpPage = () => {
         pw: pw,
         name: name,
         phone: phone,
-        role: role,
-        agrees: agrees,
+        role: role
       })
       
     })
       .then(res => res.json())
-      .then(res => {
-        console.log(res)
+      .then((res) => {
+        console.log(res);
+        alert("회원가입을 환영해요!! 로그인 페이지로 이동합니다~")
+        window.location.href = "/SignInPage"
       })
       
     }else{
@@ -180,39 +181,21 @@ const SignUpPage = () => {
           <input name="phone" type="text" placeholder="휴대폰" onChange={onChangePhone} className='w-[300px] h-[50px] pl-[10px] m-[10px]' />
           <p className="message"> {phoneMessage} </p>
         </div>
+        <br />
         <div className='flex'>
           <div>
             <label htmlFor="common">common</label></div>
-            <input type="radio" id="common" name="role" value="common" onClick={() => {onRoleHandler(); setRollCheckFlag(true)}}/>
-            {/* <p className="message"> {idMessage} </p> */}
+            <input type="radio" id="common" name="role" value="common" onClick={onRoleHandler}/>
           <div>
             <label htmlFor="special">special</label>
-            <input type="radio" id="special" name="role" value="special" onClick={() => {onRoleHandler2(); setRollCheckFlag(true)}}/>
-            {/* <p className="message"> {idMessage} </p> */}
+            <input type="radio" id="special" name="role" value="special" onClick={onRoleHandler2}/>
           </div>
         
-          {/* <div><input type="checkbox" onClick={toChangePage} className="mt-10 mb-16 border-sky-400" defaultValue="" /></div> */}
         </div>
+        <br />
         <div>
-          <button onClick={() => {console.log(duplicateFlag);}}>이메일 확인</button>
+          <button onClick={() => {console.log(duplicateFlag);}}>duplicateFlag 값 확인용</button>
         </div>
-        {/* <div className='flex'>
-          <input type="radio" id="html" name="fav_language" value="HTML">
-          <label for="html">HTML</label>
-          </input>
-          </div> */}
-        {/* {RoleList.map((x, i) => <div>
-        <input
-          type="radio"
-          name="role"
-          value={x.value}
-          onClick={() => {{setCheckedRole(x.value); console.log(checkedRole)}}}
-        />
-        <label key={i}>
-        {x.label}
-      </label></div>)}  */}
-        {/* <div><input name="common" type="checkbox" placeholder="일반" value={role} onClick={commonHandler} className='w-[300px] h-[50px] pl-[10px] m-[10px]'/>일반</div>
-          <div><input name="special" type="checkbox" placeholder="스페셜" value={role} onClick={specialHandler} className='w-[300px] h-[50px] pl-[10px] m-[10px]'/>스페셜</div> */}
       </div>
       <div><button type="button" onClick={join} className='font-bold text-white rounded-[40px] bg-indigo-500 mt-[370px] h-[48px] w-[100%]'>계정 생성하기</button></div>
     </div>

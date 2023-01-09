@@ -1,3 +1,4 @@
+
 package com.mamoorie.mytraview.service;
 
 
@@ -53,7 +54,7 @@ public class ArticleService {
 
 		findArticle.setContent(articleEntity.getContent());
 
-		findArticle.setUploadDate(new SimpleDateFormat("yyyy.MM.dd").format(new Date()));
+		findArticle.setUploadDate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
 
 		articleRepository.save(findArticle);
 

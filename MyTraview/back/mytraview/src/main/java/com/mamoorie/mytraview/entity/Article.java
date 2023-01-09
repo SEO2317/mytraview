@@ -1,3 +1,4 @@
+
 package com.mamoorie.mytraview.entity;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -33,7 +36,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-//@DynamicUpdate
+@DynamicInsert
 public class Article {
 
 	@Id
@@ -67,11 +70,14 @@ public class Article {
 	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "article-comment")
 	private List<Comment> comments;
-	
 
 	@OneToMany(mappedBy = "article")
 	@JsonManagedReference(value = "article-place")
 	private List<Place> places;
+	
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "article-heart")
+	private List<Heart> hearts;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
@@ -151,6 +157,7 @@ public class Article {
 		
 		private List<Comment> comments;
 		private List<Place> places;
+		private List<Heart> hearts;
 
 		public static Article.Response toResponse(final Article article) {
 			return Article.Response.builder()
@@ -163,6 +170,7 @@ public class Article {
 					.likedCount(article.getLikedCount())
 					.comments(article.getComments())
 					.places(article.getPlaces())
+					.hearts(article.getHearts())
 					.build();
 		}
 

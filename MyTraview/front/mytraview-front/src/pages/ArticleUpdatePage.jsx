@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import EditorComponent from '../components/article/EditorComponent'
 import curBoardAtom from '../components/atoms/curBoardAtom'
 
 const ArticleUpdatePage = () => {
@@ -10,7 +11,11 @@ const ArticleUpdatePage = () => {
     const [content, setContent] = useState("")
     const [curBoard, setCurBoard] = useAtom(curBoardAtom);
 
-    const handleModify = () => {
+    const handleContent = (value) => {
+        setContent(value);
+    }
+
+    const handleModify = (e) => {
 
         if (title === "" || content === "") {
             alert("제목 및 내용을 입력해주세요.")
@@ -27,7 +32,7 @@ const ArticleUpdatePage = () => {
             }
 
             const req = {
-                articleId: curBoard,
+                id: curBoard,
                 title: title,
                 content: content,
             }
@@ -39,15 +44,10 @@ const ArticleUpdatePage = () => {
                 body: JSON.stringify(req)
             };
 
-            fetch('http://localhost:3100/article', options)
-                .then(response => {
-                    response.json();
-                    if (response.ok) { alert("수정이 완료되었습니다.") } else {
-                        alert("해당 요청은 작성자만 가능합니다.")
-                    }
-                    
-                })
-                .catch(error => console.error('해당 요청은 작성자만 가능합니다.', error));
+            fetch('http://localhost:8100/article', options)
+                .then(response => response.json())
+                .then((res)=> {alert(res.resMessage); console.log(res); window.location.href ="/viewAllArticles"})
+                .catch(error => console.error(error));
             console.log("handleModify clicked button")
         }
     }
@@ -64,9 +64,7 @@ const ArticleUpdatePage = () => {
         }
 
         const req = {
-            articleId: curBoard,
-            title,
-            content
+            id: curBoard,
         }
 
         console.log(req);
@@ -77,22 +75,27 @@ const ArticleUpdatePage = () => {
             body: JSON.stringify(req)
         };
 
-        fetch(`http://localhost:3100/article/articleId=${articleId}`, options)
+        fetch(`http://localhost:8100/article/articleId=${curBoard}`, options)
             .then(response => {
-                if (response.ok) { alert("삭제가 완료되었습니다.") } else { alert("해당 요청은 작성자만 가능합니다.") }
+                if (response.ok) { alert("삭제가 완료되었습니다."); window.location.href ="/viewAllArticles" } else { alert("해당 요청은 작성자만 가능합니다.") }
             })
             .catch(response => response.resMessage);
         console.log("handledelete clicked button")
     }
 
     useEffect(() => {
-        fetch(`http://localhost:3100/article/articleId=${articleId}`)
+
+        const options = {
+            method: 'GET',
+        };
+
+        fetch(`http://localhost:8100/article/articleId=${curBoard}`,options)
             .then(response => response.json())
-            .then(data => {
+            .then(res => {
                 console.log("현재 게시글 번호:" + curBoard);
-                setArticleId(data.articleId);
-                setTitle(data.title);
-                setContent(data.content);
+                setArticleId(res.articleId);
+                setTitle(res.title);
+                setContent(res.content);
             })
             .catch(error => console.error(error))
     }, [])
@@ -115,21 +118,20 @@ const ArticleUpdatePage = () => {
                     <div>
                         <div className="mb-10 text-2xl font-bold text-center text-gray-500 border-4">
                             제목
-                            <input type="text" name="title" value={title} placeholder="고민을 한 마디로 알려주세요" onChange={(event) => setTitle(event.target.value)} className="w-full py-4 text-sm text-left text-gray-900 border-2 px-30" />
+                            <input type="text" name="title"  placeholder={title} onChange={(event) => setTitle(event.target.value)} className="w-full py-4 text-sm text-left text-gray-900 border-2 px-30" />
                         </div>
                     </div>
-                    <div>
-                        <div className="items-center w-full h-[400px] text-gray-600 bg-gray-100 rounded-md resize-none mb-9 text-center">
-                            내용
-                            <textarea type="text" name="content" value={content} placeholder="당신의 고민을 적어보세요" onChange={event => setContent(event.target.value)} className="items-center w-full h-[400px] text-gray-600 bg-gray-100 rounded-md resize-none mb-9 text-center" />
-                        </div>
-                    </div>
+                    <br></br>
+            <div className="items-center text-center text-gray-700 bg-gray-100 rounded-md resize-none mb-9 opacity-80">
+              <EditorComponent value={content} onChange={handleContent}/>
+            </div>
+            <br></br>
                     <Link to='/ArticleListPage'>
                         <button type='delete' onClick={handleDelete} className='float-right px-5 py-2 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200'>글 삭제</button>
                     </Link>
-                    <Link to='ArticleDetailPage'>
-                        <button type='modify' onClick={handleModify} className='float-right px-5 py-2 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200'>글 수정</button>
-                    </Link>
+                    {/* <Link to='ArticleDetailPage'> */}
+                        <button type='modify' onClick={(e)=>{handleModify(e)}} className='float-right px-5 py-2 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200'>글 수정</button>
+                    {/* </Link> */}
 
                 </div>
             </form>

@@ -17,7 +17,7 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const TagList = ({category}) => {
+const TagList = (props) => {
 
 
   // const [size, setSize] = useState(null);
@@ -40,14 +40,14 @@ const TagList = ({category}) => {
 
   return (
     <>
-      <div className="fixed bottom-5 right-0 flex items-center justify-end mr-56">
+      <div className="fixed bottom-5 right-0 flex items-center justify-end mr-36">
       
         <button
           type="button"
           onClick={openModal}
           className="rounded-md bg-black bg-opacity-80 px-4 py-2 text-sm font-medium border-2 text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
-          +
+          태그 추가하기
         </button>
       </div>
 
@@ -81,7 +81,7 @@ const TagList = ({category}) => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    Add Tags
                   </Dialog.Title>
                   <div className="mt-2">
                     {/* <p className="text-sm text-gray-500">
@@ -90,14 +90,20 @@ const TagList = ({category}) => {
                     </p> */}
                     <LandingPage/>
                   </div>
-
-                  <div className="mt-4">
+                  <div className="mt-4 float-right">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
-                      Got it, thanks!
+                      적용
+                    </button>
+                    <button
+                      type="button"
+                      className="ml-5 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      취소
                     </button>
                   </div>
                 </Dialog.Panel>
@@ -106,81 +112,6 @@ const TagList = ({category}) => {
           </div>
         </Dialog>
       </Transition>
-
-      {/* <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>주소</TableCell>
-              <TableCell align="right">업체명</TableCell>
-              <TableCell align="right">별점</TableCell>
-              <TableCell align="right">카테고리</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer> */}
-      {/* <Fragment>
-
-        <div className="flex justify-center gap-3">
-          <button onClick={() => handleOpen("xl")} variant="gradient">
-            태그 추가하기
-          </button>
-        </div>
-        <Dialog
-
-          open={
-            size === "xs" ||
-            size === "sm" ||
-            size === "md" ||
-            size === "lg" ||
-            size === "xl" ||
-            size === "xxl"
-          }
-          size={size || "md"}
-          handler={handleOpen}
-        >
-          <DialogTitle>장소 찾기?</DialogTitle>
-          <div>검색</div>
-          <DialogContent>
-            <div style={{ margin: "0 auto" }}>
-              <Map />
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <button
-              variant="text"
-              color="red"
-              onClick={() => handleOpen(null)}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </button>
-            <button
-              variant="gradient"
-              color="green"
-              onClick={() => handleTagAdd()}
-            >
-              <span>Confirm</span>
-            </button>
-          </DialogActions>
-        </Dialog>
-      </Fragment> */}
     </>
   );
 }

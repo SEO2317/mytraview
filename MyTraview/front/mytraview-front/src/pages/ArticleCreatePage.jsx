@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { call } from '../api_config/ApiService';
 import { Link } from 'react-router-dom';
 import Map from '../components/map/Map';
@@ -9,12 +9,12 @@ import curBoardAtom from '../components/atoms/curBoardAtom';
 import { useAtom } from 'jotai';
 
 const ArticleCreatePage = () => {
-  const [postId, setPostId] = useState("")
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [curBoard, setCurBoard] = useAtom(curBoardAtom);
   const [category, setCategory] = useState('');
-
+  const id = useRef('');
+  const [articleId, setArticleId] = useState('');
 
   // const [desc, setDesc] = useState('') // react-quill 에디터 변수
 
@@ -30,23 +30,20 @@ const ArticleCreatePage = () => {
     setContent(value)
   }
 
-  const req = {
+  const handleCreate = async () => {
+    const req = {
+      
+      title: title,
+      content: content
+  
+    }
 
-    title: title,
-    content: content
-
-  }
-  const handleCreate = () => {
-    call("/article", "POST", req)
-      .then((res) => {
-        console.log(res);
-        setCurBoard(res.id)
-      })
+    await call("/article", "POST", req)
+    .then( (res) => {id.current=res.id; console.log(articleId); console.log(res); alert("리뷰 남겨주셔서 감사합니다~")})
       .catch((err) => {
         console.log(err);
       });
-
-      // call("/place", "POST", )
+    setArticleId(id.current)
   }
 
   return (
@@ -67,8 +64,11 @@ const ArticleCreatePage = () => {
             <br></br>
             <br></br>
           <TagList category={category}/>
-          <Link to='/ArticleDetailPage'>
-            <button type='create' onClick={handleCreate} className='float-right px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300'>저장하기</button>
+          {/* <Link to='/ArticleDetailPage' state={{id: articleId}}>
+            <button type='create' onClick={handleCreate}className='float-right px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300'>저장하기</button>
+          </Link> */}
+          <Link to='/'>
+            <button type='create' onClick={handleCreate}className='float-right px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300'>저장하기</button>
           </Link>
         </div>
       </div>

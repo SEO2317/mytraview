@@ -1,16 +1,17 @@
 import { useAtom } from 'jotai'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import curBoardAtom from '../components/atoms/curBoardAtom'
 import Modify from '../components/comment/Modify'
 import SubComment from '../components/comment/SubComment'
+import CountHeart from '../components/heart/CountHeart'
 // import CountHeart from '../components/heart/CountHeart'
 
 
 const ArticleDetailPage = () => {
-    // const [category, setCategory] = useState("")
+    const location = useLocation();
+    // const [articleId, setArticleId] = useState('')
     const [article, setArticle] = useState('')
-    const [articleId, setArticleId] = useState("")
     const [title, setTitle] = useState("")
     const [content, setContent] = useState()
     const [uploadDate, setUploadDate] = useState("") // 작성일자
@@ -36,8 +37,7 @@ const ArticleDetailPage = () => {
 
     const updateArticle = () => {
         const req = {
-            // category,
-            articleId: curBoard,
+            id: curBoard,
             title: article.title,
             content: article.content,
             uploadDate: article.uploadDate,
@@ -66,10 +66,8 @@ const ArticleDetailPage = () => {
     const commentCreate = () => {
 
         const req = {
-            // commentId,
             articleId: curBoard,
             content: commentContent,
-            writer: "Alex"
         }
 
         console.log("댓글을 다는 현재 게시글의 번호:" + curBoard);
@@ -95,47 +93,38 @@ const ArticleDetailPage = () => {
                 console.log("-----백엔드 응답-----");
 
             })
-            // .then(data => console.log(data))
             .catch(error => console.error('실패', error));
         console.log("handleDetail clicked button")
 
     } // 댓글 컴포넌트
 
-
-
-
-
-
-    // useEffect(() => {
-    //     fetch(`http://localhost:8100/article/articleId=${curBoard}`)
-    //         .then(response => response.json())
-    //         .then(response => {
-    //             console.log(response)
-    //             // setArticleId(response.articleId)
-    //             // setTitle(response.title)
-    //             // setWriter(response.writer)
-    //             // setUploadDate(response.uploadDate)
-    //             // setViewCount(response.viewCount)
-    //             // setHeartCount(response.heartCounitt)
-    //             // setContent(response.content)
-    //             setArticle(response)
-    //             setComments(response.comments)
-    //             if (flag === false) {
-    //                 setFlag(!flag)
-    //             }
-    //             if(flag2 === false){
-    //                 setFlag2(!flag2)
-    //             }
-    //         })
-    //         .catch(error => console.error(error))
-    // }, [flag, flag2])
+    useEffect(() => {
+        if(location.state){
+            setCurBoard(location.state.id)
+            console.log(curBoard);
+        }
+        fetch(`http://localhost:8100/article/articleId=${curBoard}`)
+            .then(response => response.json())
+            .then(response => {
+                // console.log(response)
+                setArticle(response)
+                setComments(response.comments)
+                if (flag === false) {
+                    setFlag(!flag)
+                }
+                if(flag2 === false){
+                    setFlag2(!flag2)
+                }
+            })
+            .catch(error => console.error(error))}
+    , [flag, flag2])
 
     let [isOpen, setIsOpen] = useState(false)
 
     return (
         <>
             <div className="bg-[url('/public/images/10.jpg')] opacity-80 bg-cover">
-                <div onClick={() => { console.log("현재보드 수 :" + curBoard) }}></div>
+                <div onClick={() => { console.log(curBoard) }}>dddd</div>
                 <div className='max-w-2xl px-6 py-10 m-auto bg-white rounded-md'>
                     <div className="mb-6 text-2xl font-bold text-left text-gray-500 border-4">
                         <Link to="/" className='text-gray-500'>
@@ -150,10 +139,10 @@ const ArticleDetailPage = () => {
                     </div>
                     <div className='font-semibold border- text-amber-700'>
                         작성일자
-                        <span className="px-2 py-4 text-sm font-light text-center text-gray-900">{"" + article.uploadDate}</span>
+                        <span className="px-2 py-4 text-sm font-light text-center text-gray-900">{article.uploadDate}</span>
                         조회수
                         <span className='px-2 py-4 text-sm font-light text-center text-gray-900'>{"" + article.viewCount}</span>
-                        사용자
+                        작성자
                         <span className="px-2 py-4 text-sm font-light text-center text-gray-900">{"" + article.writer}</span>
                     </div>
                     <div className="mb-2 text-2xl font-bold text-center text-gray-500 border-b-4">
@@ -166,7 +155,7 @@ const ArticleDetailPage = () => {
                     </div>
 
                     {/* 좋아요 */}
-                   {/* <CountHeart /> */}
+                   <CountHeart articleId = {curBoard}/>
 
                     {/* 댓글창 */}
                     <div className="mb-6">
@@ -187,15 +176,6 @@ const ArticleDetailPage = () => {
                                 <td className='pl-2 text-left text-gray-600'>작성자</td>
                                 <td className='pl-2 text-left text-gray-600'>내용</td>
                             </tr>
-                            {/* {comments && comments.map(comment => (
-                                <tr key={comment.id} className="text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
-                                    <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
-                                    <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
-                                    <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
-                                </tr>
-                            )
-                            )
-                            } */}
                             {comments.replyComments===null?
                             comments && comments.map(comment => (
                                 <tr key={comment.id} className="text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
@@ -233,7 +213,7 @@ const ArticleDetailPage = () => {
                     {/* 댓글창 끝 */}
 
                     <Link to='/ArticleUpdatePage'>
-                        <button type='modify' onClick={()=>{setCurBoard(article.id); updateArticle()}} className='px-5 py-2 mx-3 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200 '>수정</button>
+                        <button type='modify' className='px-5 py-2 mx-3 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200 '>수정</button>
                     </Link>
                 </div>
             </div>

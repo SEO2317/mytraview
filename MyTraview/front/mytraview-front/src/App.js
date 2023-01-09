@@ -13,7 +13,6 @@ import Nav from './components/main/Nav';
 import ArticleMainListPage from './pages/ArticleMainListPage';
 import ArticleSubListPage from './pages/ViewAllArticles';
 import MainPage from './pages/MainPage';
-import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import ViewAllArticles from './pages/ViewAllArticles';
 import SinglePage from './components/main/SinglePage';
@@ -22,6 +21,7 @@ import UserUpdateMyPage from './pages/UserUpdateMyPage';
 import BestArticles from './pages/BestArticles';
 import ArticleInput from './pages/ArticleInput';
 import Pagination from './components/article/Pagination';
+import SignInPage from './pages/SignInPage';
 
 function App() {
   return (

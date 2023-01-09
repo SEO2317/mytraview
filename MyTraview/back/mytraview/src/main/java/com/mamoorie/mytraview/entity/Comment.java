@@ -70,7 +70,7 @@ public class Comment {
 	private String writer;
 	
 	@Column(name = "COMMENT_ARTICLE_ID")
-	private Integer articleId; // 임시추가
+	private Integer articleId; // �ӽ��߰�
 
 	public void setUser(User user) {
 		this.user = user;
@@ -98,7 +98,7 @@ public class Comment {
 		private User user;
 		private Article article;
 		private Integer parentId;
-		private Integer articleId; // 임시추가
+		private Integer articleId; // �ӽ��߰�
 		private String writer;
 		private Integer commentLevel;
 		private Comment replyComment;
@@ -111,7 +111,7 @@ public class Comment {
 					.article(req.getArticle())
 					.content(req.getContent())
 					.parentId(req.getParentId())
-					.articleId(req.getArticleId()) // 임시추가
+					.articleId(req.getArticleId()) // �ӽ��߰�
 					.writer(req.getWriter())
 					.commentLevel(req.getCommentLevel())
 					.replyComment(req.getReplyComment())
@@ -131,18 +131,19 @@ public class Comment {
 		private Integer id;
 		private String content;
 		private Integer parentId;
-		private Integer articleId; // 임시추가
-		private String writer; // 임시추가
+		private Integer articleId; // �ӽ��߰�
+		private String writer; // �ӽ��߰�
 		private Integer commentLevel;
 		private Comment replyComment;
 		private List<Comment> replyComments;
+		private String resMessage;
 		
 		public static Comment.Response toResponse(Comment commentEntity){
 			return Comment.Response.builder()
 					.id(commentEntity.getId())
 					.content(commentEntity.getContent())
 					.parentId(commentEntity.getParentId())
-					.articleId(commentEntity.getArticleId()) // 임시추가
+					.articleId(commentEntity.getArticleId()) // �ӽ��߰�
 					.writer(commentEntity.getWriter())
 					.commentLevel(commentEntity.getCommentLevel())
 					.replyComment(commentEntity.getReplyComment())
@@ -162,4 +163,3 @@ public class Comment {
 	}
 
 }
-

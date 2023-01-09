@@ -1,10 +1,13 @@
 package com.mamoorie.mytraview.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.mamoorie.mytraview.entity.Article;
 import com.mamoorie.mytraview.entity.User;
+import com.mamoorie.mytraview.repository.ArticleRepository;
 import com.mamoorie.mytraview.repository.UserRepository;
 import com.mamoorie.mytraview.service.ArticleService;
 
@@ -24,22 +29,15 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("article")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3100")
 public class ArticleController {
-	
-	
-//	private ArticleRepository articleRepository;
-	
 
 	private final UserRepository userRepository;
 	
-	
 	private final ArticleService articleService;
-
 	
 	@GetMapping("/articleId={articleId}")
 	public ResponseEntity<?> findArticle(@PathVariable Integer articleId){
-		System.out.println("GET: findArticle() 동작");
+		System.out.println("GET: findArticle() ����");
 		Article findArticle = articleService.findArticle(articleId);
 		Article.Response res = Article.Response.toResponse(findArticle);
 		
@@ -79,25 +77,39 @@ public class ArticleController {
 		return Article.Response.toResponseList(articleList);
 	} 
 	
+	@GetMapping("viewCount")
+	public void increaseViewCount(@RequestParam Integer articleId) {
+		Article findArticle = articleService.findArticle(articleId);
+		Integer beforeViewCount = findArticle.getViewCount();
+		findArticle.setViewCount(beforeViewCount+1);
+		articleService.createArticle(findArticle);
+	}
+	
 	// 'POST' http://localhost:8100/article
 	@PostMapping
-	public ResponseEntity<Article.Response> createArticle(@RequestBody @Valid Article.Request request) {
+	public ResponseEntity<Article.Response> createArticle(@RequestBody @Valid Article.Request request, @AuthenticationPrincipal String email) {
 		System.out.println("POST: createArticle() of ArticleController called");		
 		Article newArticle = Article.Request.toEntity(request);
-//		Address address = request.get();
 
-		User foundUser = userRepository.findByEmail("1234@1234.com");
+		User foundUser = userRepository.findByEmail(email);
 
 		newArticle.setUser(foundUser);
-		//TODO: Bookmark set ^ 위에 방법
+		newArticle.setWriter(foundUser.getName());
+		newArticle.setUploadDate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
 		Article savedArticle = articleService.createArticle(newArticle);
 		Article.Response response = Article.Response.toResponse(savedArticle);
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.ok().body(response);
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> modifyArticle(@RequestBody Article.Request req){
+	public ResponseEntity<?> modifyArticle(@RequestBody Article.Request req, @AuthenticationPrincipal String email){
 		System.out.println("PUT: modifyArticle() of ArticleController called");
+		
+		String findEmail = articleService.findArticle(req.getId()).getUser().getEmail();
+		
+		if(!findEmail.equals(email)) {
+			return ResponseEntity.badRequest().body(Article.Response.builder().resMessage("작성자만 가능합니다.").build());
+		}
 		
 		Article articleEntity = Article.Request.toEntity(req);
 		
@@ -105,18 +117,23 @@ public class ArticleController {
 		
 		Article.Response res = Article.Response.toResponse(updatedArticle);
 		
-		return ResponseEntity.ok().body(res);
+		return ResponseEntity.ok().body(res.builder().resMessage("수정에 성공하였습니다.").build());
 	}
 	
 	@DeleteMapping("/articleId={articleId}")
-	public ResponseEntity<?> removeArticle(@PathVariable Integer articleId){
+	public ResponseEntity<?> removeArticle(@PathVariable Integer articleId, @AuthenticationPrincipal String email){
+		
+		String findEmail = articleService.findArticle(articleId).getUser().getEmail();
+		
+		if(!findEmail.equals(email)) {
+			return ResponseEntity.badRequest().body(Article.Response.builder().resMessage("작성자만 가능합니다.").build());
+		}
 		
 		articleService.delete(articleId);
 		
-		Article.Response res = Article.Response.builder().resMessage("삭제 작업이 완료됐습니다..").build();
+		Article.Response res = Article.Response.builder().resMessage("삭제가 완료 됐습니다.").build();
 		
 		return ResponseEntity.ok().body(res);
 	}
 
 }
-
