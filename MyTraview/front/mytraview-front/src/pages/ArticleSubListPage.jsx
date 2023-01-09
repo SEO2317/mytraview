@@ -12,7 +12,7 @@ const ArticleSubListPage = () => {
   const [articles, setArticles] = useState([]);
   const [_, setCurBoard] = useAtom(curBoardAtom);
   // const [auth, setAuth] = useAtom(authAtom); 
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   let [postNum, setPostNum] = useState(1)
@@ -52,7 +52,7 @@ const ArticleSubListPage = () => {
       </div>
 
       <div className="box-content h-5 py-5 mb-2 ml-4 text-2xl font-bold text-center text-gray-200 border-4 border-x-transparent w-96">
-        Some desciption of the place
+        Some description of the place
       </div>
       
       <label className='mx-10 font-extrabold text-gray-300'>
@@ -63,9 +63,8 @@ const ArticleSubListPage = () => {
           style={{font: "bold", color: "white", background: "transparent", position: "end"}}
           onChange={({ target: { value } }) => setLimit(Number(value))}
         >
-          <option value="10" className="text-sm font-bold text-right text-neutral-600">10개씩</option>
-          <option value="15" className="text-sm font-bold text-right text-neutral-600">15개씩</option>
-          <option value="20" className="text-sm font-bold text-right text-neutral-600">20개씩</option>
+          <option value="5" className="text-sm font-bold text-right text-neutral-600">5개씩</option>
+          
         </select>
       </label>
 
@@ -83,7 +82,7 @@ const ArticleSubListPage = () => {
           </thead>
           <tbody className="text-sm font-normal text-gray-700">
             {articles && articles.slice(offset, offset + limit).map(article => (
-              <tr key={article.id} className="py-10 border-b border-gray-200 hover:bg-gray-100" >
+              <tr key={article.id} className="py-10 border-b border-gray-200 bg-white hover:bg-gray-100" >
 
                 <td className="px-4 py-2 text-center border">{postNum++}</td>
 

@@ -106,29 +106,29 @@ const ArticleDetailPage = () => {
 
 
 
-    useEffect(() => {
-        fetch(`http://localhost:8100/article/articleId=${curBoard}`)
-            .then(response => response.json())
-            .then(response => {
-                console.log(response)
-                // setArticleId(response.articleId)
-                // setTitle(response.title)
-                // setWriter(response.writer)
-                // setUploadDate(response.uploadDate)
-                // setViewCount(response.viewCount)
-                // setHeartCount(response.heartCounitt)
-                // setContent(response.content)
-                setArticle(response)
-                setComments(response.comments)
-                if (flag === false) {
-                    setFlag(!flag)
-                }
-                if(flag2 === false){
-                    setFlag2(!flag2)
-                }
-            })
-            .catch(error => console.error(error))
-    }, [flag, flag2])
+    // useEffect(() => {
+    //     fetch(`http://localhost:8100/article/articleId=${curBoard}`)
+    //         .then(response => response.json())
+    //         .then(response => {
+    //             console.log(response)
+    //             // setArticleId(response.articleId)
+    //             // setTitle(response.title)
+    //             // setWriter(response.writer)
+    //             // setUploadDate(response.uploadDate)
+    //             // setViewCount(response.viewCount)
+    //             // setHeartCount(response.heartCounitt)
+    //             // setContent(response.content)
+    //             setArticle(response)
+    //             setComments(response.comments)
+    //             if (flag === false) {
+    //                 setFlag(!flag)
+    //             }
+    //             if(flag2 === false){
+    //                 setFlag2(!flag2)
+    //             }
+    //         })
+    //         .catch(error => console.error(error))
+    // }, [flag, flag2])
 
     let [isOpen, setIsOpen] = useState(false)
 

@@ -1,6 +1,6 @@
 import React from 'react'
-// import ArticleDetailPage from '../../pages/ArticleDetailPage'
-// import ArticleSubListPage from '../../pages/ArticleSubListPage'
+import ArticleDetailPage from '../../pages/ArticleDetailPage'
+import ArticleSubListPage from '../../pages/ArticleSubListPage'
 // import Best from '../../pages/Best'
 import Section from './Section'
 import SeventeenDistrict from './SeventeenDistrict'
@@ -18,17 +18,17 @@ const SinglePage = () => {
                 </div>
 
                 <div id="s2" style={{ height: "100vh", width: "200vh", backgroundColor: "DarkNavy" }}>
-                    <SeventeenDistrict />
+                    {/* <SeventeenDistrict /> */}
                 </div>
 
                 <div id="s3" style={{ height: "100vh", width: "200vh", backgroundColor: "gray" }}>
                     {/* <Best /> */}
                     {/* <TPostCarousel /> */}
-                    {/* <ArticleSubListPage /> */}
+                    <ArticleSubListPage />
                 </div>
 
                 <div id="s4" style={{ height: "100vh", width: "200vh", backgroundColor: "peach" }}>
-                    {/* <ArticleDetailPage /> */}
+                    <ArticleDetailPage />
                 </div>
 
             </div>
