@@ -16,7 +16,7 @@ const Nav = () => {
 
   return (
 
-    <div className='fixed flex items-center justify-between w-full p-4 text-white bg-transparent'>
+    <div className='fixed flex items-center justify-between w-full text-white bg-transparent' style={{zIndex: 9999}}>
 
       <div className='text-2xl font-bold text-center uppercase'>
         <h1>My <span className='block text-3xl'>Traview</span></h1>

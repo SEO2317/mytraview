@@ -4,6 +4,7 @@ package com.mamoorie.mytraview.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -59,19 +60,19 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonManagedReference(value =  "user-article")
     private List<Article> articles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonManagedReference(value =  "user-comment")
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonManagedReference(value =  "user-bookmark")
     private List<Bookmark> bookmarks;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonManagedReference(value =  "user-heart")
     private List<Heart> hearts;
 

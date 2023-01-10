@@ -46,7 +46,7 @@ const ArticleSubListPage = () => {
       </div>
 
       <div className="box-content h-5 py-5 mb-2 ml-4 text-2xl font-bold text-center text-gray-200 border-4 border-x-transparent w-96">
-        Some desciption of the place
+        Some description of the place
       </div>
       
       <label className='mx-10 font-extrabold text-gray-300'>
