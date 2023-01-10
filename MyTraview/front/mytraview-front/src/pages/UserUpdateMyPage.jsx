@@ -140,8 +140,8 @@ const UserUpdateMyPage = () => {
           <div><input type="radio" id="special" name="role" value="special" onClick={onRoleHandler2}/>
             <label htmlFor="special">special</label>
           </div>
-            <button type='delete' onClick={handleEraser} className='float-right px-5 py-2 font-bold border-2 rounded-lg text-gray-800 hover:bg-sky-300'>탈퇴하기</button>
-            <button type='modify' onClick={handleModify} className='float-right px-5 py-2 font-bold border-2 rounded-lg text-gray-800 hover:bg-sky-300'>회원정보 수정</button>
+            <button type='delete' onClick={handleEraser} className='float-right px-5 py-2 font-bold text-gray-800 border-2 rounded-lg hover:bg-sky-300'>탈퇴하기</button>
+            <button type='modify' onClick={handleModify} className='float-right px-5 py-2 font-bold text-gray-800 border-2 rounded-lg hover:bg-sky-300'>회원정보 수정</button>
 
     </div>
     )

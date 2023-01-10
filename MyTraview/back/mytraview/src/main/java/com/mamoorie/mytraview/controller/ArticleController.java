@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.mamoorie.mytraview.entity.Article;
+import com.mamoorie.mytraview.entity.Comment;
+import com.mamoorie.mytraview.entity.Heart;
 import com.mamoorie.mytraview.entity.User;
 import com.mamoorie.mytraview.repository.ArticleRepository;
 import com.mamoorie.mytraview.repository.UserRepository;
@@ -83,6 +85,19 @@ public class ArticleController {
 		Integer beforeViewCount = findArticle.getViewCount();
 		findArticle.setViewCount(beforeViewCount+1);
 		articleService.createArticle(findArticle);
+	}
+	
+	@PostMapping("/checkUser")
+	public ResponseEntity<?> checkUser(@RequestBody Article.Request req ,@AuthenticationPrincipal String email){
+		
+		String findEmail = articleService.findArticle(req.getId()).getUser().getEmail();
+		
+		if(!findEmail.equals(email)) {
+			return ResponseEntity.badRequest().body(Heart.Response.builder().flag(false).build());
+		}
+		
+		return ResponseEntity.ok().body(Heart.Response.builder().flag(true).build());
+		
 	}
 	
 	// 'POST' http://localhost:8100/article

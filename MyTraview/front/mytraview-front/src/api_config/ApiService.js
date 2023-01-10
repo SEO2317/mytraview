@@ -23,7 +23,7 @@ export function call(api, method, req){
 
     return fetch(options.url, options)
     .then((res)=>{
-        if(res.ok || res.status === 400){
+        if(res.ok||res.status===400){
             return res.json();
         } else {
             new Error(res);

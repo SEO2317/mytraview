@@ -52,7 +52,7 @@ const Modify = (props) => {
     
     call("/comment", "PUT", req)
     .then((res)=>{
-      console.log(res); alert("수정이 완료 되었습니다.")
+      console.log(res); alert(res.resMessage)
     })
     .catch((res)=>
     {
@@ -71,7 +71,7 @@ const Modify = (props) => {
 
     call("/comment","DELETE", req)
     .then((res)=>{
-      console.log(res); alert("정상적으로 삭제 되었습니다.")
+      console.log(res); alert(res.resMessage)
     })
     .catch((res) => {
       console.log(res); alert(res.resMessage)
@@ -87,7 +87,7 @@ const Modify = (props) => {
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-black bg-opacity-80 px-4 py-2 text-sm font-medium border-2 text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="px-4 py-2 text-sm font-medium text-white bg-black border-2 rounded-md bg-opacity-80 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           수정
         </button>
@@ -108,7 +108,7 @@ const Modify = (props) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -118,7 +118,7 @@ const Modify = (props) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-full p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -132,14 +132,14 @@ const Modify = (props) => {
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {updateContent(commentId); closeModal()}}
                     >
                       수정
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {deleteContent(commentId);  closeModal()}}
                     >
                       삭제

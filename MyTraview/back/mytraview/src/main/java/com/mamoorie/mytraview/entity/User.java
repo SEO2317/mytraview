@@ -76,8 +76,6 @@ public class User {
 	@JsonManagedReference(value =  "user-heart")
     private List<Heart> hearts;
 
-//    private List<Article> heartArticles;
-
     @Setter
     @Getter
     @Builder

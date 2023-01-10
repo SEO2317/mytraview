@@ -6,6 +6,7 @@ const { kakao } = window
 const MapContainer = ({ searchPlace }) => {
 
   const [countReview, setCountReview] = useState('');
+  let [address, setAddress] = useState('');
 
 
   useEffect(() => {
@@ -143,18 +144,19 @@ const MapContainer = ({ searchPlace }) => {
       call('/place/countReview','POST',req)
         .then(
         (res) => {
-            el.getElementsByClassName("review")[0].innerHTML = '<p> 리뷰 '+ res + '건</p>';
+            el.getElementsByClassName("review")[0].innerHTML = '<p> 리뷰 '+ res.reviewCount + '건</p>';
             el.getElementsByClassName("review")[0].onclick = () => {alert(places.place_name)};
+            el.getElementsByClassName("info")[0].onclick = () => {setAddress(places.road_address_name)};
           console.log(places.place_name+"의 값");
           console.log("위도는 "+places.y + ", 경도는 " + places.x);
-          console.log("백엔드 반응:");
+          console.log("백엔드 반응:" + res);
           console.log();
         }
         )
 
       var el = document.createElement('li'),
         itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-          '<div class="info">' +
+          `<div class="info">` +
           '   <h5>' + places.place_name + '</h5>';
 
       if (places.road_address_name) {
@@ -262,7 +264,8 @@ const MapContainer = ({ searchPlace }) => {
         <ul id="placesList"></ul>
         <div id="pagination"></div>
       </div>
-      <div className='mt-4'>ddd</div>
+      주소:
+      <input value={address} onChange={(e)=>{setAddress(e.target.value)}} className='mt-4 ml-2 w-4/5 border-b-2 border-slate-900'/>
     </div>
   )
 }
