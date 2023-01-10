@@ -45,7 +45,6 @@ const ArticleDetailPage = () => {
             heartCount: article.heartCount
         }
 
-
         const accessToken = sessionStorage.getItem("ACCESS_TOKEN")
 
         console.log(curBoard);
