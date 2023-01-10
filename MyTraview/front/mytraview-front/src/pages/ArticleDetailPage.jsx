@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { call } from '../api_config/ApiService'
 import curBoardAtom from '../components/atoms/curBoardAtom'
 import Modify from '../components/comment/Modify'
 import SubComment from '../components/comment/SubComment'
@@ -25,6 +26,7 @@ const ArticleDetailPage = () => {
     const [postSeq, setPostSeq] = useState("") // 게시글 번호(프론트 단)
     const [flag, setFlag] = useState(false);
     const [flag2, setFlag2] = useState(false);
+    const checkUser = useRef('');
 
     const writeComment = (e) => {
         setCommentContent(e.target.value);
@@ -33,34 +35,6 @@ const ArticleDetailPage = () => {
 
     const flagController = (testFlag) => {
         setFlag2(testFlag);
-    }
-
-    const updateArticle = () => {
-        const req = {
-            id: curBoard,
-            title: article.title,
-            content: article.content,
-            uploadDate: article.uploadDate,
-            viewCount: article.viewCount,
-            heartCount: article.heartCount
-        }
-
-        const accessToken = sessionStorage.getItem("ACCESS_TOKEN")
-
-        console.log(curBoard);
-        const options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + accessToken
-            },
-            body: JSON.stringify(req),
-        };
-
-        fetch('http://localhost:8100/article', options)
-            .then(response => response.json())
-            .catch(error => console.error('실패', error));
-        console.log("handleDetail clicked button")
     }
 
     const commentCreate = () => {
@@ -99,7 +73,7 @@ const ArticleDetailPage = () => {
     } // 댓글 컴포넌트
 
     useEffect(() => {
-        if(location.state){
+        if (location.state) {
             setCurBoard(location.state.id)
             console.log(curBoard);
         }
@@ -112,19 +86,36 @@ const ArticleDetailPage = () => {
                 if (flag === false) {
                     setFlag(!flag)
                 }
-                if(flag2 === false){
+                if (flag2 === false) {
                     setFlag2(!flag2)
                 }
             })
-            .catch(error => console.error(error))}
-    , [flag, flag2])
+            .catch(error => console.error(error))
+    }
+        , [flag, flag2])
+
+
+    useEffect(() => {
+        const req = {
+            id: curBoard
+        }
+        call("/article/checkUser", "POST", req)
+            .then((res) => {
+                if (res.flag === true) {
+                    checkUser.current = res.flag; console.log(checkUser);
+                } else {
+                    checkUser.current = res.flag; console.log(checkUser);
+                }
+            })
+            .catch((res) => console.log(res))
+    },[])    
 
     let [isOpen, setIsOpen] = useState(false)
 
     return (
         <>
             <div className="bg-[url('/public/images/10.jpg')] opacity-80 bg-cover">
-                <div onClick={() => { console.log(curBoard) }}>dddd</div>
+                {/* <div onClick={() => { console.log(checkUser) }}>dddd</div> */}
                 <div className='max-w-2xl px-6 py-10 m-auto bg-white rounded-md'>
                     <div className="mb-6 text-2xl font-bold text-left text-gray-500 border-4">
                         <Link to="/" className='text-gray-500'>
@@ -155,7 +146,7 @@ const ArticleDetailPage = () => {
                     </div>
 
                     {/* 좋아요 */}
-                   <CountHeart articleId = {curBoard}/>
+                    <CountHeart articleId={curBoard} />
 
                     {/* 댓글창 */}
                     <div className="mb-6">
@@ -176,48 +167,51 @@ const ArticleDetailPage = () => {
                                 <td className='pl-2 text-left text-gray-600'>작성자</td>
                                 <td className='pl-2 text-left text-gray-600'>내용</td>
                             </tr>
-                            {comments.replyComments===null?
-                            comments && comments.map(comment => (
-                                <tr key={comment.id} className="text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
-                                    <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
-                                    <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
-                                    <td><SubComment isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
-                                    <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
-                                </tr>
-                            )
-                            ) : 
-                            comments && comments.map(comment => (
-                                <>
-                                <tr key={comment.id} className=" text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
+                            {comments.replyComments === null ?
+                                comments && comments.map(comment => (
+                                    <tr key={comment.id} className="text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
                                         <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
                                         <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
                                         <td><SubComment isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
                                         <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
-                                        </tr>
-                                    {comment.replyComments&&comment.replyComments.map(reply => (
-                                        <tr key={reply.id} >
-                                        <td >
-                                        <td className="pl-2 text-gray-600 text-start">{reply.writer}</td>
-                                        <td id={reply.id} className="py-4 pl-2 text-left text-gray-600">{reply.content}</td>
-                                        <td><Modify isOpen={isOpen} content={reply.content} commentId={reply.id} flagController={flagController} flag={flag2} /></td>
-                                        </td>
                                     </tr>
-                                    ))}
-                                </>
-                                
+                                )
+                                ) :
+                                comments && comments.map(comment => (
+                                    <>
+                                        <tr key={comment.id} className=" text-center py-20 border-opacity-10 border-b-2 border-gray-200 bg-gray-100 hover:bg-[#8ab4e97d]">
+                                            <td className="pl-2 text-gray-600 text-start">{comment.writer}</td>
+                                            <td id={comment.id} className="py-4 pl-2 text-left text-gray-600">{comment.content}</td>
+                                            <td><SubComment isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
+                                            <td><Modify isOpen={isOpen} content={comment.content} commentId={comment.id} flagController={flagController} flag={flag2} /></td>
+                                        </tr>
+                                        {comment.replyComments && comment.replyComments.map(reply => (
+                                            <tr key={reply.id} >
+                                                <td >
+                                                    <td className="pl-2 text-gray-600 text-start">{reply.writer}</td>
+                                                    <td id={reply.id} className="py-4 pl-2 text-left text-gray-600">{reply.content}</td>
+                                                    <td><Modify isOpen={isOpen} content={reply.content} commentId={reply.id} flagController={flagController} flag={flag2} /></td>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </>
+
                                 ))
                             }
                         </tbody>
                     </table>
 
                     {/* 댓글창 끝 */}
-
+                    {checkUser.current===true?
                     <Link to='/ArticleUpdatePage'>
-                        <button type='modify' className='px-5 py-2 mx-3 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200 '>수정</button>
-                    </Link>
+                    <button type='modify' className='px-5 py-2 mx-3 font-bold border-2 rounded-lg text-neutral-900 hover:bg-neutral-200 '>수정</button>
+                    </Link> :
+                    <></>
+                    
+                }
                 </div>
             </div>
-            
+
         </>
     )
 }

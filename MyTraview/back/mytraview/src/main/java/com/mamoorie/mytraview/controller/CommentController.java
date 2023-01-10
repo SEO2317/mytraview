@@ -91,7 +91,7 @@ public class CommentController {
 				
 				Comment.Response res = Comment.Response.toResponse(updatedComment);
 				
-				return ResponseEntity.ok().body(res);
+				return ResponseEntity.ok().body(Comment.Response.builder().resMessage("수정이 완료 되었습니다.").build());
 
 		}
 
@@ -107,7 +107,7 @@ public class CommentController {
 			
 				commentService.deleteComment(findComment);
 
-				return ResponseEntity.ok().body(Comment.Response.builder().resMessage("삭제 되었습니다."));
+				return ResponseEntity.ok().body(Comment.Response.builder().resMessage("삭제 되었습니다.").build());
 
 		}
 		
