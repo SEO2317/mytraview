@@ -83,8 +83,12 @@ const StyledSlider = styled(Slider)`
 
   return (
     <>
-      <div className="text-center">Home
-        <br /><br />
+    {/* 배경 추가 및 br 태그로 띄어쓰기 추가함 */}
+    <div className="bg-[url('/public/images/lumn.jpg')] bg-cover opacity-95" style={{height: "100vh"}}>
+      <div className="text-center">
+      <br /><br />
+      <br /><br />
+      <br /><br />
         {/* ArticleSubListPage */}
         <Link to="/ArticleSubListPage">
           <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">글목록</button>
@@ -119,7 +123,12 @@ const StyledSlider = styled(Slider)`
           <Link to="/Carousel">
             <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">React-slick</button>
           </Link>
+          <Link to="/ListTableTest">
+            <button className="px-5 py-2 font-bold text-blue-500 border-2 rounded-lg border-sky-500 hover:bg-sky-300">ListTableTest</button>
+          </Link>
+
         </div>
+      </div>
       </div>
     </>
   )

@@ -47,6 +47,8 @@ const ArticleCreatePage = () => {
 
   return (
     <>
+    {/* 스크롤 (0, 0)으로 세팅해둠 */}
+    {window.scrollTo(0, 0)}
       <div className="bg-[url('/public/images/10.jpg')] opacity-80 bg-cover" >
       
         <div className='max-w-2xl px-6 py-10 m-auto bg-gray-200 rounded-md bg-opacity-20 ml-25 mr-25'>

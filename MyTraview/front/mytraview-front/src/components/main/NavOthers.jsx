@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import MenuItems from './MenuItems'
 
-const Nav = () => {
+const NavOthers = () => {
 
   const [active, setActive] = useState(false)
 
@@ -29,13 +29,9 @@ const Nav = () => {
         </div>
 
         <ul className='hidden gap-8 p-6 uppercase md:flex bg-white/10'>
-          <li><a href="#s1">Home</a></li>
-          <li><a href="#s2">17도</a></li>
-          <li><a href="#s3">Best Reviews</a></li>
-          <li><a href="#s4">Event Sale</a></li>
+          <li><Link to="/">Home</Link></li>
           <li><Link to='/SignInPage'>Sign In</Link></li>
           <li><Link to='/SignUpPage'>Sign Up</Link></li>
-          <li><Link to='/UserMyPage'>MyPage</Link></li>
         </ul>
 
         <MenuItems showMenu={showMenu} active={active} />
@@ -47,4 +43,4 @@ const Nav = () => {
   )
 }
 
-export default Nav
+export default NavOthers

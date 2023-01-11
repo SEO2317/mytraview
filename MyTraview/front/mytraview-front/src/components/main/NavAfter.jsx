@@ -3,12 +3,21 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import MenuItems from './MenuItems'
 
-const Nav = () => {
+const NavAfter = () => {
 
   const [active, setActive] = useState(false)
 
   const showMenu = () => {
     setActive(!active)
+  }
+
+  const logOut = () => {
+    if(window.confirm("로그아웃 하시겠습니까?")){
+    sessionStorage.removeItem("ACCESS_TOKEN")
+    window.location.href ="/"
+    }else{
+      alert("취소 되었습니다.")
+    }
   }
   
   // TO Do : 로그인 중일 때 메인페이지 상 원페이징 되는 네비바, 로그아웃 중일 때 메인페이지 상 원페이징 되는 네비바
@@ -33,9 +42,13 @@ const Nav = () => {
           <li><a href="#s2">17도</a></li>
           <li><a href="#s3">Best Reviews</a></li>
           <li><a href="#s4">Event Sale</a></li>
-          <li><Link to='/SignInPage'>Sign In</Link></li>
-          <li><Link to='/SignUpPage'>Sign Up</Link></li>
+          {/* <li><Link to='/SignInPage'>Sign In</Link></li> */}
+          <li>
+            <button onClick={logOut}>Sign Out</button>
+          </li>
           <li><Link to='/UserMyPage'>MyPage</Link></li>
+          {/* <li><Link to='/UserUpdateMyPage'>MyPage업데이트</Link></li> */}
+
         </ul>
 
         <MenuItems showMenu={showMenu} active={active} />
@@ -47,4 +60,4 @@ const Nav = () => {
   )
 }
 
-export default Nav
+export default NavAfter

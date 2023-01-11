@@ -35,14 +35,17 @@ const ViewAllArticles = () => {
 
   return (
     <>
-    <br /><br /><br /><br /><br />
-    <div className='px-96'>
-      <label >
+    {/* 배경 넣었으며 색깔 디자인을 손을 대었음 */}
+    <div className="bg-[url('/public/images/star_bg.jpg')] opacity-80 bg-cover h-[100vh] text-white">
+    <br /><br />
+    <br /><br /><br />
+      <label>
         페이지 당 표시할 게시물 수:&nbsp;
         <select
           type="number"
           value={limit}
           onChange={({ target: { value } }) => setLimit(Number(value))}
+          className="text-black"
         >
           <option value="10" className="text-sm font-bold text-right text-neutral-600">10개씩</option>
           <option value="15" className="text-sm font-bold text-right text-neutral-600">15개씩</option>
@@ -52,7 +55,7 @@ const ViewAllArticles = () => {
         </select>
       </label>
 
-      <div className="mt-6 overflow-x-auto">
+      <div className="mt-6 overflow-x-auto text-white">
         <div onClick={() => {console.log( articles)}}>전체 리뷰 조회 페이지</div>
         <table className="w-full border-collapse table-auto">
           <thead>
@@ -64,7 +67,7 @@ const ViewAllArticles = () => {
               <th className="px-4 py-2 bg-[#F8F8F8] text-center border">Views</th>
             </tr>
           </thead>
-          <tbody className="text-sm font-normal text-gray-700">
+          <tbody className="text-sm font-normal text-gray-700 bg-white">
             {articles && articles.slice(offset, offset + limit).map(article => (
               <tr key={article.id} className="py-10 border-b border-gray-200 hover:bg-gray-100" >
 

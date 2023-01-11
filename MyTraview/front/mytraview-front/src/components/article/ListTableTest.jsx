@@ -17,7 +17,7 @@ import { useAtom } from 'jotai';
 import { call } from '../../api_config/ApiService';
 import { Link } from 'react-router-dom';
 
-const ListTable = (props) => {
+const ListTableTest = (props) => {
     const [order, setOrder] = React.useState('desc');
     const [orderBy, setOrderBy] = React.useState('viewCount');
     const [selected, setSelected] = React.useState([]);
@@ -300,4 +300,4 @@ const ListTable = (props) => {
     );
 }
 
-export default ListTable
+export default ListTableTest

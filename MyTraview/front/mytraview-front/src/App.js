@@ -22,12 +22,24 @@ import BestArticles from './pages/BestArticles';
 import ArticleInput from './pages/ArticleInput';
 import Pagination from './components/article/Pagination';
 import SignInPage from './pages/SignInPage';
+import ListTableTest from './components/article/ListTableTest';
+import authAtom from './stores/authAtom';
+import { useAtom } from 'jotai';
+import NavAfter from './components/main/NavAfter';
+import NavOthers from './components/main/NavOthers';
+import NavOthersAfter from './components/main/NavOthersAfter';
 
 function App() {
+
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN")
   return (
     <>
       <BrowserRouter>
-        <Nav />
+        {/* Home이 아닌 비로그인 혹은 로그인했을 때 */}
+        {window.location.href === '/' ? <NavOthers /> : <NavOthersAfter />}
+        {console.log()}
+        {/* 싱글페이지에서의 로그인 로그아웃 */}
+        {/* {accessToken == null ? <Nav /> : <NavAfter />} */}
         <Routes>
           {/* 메인 페이지 */}
           <Route path="/" element={<MainPage />} />
@@ -57,6 +69,8 @@ function App() {
           <Route path="/ArticleSubListPage" element={<ArticleSubListPage />} />
           {/* 테스트용 페이지 */}
           <Route path="/ArticleInput" element={<ArticleInput />} />
+          <Route path="/ListTableTest" element={<ListTableTest />} />
+
         </Routes>
       </BrowserRouter>
     </>
