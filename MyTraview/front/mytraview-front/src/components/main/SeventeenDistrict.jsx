@@ -26,6 +26,7 @@ import kyungbuk from '../assets/경북 안압지.jpg'
 import kyungnam from '../assets/경남 해인사.jpg'
 import jeju from '../assets/trip1.jpg' //아직
 
+
 const StyledSlider = styled(Slider)`
   
   position: relative;
