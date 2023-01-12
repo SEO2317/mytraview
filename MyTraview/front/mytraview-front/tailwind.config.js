@@ -22,10 +22,10 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
-      backgroundImage:{
-        'hero-image' : 'url("./components/assets/oh.jpg")'
-      }
+      backgroundImage: {
+        'hero-image': 'url("./components/assets/oh.jpg")'
     },
-  },
-  plugins: []
+    },
+    plugins: []
+  }
 }

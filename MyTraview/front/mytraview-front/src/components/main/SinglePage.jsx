@@ -85,8 +85,10 @@ const SinglePage = () => {
     //     }
     // });
 
+    
+
     return (
-        <div className="slider" style={{width: "100%", height: "100vh"}}>
+        <div style={{width: "100%", height: "100vh"}}>
             
                 {/* <div style={{ height: "100vh", width: "100%", display: "vertical" }}> */}
 

@@ -36,10 +36,9 @@ function App() {
     <>
       <BrowserRouter>
         {/* Home이 아닌 비로그인 혹은 로그인했을 때 */}
-        {window.location.href === '/' ? <NavOthers /> : <NavOthersAfter />}
-        {console.log()}
+        {/* {window.location.href === '/' ? <NavOthers /> : <NavOthersAfter />} */}
         {/* 싱글페이지에서의 로그인 로그아웃 */}
-        {/* {accessToken == null ? <Nav /> : <NavAfter />} */}
+        {accessToken == null ? <Nav /> : <NavAfter />}
         <Routes>
           {/* 메인 페이지 */}
           <Route path="/" element={<MainPage />} />

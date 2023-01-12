@@ -27,7 +27,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
 	List<Article> findAllByWriter(String writer);
 	
-	List<Article> findAllByUser_Email(String Email);
+//	List<Article> findAllByUser_Email(String Email);
 	
 //	Article findByArticleId(Integer id); // 임시추가
 //	List<Article> findByWriter(String writer); // 임시추가
