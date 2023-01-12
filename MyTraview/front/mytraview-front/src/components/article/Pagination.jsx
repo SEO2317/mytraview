@@ -2,10 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 
 
-const Pagination = ({ total, limit, page, setPage }) => {
-  const numPages = Math.ceil(total / limit);
-
-  const Nav = styled.nav`
+const Nav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +38,11 @@ const Button = styled.button`
     transform: revert;
   }
 `;
+
+const Pagination = ({ total, limit, page, setPage }) => {
+  const numPages = Math.ceil(total / limit);
+
+  
 
   return (
     <> 

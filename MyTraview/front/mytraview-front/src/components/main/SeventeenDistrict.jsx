@@ -26,6 +26,17 @@ import kyungbuk from '../assets/경북 안압지.jpg'
 import kyungnam from '../assets/경남 해인사.jpg'
 import jeju from '../assets/trip1.jpg' //아직
 
+const StyledSlider = styled(Slider)`
+  
+  position: relative;
+   .slick-prev::before,
+   .slick-next::before {
+     opacity: 0;
+     display: none;
+   }
+ `;
+ // 기존 Slider를 StyledSlider로 스타일링 적용
+
 
 const SeventeenDistrict = () => {
   const data = [
@@ -64,16 +75,7 @@ const SeventeenDistrict = () => {
     );
   }
 
-const StyledSlider = styled(Slider)`
-  
-  position: relative;
-   .slick-prev::before,
-   .slick-next::before {
-     opacity: 0;
-     display: none;
-   }
- `;
- // 기존 Slider를 StyledSlider로 스타일링 적용
+
 
   const NextArrow = (props) => {
     const { className, style, onClick } = props;
@@ -119,7 +121,7 @@ const StyledSlider = styled(Slider)`
         <StyledSlider {...settings}>
           {data.map(({areaCode, Img}) => (
             <div key={areaCode + Img}>
-              {console.log(areaCode, Img)}
+              {/* {console.log(areaCode, Img)} */}
               <div className='ml-10' style={{ width: "80%" }} >
                 <Link to="/ArticleMainListPage" state={{ from: { areaCode } }} >
                   <div style={{backgroundImage: `url("${Img}")`}} className={`box-content bg-cover bg-center scale-95 hover:scale-100 h-64 text-2xl text-left text-white border-2 rounded-lg border-sky-500`}>
